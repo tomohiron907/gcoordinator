@@ -21,6 +21,5 @@ def extrusion_calculator(coords: np.ndarray) -> np.ndarray:
         numerator    = 4 * NOZZLE_DIAMETER * LAYER_HEIGHT * distance
         denominator  = np.pi * FILAMENT_DIAMETER**2
         extrusion[i] = numerator / denominator
-        extrusion[i] = extrusion[:i+1].sum()
     
     return extrusion

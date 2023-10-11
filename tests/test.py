@@ -13,5 +13,6 @@ for layer in range(100):
 
 
 gcode = gc.GCode(full_object)
-
+gcode.start_gcode("/Users/taniguchitomohiro/Documents/default_gcode/start_gcode.txt")
+gcode.end_gcode("/Users/taniguchitomohiro/Documents/default_gcode/end_gcode.txt")
 gcode.save('test.gcode')

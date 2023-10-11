@@ -3,13 +3,11 @@ import numpy as np
 from  gcoordinator.print_settings import *
 
 
-
 class GCode:
     def __init__(self, full_object:list) -> None:
         # full_object is a list of Path objects
         self.full_object = full_object
         self.txt = self.generate_gcode()
-        
         
 
     def generate_gcode(self):
@@ -31,16 +29,43 @@ class GCode:
         return txt
     
 
-    def save(self, file_path ):
+    def save(self, file_path):
+        """
+        Save the generated G-code to a file.
+
+        Args:
+            file_path (str): The path to the file to save the G-code to.
+
+        Returns:
+            None
+        """
         with open(file_path, 'w') as f:
             f.write(self.txt)
 
 
     def start_gcode(self, file_path):
+        """
+        Prepends the contents of a file to the current G-code text.
+
+        Args:
+            file_path (str): The path to the file to be prepended.
+
+        Returns:
+            None
+        """
         with open(file_path, 'r') as f:
-            return f.read()
+            self.txt = f.read() + self.txt
         
     
     def end_gcode(self, file_path):
+        """
+        Appends the contents of the file at the given file path to the current G-code text.
+
+        Args:
+            file_path (str): The path to the file to be appended.
+
+        Returns:
+            None
+        """
         with open(file_path, 'r') as f:
-            return f.read()
+            self.txt = self.txt + f.read()

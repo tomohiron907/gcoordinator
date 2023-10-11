@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "gcoordinator"
 version = "0.0.2"
 authors = [
-  { name="Tomohiro TANIGUCHI", email="tomohiron907@gmail.com" },
+  { name="Tomohiro TANIGUCHI", email="gcoordinator.3dp@gmail.com" },
 ]
 description = "a package for generate G-code for 3D Printer"
 readme = "README.md"
@@ -16,11 +16,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = ["numpy"]
 
-[project.dependencies]
-python = ">=3.7"
-numpy = "*"
+
+
 
 [project.urls]
 "Homepage" = "https://github.com/tomohiron907/gcoordinator"
-"Bug Tracker" = ""
