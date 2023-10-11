@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gcoordinator"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Tomohiro TANIGUCHI", email="tomohiron907@gmail.com" },
 ]
@@ -17,6 +17,10 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[project.dependencies]
+python = ">=3.7"
+numpy = "*"
+
 [project.urls]
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Homepage" = "https://github.com/tomohiron907/gcoordinator"
+"Bug Tracker" = ""
