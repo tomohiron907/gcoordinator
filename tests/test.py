@@ -3,7 +3,7 @@ import numpy as np
 
 
 full_object = []
-for layer in range(100):
+for layer in range(500):
     arg = np.linspace(0, 2*np.pi, 5)
     x = 10 * np.cos(arg)
     y = 10 * np.sin(arg)

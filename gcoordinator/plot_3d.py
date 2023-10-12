@@ -1,3 +1,17 @@
+"""
+This module provides a class for generating and displaying 3D plots using PyQtGraph's GLViewWidget.
+
+The Plot3D class contains methods for initializing a 3D plot window, adding a 3D grid to the view, 
+and creating and drawing a sequence of coordinates that the nozzle moves through the entire list of full_objects.
+
+Functions:
+    show(full_object): Displays a 3D plot of the given object.
+
+Classes:
+    Plot3D: A class for generating and displaying 3D plots using PyQtGraph's GLViewWidget.
+
+"""
+
 import sys
 import colorsys
 import numpy as np
@@ -5,15 +19,47 @@ import pyqtgraph.opengl as gl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
 
 
+def show(full_object):
+    """
+    Displays a 3D plot of the given object.
+
+    Args:
+        full_object(list of Path object): The object to be plotted.
+
+    Returns:
+        None.
+    """
+    graph = Plot3D()
+    graph.show(full_object)
 
 class Plot3D:
-    """3次元プロットを担うクラス"""
+    """
+    A class for generating and displaying 3D plots using PyQtGraph's GLViewWidget.
+
+    Attributes:
+        app (QApplication): The Qt application instance.
+        window (QMainWindow): The main window of the application.
+        central_widget (QWidget): The central widget of the main window.
+        layout (QVBoxLayout): The layout of the central widget.
+        view (GLViewWidget): The 3D view widget.
+    
+    Methods:
+        __init__(): Initializes the class instance and generates the window and grid.
+        generate_window(): Initializes and displays a 3D plot window using PyQtGraph's GLViewWidget.
+        draw_grid(): Adds a 3D grid to the view, with axis labels and tick marks.
+        show(full_object): Creates and draws a sequence of coordinates that the nozzle moves through the entire list of full_objects.
+    """
     def __init__(self):
         self.generate_window()
         self.draw_grid()
     
-    #==================== ウィンドウを生成 =====================================
     def generate_window(self):
+        """
+        Initializes and displays a 3D plot window using PyQtGraph's GLViewWidget.
+
+        Returns:
+            None
+        """
         self.app = QApplication(sys.argv)
         self.window = QMainWindow()
         self.window.setGeometry(100, 100, 1200, 1000)  
@@ -26,9 +72,10 @@ class Plot3D:
         self.view.setCameraPosition(distance=180)
         self.layout.addWidget(self.view)
     
-
-    #==================== グリッドを描画 =====================================
     def draw_grid(self):
+        """
+        Add a 3D grid to the view, with axis labels and tick marks.
+        """
         gz = gl.GLGridItem()
         gz.setSize(200, 200)
         gz.setSpacing(10,10)
@@ -48,18 +95,6 @@ class Plot3D:
         self.view.addItem(z_text)
         self.view.addItem(gz)
 
-
-    #==================== 線を描画する関数 =====================================
-    def plot_line(self, pos, color):
-        plt = gl.GLLinePlotItem(pos=pos, color=color, width=3, antialias=True)
-        self.view.addItem(plt)
-
-    #==================== 点を描画する関数 =====================================
-    def scatter_point(self, pos, color):
-        plt = gl.GLScatterPlotItem(pos=pos, color=color, size=15)
-        self.view.addItem(plt)
-
-    #==================== ウィンドウを表示 =====================================
     def show(self, full_object):
         """Create and draw a sequence of coordinates that the nozzle moves through the entire list of full_objects
 
@@ -89,20 +124,10 @@ class Plot3D:
         
         pos_array = np.concatenate(pos_array)
         colors = np.concatenate(colors)
-
         plt = gl.GLLinePlotItem(pos=pos_array, color=colors, width=0.5, antialias=True)
-        
         self.view.addItem(plt)
         self.window.show()
         self.app.exec_()
 
 
-def show(full_object):
-    graph = Plot3D()
-    graph.show(full_object)
 
-
-if __name__ == '__main__':
-    graph = Plot3D()
-    graph.plot_line(pos=np.array([[0,0,0],[1,1,1]]), color=np.array([[1,0,0,1],[0,1,0,1]]))
-    graph.show()
