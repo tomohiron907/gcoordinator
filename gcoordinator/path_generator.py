@@ -15,7 +15,8 @@ class Path:
         self.optional_settings = kwargs
         self.apply_optional_settings()
 
-        self.extrusion = extrusion_calculator(self.coords)
+        #self.extrusion = extrusion_calculator(self.coords)
+        self.extrusion = extrusion_calculator(self)
 
     def apply_default_settings(self):
         # apply json settings to the object

@@ -9,11 +9,9 @@ for layer in range(100):
     y = 10 * np.sin(arg)
     z = np.full_like(x, layer * 0.1)
     if layer<50:
-        wall = gc.Path(x, y, z, print_speed = 40)
+        wall = gc.Path(x, y, z )
     else:
-        wall = gc.Path(x, y, z, print_speed = 20)
-    
-    print(wall.print_speed)
+        wall = gc.Path(x, y, z )
     
     full_object.append(wall)
 
