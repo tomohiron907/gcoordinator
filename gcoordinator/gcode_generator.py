@@ -22,9 +22,9 @@ class GCode:
             txt += f'G0 F{TRAVEL_SPEED} X{path.x[0]+X_ORIGIN} Y{path.y[0]+Y_ORIGIN} Z{path.z[0]}\n'
             for i in range(len(path.x)-1):
                 txt += f'G1 F{PRINT_SPEED} '
-                txt += f'X{path.x[i]+X_ORIGIN} '
-                txt += f'Y{path.y[i]+Y_ORIGIN} '
-                txt += f'Z{path.z[i]} '
+                txt += f'X{path.x[i+1]+X_ORIGIN} '
+                txt += f'Y{path.y[i+1]+Y_ORIGIN} '
+                txt += f'Z{path.z[i+1]} '
                 txt += f'E{path.extrusion[i]}\n'
         return txt
     

@@ -16,8 +16,8 @@ def extrusion_calculator(coords: np.ndarray) -> np.ndarray:
     extrusion = np.zeros(len(distances))
     for i, distance in enumerate(distances):
         # Calculate the extrusion for each distance
-        # for more details
-        # https://nature3d.net/explanation/filament_ext.html
+        # for more details, see formula 3 in the following paper:
+        # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7600913/
         numerator    = 4 * NOZZLE_DIAMETER * LAYER_HEIGHT * distance
         denominator  = np.pi * FILAMENT_DIAMETER**2
         extrusion[i] = numerator / denominator
