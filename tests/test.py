@@ -8,11 +8,11 @@ for layer in range(500):
     x = 10 * np.cos(arg)
     y = 10 * np.sin(arg)
     z = np.full_like(x, layer * 0.1)
-    if layer<50:
-        wall = gc.Path(x, y, z )
+    if layer < 50:
+        wall = gc.Path(x, y, z)
     else:
-        wall = gc.Path(x, y, z , extrusion_multiplier=2)
-    
+        wall = gc.Path(x, y, z)
+
     full_object.append(wall)
 
 gc.show(full_object)
