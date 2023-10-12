@@ -11,9 +11,11 @@ for layer in range(100):
     if layer<50:
         wall = gc.Path(x, y, z )
     else:
-        wall = gc.Path(x, y, z )
+        wall = gc.Path(x, y, z , extrusion_multiplier=2)
     
     full_object.append(wall)
+
+gc.show(full_object)
 
 
 gcode = gc.GCode(full_object)
