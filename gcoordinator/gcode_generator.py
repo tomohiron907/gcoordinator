@@ -23,33 +23,31 @@ class GCode:
     def __init__(self, full_object: list) -> None:
         # full_object is a list of Path objects
         self.full_object = full_object
-        self.txt = self.generate_gcode()
 
     def generate_gcode(self):
-        """
-        Generates G-code instructions for the current object, based on its paths and extrusion values.
 
-        Returns:
-            str: A string containing the G-code instructions for the object.
-        """
-        txt = ''
         for path in self.full_object:
             # apply path settings
-            txt += self.apply_path_settings(path)
-            # travel to the first point of the path
-            txt += f'G0 F{path.travel_speed} '
-            txt += f'X{path.x[0]+path.x_origin} '
-            txt += f'Y{path.y[0]+path.y_origin} '
-            txt += f'Z{path.z[0]}\n'
-            for i in range(len(path.x)-1):
-                # print the path. move to the next point with extrusion
-                txt += f'G1 F{path.print_speed} '
-                txt += f'X{path.x[i+1]+path.x_origin} '
-                txt += f'Y{path.y[i+1]+path.y_origin} '
-                txt += f'Z{path.z[i+1]} '
-                txt += f'E{path.extrusion[i]}\n'
-        return txt
+            self.apply_path_settings(path)
+            self.generate_path_gcode(path)
     
+
+    def generate_path_gcode(self, path):
+        txt = ''
+        # travel to the first point of the path
+        txt += f'G0 F{path.travel_speed} '
+        txt += f'X{path.x[0]+path.x_origin} '
+        txt += f'Y{path.y[0]+path.y_origin} '
+        txt += f'Z{path.z[0]}\n'
+        for i in range(len(path.x)-1):
+            # print the path. move to the next point with extrusion
+            txt += f'G1 F{path.print_speed} '
+            txt += f'X{path.x[i+1]+path.x_origin} '
+            txt += f'Y{path.y[i+1]+path.y_origin} '
+            txt += f'Z{path.z[i+1]} '
+            txt += f'E{path.extrusion[i]}\n'
+        self.gcode.write(txt)
+
     def set_initial_settings(self):
         """
         Generates G-code commands to set the initial printer settings, such as bed and nozzle temperature, extrusion mode,
@@ -65,7 +63,7 @@ class GCode:
         txt += f'M109 S{print_settings.NOZZLE_TEMPERATURE} \n'
         txt += f'M83 ;relative extrusion mode \n'
         txt += f'M106 S{print_settings.FAN_SPEED} \n'
-        return txt
+        self.gcode.write(txt)
     
     def apply_path_settings(self, path):
         """
@@ -85,43 +83,35 @@ class GCode:
             txt += f'M140 S{path.bed_temperature} \n'
         if path.fan_speed != print_settings.FAN_SPEED:
             txt += f'M106 S{path.fan_speed} \n'
-        return txt
+        self.gcode.write(txt)
 
     def save(self, file_path):
         """
-        Saves the generated G-code to a file.
+        Saves the generated G-code to a file at the specified file path.
 
-        Reads the contents of the start G-code file, generates the initial settings G-code,
-        reads the contents of the end G-code file, combines the start G-code, initial settings G-code,
-        object G-code, and end G-code, and writes the combined G-code to the specified file.
+        Args:
+            file_path (str): The path to the file where the G-code will be saved.
 
-        :param file_path: The path of the file to write the G-code to.
-        :type file_path: str
+        Returns:
+            None.
         """
+        self.gcode = open(file_path, 'w', encoding='utf-8')
 
-        # Read the contents of the start G-code file
         with open(self.start_gcode_path, 'r') as f:
             self.start_gcode_txt = f.read()
+        self.gcode.write(self.start_gcode_txt)
         
-        # Generate the initial settings G-code
-        self.initial_settings_txt = self.set_initial_settings()
+        self.set_initial_settings()
         
-        # Read the contents of the end G-code file
+        self.generate_gcode()
+        
         with open(self.end_gcode_path, 'r') as f:
-            self.end_gcode_txt = f.read()
+            self.end_gcode_txt = f.read()   
+        self.gcode.write(self.end_gcode_txt)
+
         
-        # Combine the start G-code, initial settings G-code, object G-code, and end G-code
-        self.gcode = (
-            self.start_gcode_txt
-            + self.initial_settings_txt
-            + self.txt
-            + self.end_gcode_txt
-        )
-        
-        # Write the combined G-code to the specified file
-        with open(file_path, 'w') as f:
-            f.write(self.gcode)
-        
+        self.gcode.close()
+
 
     def start_gcode(self, file_path):
         self.start_gcode_path = file_path
