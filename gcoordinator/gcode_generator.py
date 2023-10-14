@@ -34,6 +34,8 @@ class GCode:
         """
         txt = ''
         for path in self.full_object:
+            # apply path settings
+            txt += self.apply_path_settings(path)
             # travel to the first point of the path
             txt += f'G0 F{path.travel_speed} '
             txt += f'X{path.x[0]+path.x_origin} '
@@ -63,6 +65,26 @@ class GCode:
         txt += f'M109 S{print_settings.NOZZLE_TEMPERATURE} \n'
         txt += f'M83 ;relative extrusion mode \n'
         txt += f'M106 S{print_settings.FAN_SPEED} \n'
+        return txt
+    
+    def apply_path_settings(self, path):
+        """
+        Generate G-code commands to apply the settings of the given `path` object.
+        The method returns a string containing the G-code commands that should be
+        sent to the printer to apply the settings of the path.
+        
+        :param path: a `Path` object containing the settings to apply.
+        :type path: Path
+        :return: a string containing the G-code commands to apply the settings.
+        :rtype: str
+        """
+        txt = ''
+        if path.nozzle_temperature != print_settings.NOZZLE_TEMPERATURE:
+            txt += f'M104 S{path.nozzle_temperature} \n'
+        if path.bed_temperature != print_settings.BED_TEMPERATURE:
+            txt += f'M140 S{path.bed_temperature} \n'
+        if path.fan_speed != print_settings.FAN_SPEED:
+            txt += f'M106 S{path.fan_speed} \n'
         return txt
 
     def save(self, file_path):

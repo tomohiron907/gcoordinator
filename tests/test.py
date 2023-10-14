@@ -9,7 +9,8 @@ for layer in range(100):
     y = 10 * np.sin(arg)
     z = np.full_like(x, layer * 0.1)
     wall = gc.Path(x, y, z)
-
+    if layer < 3:
+        wall.bed_temperature = 60
     full_object.append(wall)
 
 gc.show(full_object)
