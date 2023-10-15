@@ -21,18 +21,60 @@ class GCode:
     """
 
     def __init__(self, full_object: list) -> None:
-        # full_object is a list of Path objects
-        self.full_object = full_object
+        self.full_object = full_object # list of Path objects
+        self.gcode = None              # gcode file object
+
+    def save(self, file_path):
+        """
+        Saves the generated G-code to a file at the specified file path.
+
+        Args:
+            file_path (str): The path to the file where the G-code will be saved.
+
+        Returns:
+            None.
+        """
+        self.gcode = open(file_path, 'w', encoding='utf-8')
+        
+        with open(self.start_gcode_path, 'r') as f:
+            self.start_gcode_txt = f.read()
+        self.gcode.write(self.start_gcode_txt)
+        
+        self.set_initial_settings()
+        self.generate_gcode()
+        
+        with open(self.end_gcode_path, 'r') as f:
+            self.end_gcode_txt = f.read()   
+        self.gcode.write(self.end_gcode_txt)
+        
+        self.gcode.close()
 
     def generate_gcode(self):
+        """
+        Generates G-code instructions for the full object by iterating over its paths and calling
+        the `apply_path_settings` and `generate_path_gcode` methods for each path.
 
+        Returns:
+            None
+        """
         for path in self.full_object:
-            # apply path settings
             self.apply_path_settings(path)
             self.generate_path_gcode(path)
     
 
     def generate_path_gcode(self, path):
+        """
+        Generates G-code instructions for printing a given path.
+
+        Args:
+            path (Path): The path to print.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
         txt = ''
         # travel to the first point of the path
         txt += f'G0 F{path.travel_speed} '
@@ -84,34 +126,6 @@ class GCode:
         if path.fan_speed != print_settings.FAN_SPEED:
             txt += f'M106 S{path.fan_speed} \n'
         self.gcode.write(txt)
-
-    def save(self, file_path):
-        """
-        Saves the generated G-code to a file at the specified file path.
-
-        Args:
-            file_path (str): The path to the file where the G-code will be saved.
-
-        Returns:
-            None.
-        """
-        self.gcode = open(file_path, 'w', encoding='utf-8')
-
-        with open(self.start_gcode_path, 'r') as f:
-            self.start_gcode_txt = f.read()
-        self.gcode.write(self.start_gcode_txt)
-        
-        self.set_initial_settings()
-        
-        self.generate_gcode()
-        
-        with open(self.end_gcode_path, 'r') as f:
-            self.end_gcode_txt = f.read()   
-        self.gcode.write(self.end_gcode_txt)
-
-        
-        self.gcode.close()
-
 
     def start_gcode(self, file_path):
         self.start_gcode_path = file_path
