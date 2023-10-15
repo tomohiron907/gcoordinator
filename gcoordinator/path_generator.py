@@ -133,7 +133,7 @@ class PathList:
     @nozzle_diameter.setter
     def nozzle_diameter(self, value):
         self._nozzle_diameter = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
     @property
     def filament_diameter(self):
@@ -141,7 +141,7 @@ class PathList:
     @filament_diameter.setter
     def filament_diameter(self, value):
         self._filament_diameter = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
     
     @property
@@ -150,7 +150,7 @@ class PathList:
     @layer_height.setter
     def layer_height(self, value):
         self._layer_height = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -159,7 +159,7 @@ class PathList:
     @print_speed.setter
     def print_speed(self, value):
         self._print_speed = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -168,7 +168,7 @@ class PathList:
     @travel_speed.setter
     def travel_speed(self, value):
         self._travel_speed = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -177,7 +177,7 @@ class PathList:
     @x_origin.setter
     def x_origin(self, value):
         self._x_origin = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -186,7 +186,7 @@ class PathList:
     @y_origin.setter
     def y_origin(self, value):
         self._y_origin = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -195,7 +195,7 @@ class PathList:
     @fan_speed.setter
     def fan_speed(self, value):
         self._fan_speed = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -204,7 +204,7 @@ class PathList:
     @nozzle_temperature.setter
     def nozzle_temperature(self, value):
         self._nozzle_temperature = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -213,7 +213,7 @@ class PathList:
     @bed_temperature.setter
     def bed_temperature(self, value):
         self._bed_temperature = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -222,7 +222,7 @@ class PathList:
     @retraction.setter
     def retraction(self, value):
         self._retraction = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -231,7 +231,7 @@ class PathList:
     @retraction_distance.setter
     def retraction_distance(self, value):
         self._retraction_distance = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -240,7 +240,7 @@ class PathList:
     @unretraction_distance.setter
     def unretraction_distance(self, value):
         self._unretraction_distance = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
 
     @property
@@ -249,7 +249,7 @@ class PathList:
     @z_hop.setter
     def z_hop(self, value):
         self._z_hop = value
-        self._apply_print_settings()
+        self.apply_print_settings()
     
     
     @property
@@ -258,7 +258,7 @@ class PathList:
     @z_hop_distance.setter
     def z_hop_distance(self, value):
         self._z_hop_distance = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -267,7 +267,7 @@ class PathList:
     @extrusion_multiplier.setter
     def extrusion_multiplier(self, value):
         self._extrusion_multiplier = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -276,7 +276,7 @@ class PathList:
     @before_gcode.setter
     def before_gcode(self, value):
         self._before_gcode = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
     @property
@@ -285,17 +285,29 @@ class PathList:
     @after_gcode.setter
     def after_gcode(self, value):
         self._after_gcode = value
-        self._apply_print_settings()
+        self.apply_print_settings()
 
 
-    def _apply_print_settings(self):
+    def apply_print_settings(self):
         for path in self.paths:
-            path.extrusion_multiplier = self.extrusion_multiplier
-            path.print_speed          = self.print_speed
-            path.retraction           = self.retraction
-            path.z_hop                = self.z_hop
-            path.before_gcode         = self.before_gcode
-            path.after_gcode          = self.after_gcode
+            path.nozzle_diameter       = self.nozzle_diameter
+            path.filament_diameter     = self.filament_diameter
+            path.layer_height          = self.layer_height
+            path.print_speed           = self.print_speed
+            path.travel_speed          = self.travel_speed
+            path.x_origin              = self.x_origin
+            path.y_origin              = self.y_origin
+            path.fan_speed             = self.fan_speed
+            path.nozzle_temperature    = self.nozzle_temperature
+            path.bed_temperature       = self.bed_temperature
+            path.retraction            = self.retraction
+            path.retraction_distance   = self.retraction_distance
+            path.unretraction_distance = self.unretraction_distance
+            path.z_hop                 = self.z_hop
+            path.z_hop_distance        = self.z_hop_distance
+            path.extrusion_multiplier  = self.extrusion_multiplier
+            path.before_gcode          = self.before_gcode
+            path.after_gcode           = self.after_gcode
 
     def sort_paths(self):
         """
