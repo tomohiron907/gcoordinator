@@ -1,6 +1,7 @@
 import os
 import numpy as np
 from gcoordinator import print_settings 
+from gcoordinator.path_generator import flatten_path_list
 
 
 class GCode:
@@ -21,7 +22,9 @@ class GCode:
     """
 
     def __init__(self, full_object: list) -> None:
-        self.full_object = full_object # list of Path objects
+        # full_object is a list of Path or PathList objects
+        # flatten_path_list() flattens the list of PathList objects into a list of Path objects
+        self.full_object = flatten_path_list(full_object) # list of Path objects
         self.gcode = None              # gcode file object
 
     def save(self, file_path):

@@ -62,6 +62,8 @@ class Path:
         self.y = np.array(y)
         self.z = np.array(z)
         self.coords = np.column_stack((self.x, self.y, self.z))
+        self.start_coord = self.coords[0]
+        self.end_coord = self.coords[-1]
 
         # apply default settings to the object
         self.apply_default_settings()
@@ -96,5 +98,248 @@ class Path:
         for key, value in self.optional_settings.items():
             setattr(self, key, value)
 
-        
 
+
+class PathList:
+    def __init__(self, paths):
+        self.paths                  = paths
+
+        self._nozzle_diameter       = NOZZLE_DIAMETER
+        self._filament_diameter     = FILAMENT_DIAMETER
+        self._layer_height          = LAYER_HEIGHT
+        self._print_speed           = PRINT_SPEED
+        self._travel_speed          = TRAVEL_SPEED
+        self._x_origin              = X_ORIGIN
+        self._y_origin              = Y_ORIGIN
+        self._fan_speed             = FAN_SPEED
+        self._nozzle_temperature    = NOZZLE_TEMPERATURE
+        self._bed_temperature       = BED_TEMPERATURE
+        self._retraction            = RETRACTION
+        self._retraction_distance   = RETRACTION_DISTANCE
+        self._unretraction_distance = UNRETRACTION_DISTANCE
+        self._z_hop                 = Z_HOP
+        self._z_hop_distance        = Z_HOP_DISTANCE
+        self._extrusion_multiplier  = EXTRUSION_MULTIPLIER
+        self._before_gcode          = None
+        self._after_gcode           = None
+
+
+        if len(paths) != 0:
+            self.sort_paths()
+
+    @property
+    def nozzle_diameter(self):
+        return self._nozzle_diameter
+    @nozzle_diameter.setter
+    def nozzle_diameter(self, value):
+        self._nozzle_diameter = value
+        self._apply_print_settings()
+    
+    @property
+    def filament_diameter(self):
+        return self._filament_diameter
+    @filament_diameter.setter
+    def filament_diameter(self, value):
+        self._filament_diameter = value
+        self._apply_print_settings()
+
+    
+    @property
+    def layer_height(self):
+        return self._layer_height
+    @layer_height.setter
+    def layer_height(self, value):
+        self._layer_height = value
+        self._apply_print_settings()
+
+
+    @property
+    def print_speed(self):
+        return self._print_speed
+    @print_speed.setter
+    def print_speed(self, value):
+        self._print_speed = value
+        self._apply_print_settings()
+
+
+    @property
+    def travel_speed(self):
+        return self._travel_speed
+    @travel_speed.setter
+    def travel_speed(self, value):
+        self._travel_speed = value
+        self._apply_print_settings()
+    
+
+    @property
+    def x_origin(self):
+        return self._x_origin
+    @x_origin.setter
+    def x_origin(self, value):
+        self._x_origin = value
+        self._apply_print_settings()
+    
+
+    @property
+    def y_origin(self):
+        return self._y_origin
+    @y_origin.setter
+    def y_origin(self, value):
+        self._y_origin = value
+        self._apply_print_settings()
+    
+
+    @property
+    def fan_speed(self):
+        return self._fan_speed
+    @fan_speed.setter
+    def fan_speed(self, value):
+        self._fan_speed = value
+        self._apply_print_settings()
+    
+
+    @property
+    def nozzle_temperature(self):
+        return self._nozzle_temperature
+    @nozzle_temperature.setter
+    def nozzle_temperature(self, value):
+        self._nozzle_temperature = value
+        self._apply_print_settings()
+    
+
+    @property
+    def bed_temperature(self):
+        return self._bed_temperature
+    @bed_temperature.setter
+    def bed_temperature(self, value):
+        self._bed_temperature = value
+        self._apply_print_settings()
+
+
+    @property
+    def retraction(self):
+        return self._retraction
+    @retraction.setter
+    def retraction(self, value):
+        self._retraction = value
+        self._apply_print_settings()
+
+
+    @property
+    def retraction_distance(self):
+        return self._retraction_distance
+    @retraction_distance.setter
+    def retraction_distance(self, value):
+        self._retraction_distance = value
+        self._apply_print_settings()
+    
+
+    @property
+    def unretraction_distance(self):
+        return self._unretraction_distance
+    @unretraction_distance.setter
+    def unretraction_distance(self, value):
+        self._unretraction_distance = value
+        self._apply_print_settings()
+    
+
+    @property
+    def z_hop(self):
+        return self._z_hop
+    @z_hop.setter
+    def z_hop(self, value):
+        self._z_hop = value
+        self._apply_print_settings()
+    
+    
+    @property
+    def z_hop_distance(self):
+        return self._z_hop_distance
+    @z_hop_distance.setter
+    def z_hop_distance(self, value):
+        self._z_hop_distance = value
+        self._apply_print_settings()
+
+
+    @property
+    def extrusion_multiplier(self):
+        return self._extrusion_multiplier
+    @extrusion_multiplier.setter
+    def extrusion_multiplier(self, value):
+        self._extrusion_multiplier = value
+        self._apply_print_settings()
+
+
+    @property
+    def before_gcode(self):
+        return self._before_gcode
+    @before_gcode.setter
+    def before_gcode(self, value):
+        self._before_gcode = value
+        self._apply_print_settings()
+
+
+    @property
+    def after_gcode(self):
+        return self._after_gcode
+    @after_gcode.setter
+    def after_gcode(self, value):
+        self._after_gcode = value
+        self._apply_print_settings()
+
+
+    def _apply_print_settings(self):
+        for path in self.paths:
+            path.extrusion_multiplier = self.extrusion_multiplier
+            path.print_speed          = self.print_speed
+            path.retraction           = self.retraction
+            path.z_hop                = self.z_hop
+            path.before_gcode         = self.before_gcode
+            path.after_gcode          = self.after_gcode
+
+    def sort_paths(self):
+        """
+        Path sorting algorithm
+
+        Sorts the paths in the PathList object in order of proximity to the previous path's end point.
+        """
+        sorted_paths = []
+        remaining_paths = self.paths.copy()
+
+        # Extract first path and add to sorted list
+        current_path = remaining_paths.pop(0)
+        sorted_paths.append(current_path)
+
+        while remaining_paths:
+            nearest_index = None
+            min_distance = float('inf')
+
+            # Find the path with the closest starting point among unsorted paths
+            for i, path in enumerate(remaining_paths):
+                distance = np.linalg.norm(current_path.end_coord - path.start_coord)
+                if distance < min_distance:
+                    min_distance = distance
+                    nearest_index = i
+
+            # Retrieve the closest path and add it to the sorted list
+            current_path = remaining_paths.pop(nearest_index)
+            sorted_paths.append(current_path)
+
+        self.paths = sorted_paths
+
+def flatten_path_list(full_object):
+    """
+    the full_object(list) is composed of Path and PathList.
+    when calcuate, PathList nedds to be flatten.
+    this function makes all elements in full_object to Path.
+
+    args    : list of Path and PathList
+    returns : list of Path
+    """
+    flattened_paths = []
+    for item in full_object:
+        if isinstance(item, PathList):
+            flattened_paths.extend(flatten_path_list(item.paths))
+        elif isinstance(item, Path):
+            flattened_paths.append(item)
+    return flattened_paths

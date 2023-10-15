@@ -17,6 +17,7 @@ import colorsys
 import numpy as np
 import pyqtgraph.opengl as gl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+from gcoordinator.path_generator import flatten_path_list
 
 
 def show(full_object):
@@ -29,6 +30,10 @@ def show(full_object):
     Returns:
         None.
     """
+    # full_object is a list of Path or PathList objects
+    # flatten_path_list() flattens the list of PathList objects into a list of Path objects
+    full_object = flatten_path_list(full_object)
+    # Plot3D cladd can only plot a list of Path objects
     graph = Plot3D()
     graph.show(full_object)
 
