@@ -7,9 +7,9 @@ for layer in range(100):
     arg = np.linspace(0, 2*np.pi, 5)
     x = 10 * np.cos(arg)
     y = 10 * np.sin(arg)
-    z = np.full_like(x, layer * 0.1)
+    z = np.full_like(x, (layer+1) * 0.2 - 0.1)
     if layer<5:
-        wall = gc.Path(x, y, z, nozzle_temperature=210)
+        wall = gc.Path(x, y, z, nozzle_temperature=200)
     else:
         wall = gc.Path(x, y, z)
     

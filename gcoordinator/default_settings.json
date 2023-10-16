@@ -7,15 +7,15 @@
         "layer_height": 0.2
     },
     "speed": {
-        "print_speed": 1000,
-        "travel_speed": 5000
+        "print_speed": 15000,
+        "travel_speed": 25000
     },
     "origin":{
         "x": 100,
         "y": 100
     },
     "fan_speed": {
-        "fan_speed": 0
+        "fan_speed": 255
     },
     "temperature": {
         "nozzle_temperature": 200,

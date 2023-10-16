@@ -101,7 +101,7 @@ class GCode:
         Returns:
             str: A string containing the G-code commands to set the initial printer settings.
         """
-        txt = ''
+        txt = '\n'
         txt += f'M140 S{print_settings.BED_TEMPERATURE} \n'
         txt += f'M190 S{print_settings.BED_TEMPERATURE} \n'
         txt += f'M104 S{print_settings.NOZZLE_TEMPERATURE} \n'
