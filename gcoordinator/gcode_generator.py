@@ -212,9 +212,27 @@ class GCode:
         self.gcode.write(txt)
 
     def start_gcode(self, file_path):
+        """
+        Sets the path to the start G-code file.
+
+        Args:
+            file_path (str): The path to the start G-code file.
+
+        Returns:
+            None
+        """
         self.start_gcode_path = file_path
         
 
     def end_gcode(self, file_path):
+        """
+        Sets the file path for the end G-code script.
+
+        Args:
+            file_path (str): The file path for the end G-code script.
+
+        Returns:
+            None
+        """
         self.end_gcode_path = file_path
 

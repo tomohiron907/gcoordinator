@@ -135,13 +135,37 @@ class Path:
             self.extrusion = extrusion_calculator(self)
 
 
+
 class PathList:
+    """
+    A class representing a list of paths. This class has the same attributes of Path class.
+    The attributes are applied to all paths in the PathList.
+
+    Attributes:
+        paths (list): A list of Path objects.
+        all attributes of Path class
+
+    Methods:
+        __init__(self, paths): Initializes a PathList object with a list of Path objects.
+        __setattr__(self, name, value): Sets an attribute to all paths in the PathList.
+        sort_paths(self): Sorts the paths in the PathList object in order of proximity to the previous path's end point.
+    """
     def __init__(self, paths):
         self.paths = paths
         if len(paths) != 0:
             self.sort_paths()
 
     def __setattr__(self, name, value):
+        """
+        Sets an attribute to all paths in the PathList.
+
+        Args:
+            name (str): The name of the attribute to set.
+            value (any): The value to set the attribute to.
+
+        Returns:
+            None
+        """
         if name == 'paths':
             self.__dict__[name] = value
             return
@@ -154,11 +178,13 @@ class PathList:
 
     def sort_paths(self):
         """
-        Path sorting algorithm
-
         Sorts the paths in the PathList object in order of proximity to the previous path's end point.
-        args    : None
-        returns : None
+
+        Args:
+            None
+
+        Returns:
+            None
         """
         sorted_paths = []
         remaining_paths = self.paths.copy()
