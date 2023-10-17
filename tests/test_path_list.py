@@ -14,7 +14,7 @@ for layer in range(100):
         walls.append(wall)
     walls = gc.PathList(walls)
     if layer > 50:
-        walls.print_speed = 300
+        walls.z_hop = True
 
     full_object.append(walls)
 

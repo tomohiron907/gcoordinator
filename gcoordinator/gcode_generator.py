@@ -1,6 +1,7 @@
 import os
 import numpy as np
 from gcoordinator import print_settings 
+from gcoordinator.path_generator import Path
 from gcoordinator.path_generator import flatten_path_list
 
 
@@ -10,24 +11,41 @@ class GCode:
 
     Attributes:
         full_object (list): A list of `Path` objects representing the paths to be printed.
-        txt (str): A string containing the G-code instructions for the object.
+        gcode (file object): The file object for the generated G-code.
+        start_gcode_path (str): The path to the file containing the start G-code.
+        start_gcode_txt (str): The text of the start G-code.
+        end_gcode_path (str): The path to the file containing the end G-code.
+        end_gcode_txt (str): The text of the end G-code.
 
     Methods:
         __init__(self, full_object:list) -> None: Initializes a new `GCode` object with the given `full_object`.
-        generate_gcode(self): Generates G-code instructions for the current object, based on its paths and extrusion values.
-        save(self, file_path): Saves the generated G-code to a file.
-        start_gcode(self, file_path): Prepends the contents of a file to the current G-code text.
-        end_gcode(self, file_path): Appends the contents of the file at the given file path to the current G-code text.
+        save(self, file_path:str) -> None: Saves the generated G-code to a file at the specified file path.
+        generate_gcode(self) -> None: Generates G-code instructions for the full object.
+        print_path(self, path:Path) -> None: Generates G-code instructions for printing a given path.
+        travel_from_path_to_path(self, curr_path:Path, next_path:Path) -> None: Generates G-code instructions for traveling from the end of `curr_path` to the start of `next_path`.
+        travel_to_first_point(self, first_path:Path) -> None: Generates G-code instructions for traveling to the first point of the first path in the full object.
+        set_initial_settings(self) -> str: Generates G-code commands to set the initial printer settings.
 
     """
 
     def __init__(self, full_object: list) -> None:
-        # full_object is a list of Path or PathList objects
-        # flatten_path_list() flattens the list of PathList objects into a list of Path objects
+        """
+        Initializes a new `GCode` object with the given `full_object`.
+
+        Args:
+            full_object (list): A list of `Path` objects representing the paths to be printed.
+
+        Returns:
+            None
+        """
         self.full_object = flatten_path_list(full_object) # list of Path objects
         self.gcode = None              # gcode file object
+        self.start_gcode_path = 'start_gcode.txt'
+        self.start_gcode_txt = ''
+        self.end_gcode_path = 'end_gcode.txt'
+        self.end_gcode_txt = ''
 
-    def save(self, file_path):
+    def save(self, file_path:str) -> None:
         """
         Saves the generated G-code to a file at the specified file path.
 
@@ -52,20 +70,26 @@ class GCode:
         
         self.gcode.close()
 
-    def generate_gcode(self):
+    def generate_gcode(self) -> None:
         """
         Generates G-code instructions for the full object by iterating over its paths and calling
-        the `apply_path_settings` and `generate_path_gcode` methods for each path.
+        the `apply_path_settings` and `print_path` methods for each path.
 
         Returns:
             None
         """
-        for path in self.full_object:
-            self.apply_path_settings(path)
-            self.generate_path_gcode(path)
-    
+        self.travel_to_first_point(self.full_object[0])
+        for i in range(len(self.full_object)):
+            curr_path = self.full_object[i]
+            self.apply_path_settings(curr_path)
+            self.print_path(curr_path)
+            if i < len(self.full_object)-1:
+                next_path = self.full_object[i+1]
+                self.travel_from_path_to_path(curr_path, next_path)
+            else:
+                pass
 
-    def generate_path_gcode(self, path):
+    def print_path(self, path:Path) -> None:
         """
         Generates G-code instructions for printing a given path.
 
@@ -79,11 +103,6 @@ class GCode:
             None
         """
         txt = ''
-        # travel to the first point of the path
-        txt += f'G0 F{path.travel_speed} '
-        txt += f'X{path.x[0]+path.x_origin} '
-        txt += f'Y{path.y[0]+path.y_origin} '
-        txt += f'Z{path.z[0]}\n'
         for i in range(len(path.x)-1):
             # print the path. move to the next point with extrusion
             txt += f'G1 F{path.print_speed} '
@@ -93,7 +112,68 @@ class GCode:
             txt += f'E{path.extrusion[i]}\n'
         self.gcode.write(txt)
 
-    def set_initial_settings(self):
+    def travel_from_path_to_path(self, curr_path:Path, next_path:Path) -> None:
+        """
+        Generates G-code instructions for traveling from the end of `curr_path` to the start of `next_path`.
+
+        Args:
+            curr_path (Path): The path to travel from.
+            next_path (Path): The path to travel to.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
+        txt = ''
+        txt += f'G91\n'
+
+        if curr_path.retraction:
+            txt += f'G1 E{-curr_path.retraction_distance}\n'
+        
+        if curr_path.z_hop:
+            txt += f'G0 Z{curr_path.z_hop_distance}\n'
+        
+        # travel to the start of the nextent path
+        travel_x = next_path.x[0] - curr_path.x[-1]
+        travel_y = next_path.y[0] - curr_path.y[-1]
+        travel_z = next_path.z[0] - curr_path.z[-1]
+        txt += f'G0 F{next_path.travel_speed} '
+        txt += f'X{travel_x} '
+        txt += f'Y{travel_y} '
+        txt += f'Z{travel_z}\n'
+
+        if curr_path.z_hop:
+            txt += f'G0 Z{-curr_path.z_hop_distance}\n'
+        
+        if curr_path.retraction:
+            txt += f'G1 E{curr_path.unretraction_distance}\n'
+        
+        txt += f'G90\n'
+        self.gcode.write(txt)
+
+    def travel_to_first_point(self, first_path:Path) -> None:
+        """
+        Generates G-code instructions for traveling to the first point of the first path in the full object.
+
+        Args:
+            first_path (Path): The first path in the full object.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
+        txt = ''
+        txt += f'G1 F{first_path.travel_speed} '
+        txt += f'X{first_path.x[0]+first_path.x_origin} '
+        txt += f'Y{first_path.y[0]+first_path.y_origin} '
+        txt += f'Z{first_path.z[0]}\n'
+        self.gcode.write(txt)
+
+    def set_initial_settings(self) -> str:
         """
         Generates G-code commands to set the initial printer settings, such as bed and nozzle temperature, extrusion mode,
         and fan speed, based on the values defined in the `print_settings` module.
@@ -106,8 +186,8 @@ class GCode:
         txt += f'M190 S{print_settings.BED_TEMPERATURE} \n'
         txt += f'M104 S{print_settings.NOZZLE_TEMPERATURE} \n'
         txt += f'M109 S{print_settings.NOZZLE_TEMPERATURE} \n'
-        txt += f'M83 ;relative extrusion mode \n'
         txt += f'M106 S{print_settings.FAN_SPEED} \n'
+        txt += f'M83 ;relative extrusion mode \n'
         self.gcode.write(txt)
     
     def apply_path_settings(self, path):

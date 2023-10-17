@@ -8,10 +8,10 @@ for layer in range(100):
     x = 10 * np.cos(arg)
     y = 10 * np.sin(arg)
     z = np.full_like(x, (layer+1) * 0.2 - 0.1)
-    if layer<5:
-        wall = gc.Path(x, y, z, nozzle_temperature=200)
+    if layer<50:
+        wall = gc.Path(x, y, z, retraction = True)
     else:
-        wall = gc.Path(x, y, z)
+        wall = gc.Path(x, y, z, z_hop=True)
     
     full_object.append(wall)
 
