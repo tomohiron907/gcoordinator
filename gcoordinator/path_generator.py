@@ -1,3 +1,4 @@
+from typing import Any
 import numpy as np
 from gcoordinator.print_settings import *
 from gcoordinator.extrusion_calculator import extrusion_calculator
@@ -71,8 +72,15 @@ class Path:
         self.optional_settings = kwargs
         self.apply_optional_settings()
 
-        #self.extrusion = extrusion_calculator(self.coords)
         self.extrusion = extrusion_calculator(self)
+
+    def __setattr__(self, name, value):
+        # set attribute to self
+        super().__setattr__(name, value)
+
+        # if extrusion_multiplier is changed, recalculate extrusion
+        if name == 'extrusion_multiplier':
+            self.refresh_extrusion()
 
     def apply_default_settings(self):
         # apply json settings to the object
@@ -95,8 +103,36 @@ class Path:
         self.extrusion_multiplier  = EXTRUSION_MULTIPLIER
 
     def apply_optional_settings(self):
-        for key, value in self.optional_settings.items():
-            setattr(self, key, value)
+            """
+            Applies optional settings to the current instance of the Path class.
+
+            This method iterates over the optional_settings dictionary and sets each key-value pair as an attribute of the
+            current instance of the PathGenerator class.
+
+            Args:
+                None
+
+            Returns:
+                None
+            """
+            for key, value in self.optional_settings.items():
+                setattr(self, key, value)
+    
+    def refresh_extrusion(self):
+            """
+            Recalculates the extrusion value for the current path.
+
+            This method updates the `extrusion` attribute of the current `Path`
+            instance by calling the `extrusion_calculator` function with the current
+            instance as its argument.
+
+            Args:
+                None
+
+            Returns:
+                None
+            """
+            self.extrusion = extrusion_calculator(self)
 
 
 class PathList:

@@ -81,6 +81,7 @@ class GCode:
         self.travel_to_first_point(self.full_object[0])
         for i in range(len(self.full_object)):
             curr_path = self.full_object[i]
+            #curr_path.refresh_extrusion()
             self.apply_path_settings(curr_path)
             self.print_path(curr_path)
             if i < len(self.full_object)-1:
