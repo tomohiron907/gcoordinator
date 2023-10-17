@@ -133,13 +133,13 @@ class Transform:
         return path_list_instance
 
     @staticmethod
-    def offset(path, d):
+    def offset(path, offset_distance):
         """
-        Computes the offset polygon of a given path by moving each vertex along its normal vector by the distance d.
+        Computes the offset polygon of a given path by moving each vertex along its normal vector by the offset_distance.
 
         Args:
             path (Path): The path to offset.
-            d (float): The distance to offset the path by.
+            offset_distance (float): The distance to offset the path by.
 
         Returns:
             Path: The offset path.
@@ -190,7 +190,7 @@ class Transform:
                 n_dot_m = np.dot(n, m)
             phi = np.arccos(n_dot_m)
             theta = 2 * np.pi - phi - np.pi
-            l = d / np.sin(theta /2)
+            l = offset_distance / np.sin(theta /2)
 
             normal = n + m
             normal /= np.linalg.norm(normal)
@@ -200,5 +200,5 @@ class Transform:
             offset_point_y.append(offset_point[1])
             offset_point_z.append(polygon[i, 2])
         offset_path = Path(offset_point_x, offset_point_y, offset_point_z)
-        
+
         return offset_path
