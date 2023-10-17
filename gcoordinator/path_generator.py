@@ -152,6 +152,7 @@ class PathList:
     """
     def __init__(self, paths):
         self.paths = paths
+        self.index = 0 # index for __next__
         if len(paths) != 0:
             self.sort_paths()
 
@@ -175,6 +176,17 @@ class PathList:
                 setattr(path, name, value)
             else:
                 self.__dict__[name] = value
+    
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index < len(self.paths):
+            current_path = self.paths[self.index]
+            self.index += 1
+            return current_path
+        else:
+            raise StopIteration()
 
     def sort_paths(self):
         """

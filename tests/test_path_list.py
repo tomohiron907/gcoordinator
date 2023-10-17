@@ -13,8 +13,10 @@ for layer in range(100):
         wall = gc.Path(x, y, z)
         walls.append(wall)
     walls = gc.PathList(walls)
-    if layer > 50:
-        walls.z_hop = True
+
+    for wall in walls:
+        wall.z_hop = True
+
 
     full_object.append(walls)
 
