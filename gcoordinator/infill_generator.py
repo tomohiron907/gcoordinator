@@ -17,7 +17,7 @@ from gcoordinator.path_generator import Path, PathList
 
 
 
-def gyroid_infill(path, density=0.5, value=0):
+def gyroid_infill(path, infill_distance = 1, value=0):
     if isinstance(path, Path):
         path_list = PathList([path])
     elif isinstance(path, PathList):
@@ -47,10 +47,13 @@ def gyroid_infill(path, density=0.5, value=0):
     x = np.linspace(min_x, max_x, resolution_x)
     y = np.linspace(min_y, max_y, resolution_y)
     X, Y = np.meshgrid(x, y)
-    density = -9.9 * density + 10
     # Equation for the Gyroid surface
     theta = np.pi/4
-    equation = np.sin(X/density*np.cos(theta) + Y/density*np.sin(theta)) * np.cos(-X/density*np.sin(theta) + Y/density*np.cos(theta)) + np.sin(-X/density*np.sin(theta) + Y/density*np.cos(theta)) * np.cos(z_height/density) + np.sin(z_height/density) * np.cos(X/density*np.cos(theta) + Y/density*np.sin(theta))-value
+    p = np.pi*np.cos(theta)*np.sqrt(2)/infill_distance # Period of the gyroid surface
+    equation = np.sin((X *np.cos(theta) + Y *np.sin(theta))*p) * np.cos((-X *np.sin(theta) + Y *np.cos(theta))*p) \
+                + np.sin((-X *np.sin(theta) + Y *np.cos(theta))*p) * np.cos(z_height*p ) \
+                + np.sin(z_height*p ) * np.cos((X *np.cos(theta) + Y *np.sin(theta))*p)\
+                -value
     insides = []
     for path in path_list.paths:
         x_list = path.x
@@ -91,7 +94,7 @@ def gyroid_infill(path, density=0.5, value=0):
     return PathList(infill_path_list)
 
 
-def line_infill(path, density=0.5, angle=np.pi/4):
+def line_infill(path,infill_distance = 1, angle=np.pi/4):
     if isinstance(path, Path):
         path_list = PathList([path])
     elif isinstance(path, PathList):
@@ -112,9 +115,10 @@ def line_infill(path, density=0.5, angle=np.pi/4):
     x = np.linspace(min_x, max_x, 250)
     y = np.linspace(min_y, max_y, 250)
     X, Y = np.meshgrid(x, y)
-    density = -9.9 * density + 10
+
     # Equation for the Gyroid surface
-    equation = np.sin(X/density + Y/density*np.tan(angle))
+    equation = np.sin((X*np.tan(angle) - Y)*np.pi*np.cos(angle)/infill_distance)
+    
     insides = []
     for path in path_list.paths:
         x_list = path.x
