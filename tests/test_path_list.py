@@ -16,8 +16,6 @@ for layer in range(100):
 
     for wall in walls:
         wall.z_hop = True
-
-
     full_object.append(walls)
 
 gc.show(full_object)
