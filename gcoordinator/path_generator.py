@@ -63,6 +63,7 @@ class Path:
         self.y = np.array(y)
         self.z = np.array(z)
         self.coords = np.column_stack((self.x, self.y, self.z))
+        self.center = np.array([np.mean(self.x), np.mean(self.y), np.mean(self.z)])
         self.start_coord = self.coords[0]
         self.end_coord = self.coords[-1]
 
@@ -77,7 +78,6 @@ class Path:
     def __setattr__(self, name, value):
         # set attribute to self
         super().__setattr__(name, value)
-
         # if extrusion_multiplier is changed, recalculate extrusion
         if name == 'extrusion_multiplier':
             self.refresh_extrusion()

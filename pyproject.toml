@@ -16,7 +16,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["numpy", "pyqtgraph==0.13.2", "pyopengl", "pyqt5"]
+dependencies = ["numpy", "pyqtgraph==0.13.2", "pyopengl", "pyqt5", "matplotlib"]
 
 
 

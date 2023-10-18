@@ -151,7 +151,11 @@ class GCode:
         if curr_path.retraction:
             txt += f'G1 E{curr_path.unretraction_distance}\n'
         
-        txt += f'G90\n'
+        # In some 3D printers, such as Bambulab, when absolute coordinates are specified with the G90 command, 
+        # the E value is also specified as an absolute amount at the same time, 
+        # so the M83 command is used to specify the extrusion amount as relative. 
+        # Will be rewritten to program using M82 absolute extrusion.
+        txt += f'G90 \nM83 \n'
         self.gcode.write(txt)
 
     def travel_to_first_point(self, first_path:Path) -> None:
