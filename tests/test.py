@@ -3,13 +3,14 @@ import numpy as np
 
 
 full_object = []
-for layer in range(100):
+for height in range(100):
     arg = np.linspace(0, 2*np.pi, 5)
     x = 10 * np.cos(arg)
     y = 10 * np.sin(arg)
-    z = np.full_like(x, (layer+1) * 0.2 - 0.1)
+    z = np.full_like(x, (height+1) * 0.2 - 0.1)
     wall = gc.Path(x, y, z)
-    wall = gc.Transform.move(wall, yaw = np.pi/4)
+    if height<50:
+        wall.extrusion_multiplier = 2
     
     full_object.append(wall)
 

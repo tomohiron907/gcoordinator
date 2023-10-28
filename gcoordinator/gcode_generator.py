@@ -3,7 +3,7 @@ import numpy as np
 from gcoordinator import print_settings 
 from gcoordinator.path_generator import Path
 from gcoordinator.path_generator import flatten_path_list
-
+from gcoordinator.utils.coords   import get_distances_between_coords
 
 class GCode:
     """
@@ -25,6 +25,10 @@ class GCode:
         travel_from_path_to_path(self, curr_path:Path, next_path:Path) -> None: Generates G-code instructions for traveling from the end of `curr_path` to the start of `next_path`.
         travel_to_first_point(self, first_path:Path) -> None: Generates G-code instructions for traveling to the first point of the first path in the full object.
         set_initial_settings(self) -> str: Generates G-code commands to set the initial printer settings.
+        apply_path_settings(self, path) -> None: Generate G-code commands to apply the settings of the given `path` object.
+        start_gcode(self, file_path) -> None: Sets the path to the start G-code file.
+        end_gcode(self, file_path) -> None: Sets the file path for the end G-code script.
+        extrusion_calculator(self, path) -> numpy.ndarray: Calculates the extrusion required for a given path.
 
     """
 
@@ -81,7 +85,6 @@ class GCode:
         self.travel_to_first_point(self.full_object[0])
         for i in range(len(self.full_object)):
             curr_path = self.full_object[i]
-            #curr_path.refresh_extrusion()
             self.apply_path_settings(curr_path)
             self.print_path(curr_path)
             if i < len(self.full_object)-1:
@@ -104,13 +107,14 @@ class GCode:
             None
         """
         txt = ''
+        extrusion = self.extrusion_calculator(path)
         for i in range(len(path.x)-1):
             # print the path. move to the next point with extrusion
             txt += f'G1 F{path.print_speed} '
             txt += f'X{path.x[i+1]+path.x_origin} '
             txt += f'Y{path.y[i+1]+path.y_origin} '
             txt += f'Z{path.z[i+1]} '
-            txt += f'E{path.extrusion[i]}\n'
+            txt += f'E{extrusion[i]}\n'
         self.gcode.write(txt)
 
     def travel_from_path_to_path(self, curr_path:Path, next_path:Path) -> None:
@@ -239,4 +243,30 @@ class GCode:
             None
         """
         self.end_gcode_path = file_path
+
+    def extrusion_calculator(self, path):
+        """
+        Calculates the extrusion required for a given path.
+
+        Args:
+            path (Path): The path for which to calculate the extrusion.
+
+        Returns:
+            numpy.ndarray: An array of extrusion values, one for each segment of the path.
+
+        Raises:
+            None.
+        """
+        coords = path.coords
+        distances = get_distances_between_coords(coords)
+        extrusion = np.zeros(len(distances))
+        for i, distance in enumerate(distances):
+            # Calculate the extrusion for each distance
+            # for more details, see formula 3 in the following paper:
+            # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7600913/
+            numerator    = 4 * path.nozzle_diameter * path.layer_height * distance
+            denominator  = np.pi * path.filament_diameter**2
+            extrusion[i] = numerator / denominator * path.extrusion_multiplier
+        
+        return extrusion
 
