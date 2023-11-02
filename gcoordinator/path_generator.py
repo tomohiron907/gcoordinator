@@ -68,10 +68,13 @@ class Path:
         self.x = np.array(x)
         self.y = np.array(y)
         self.z = np.array(z)
-        self.coords = np.column_stack((self.x, self.y, self.z))
+        self.coords = np.column_stack([self.x, self.y, self.z])
+        self.norms = [(0, 0, 1) for _ in range(len(self.coords))]
         self.center = np.array([np.mean(self.x), np.mean(self.y), np.mean(self.z)])
         self.start_coord = self.coords[0]
         self.end_coord = self.coords[-1]
+        self.before_gcode = None
+        self.after_gcode = None
 
         # apply default settings to the object
         self.apply_default_settings()
