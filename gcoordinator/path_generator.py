@@ -1,6 +1,6 @@
 from typing import Any
 import numpy as np
-from gcoordinator.print_settings import *
+from gcoordinator import print_settings
 
 class Path:
     """
@@ -83,24 +83,26 @@ class Path:
         self.apply_optional_settings()
 
     def apply_default_settings(self):
-        # apply json settings to the object
-        # json settings are defined in gcoordinator/print_settings.py 
-        self.nozzle_diameter       = NOZZLE_DIAMETER
-        self.filament_diameter     = FILAMENT_DIAMETER
-        self.layer_height          = LAYER_HEIGHT
-        self.print_speed           = PRINT_SPEED
-        self.travel_speed          = TRAVEL_SPEED
-        self.x_origin              = X_ORIGIN
-        self.y_origin              = Y_ORIGIN
-        self.fan_speed             = FAN_SPEED
-        self.nozzle_temperature    = NOZZLE_TEMPERATURE
-        self.bed_temperature       = BED_TEMPERATURE
-        self.retraction            = RETRACTION
-        self.retraction_distance   = RETRACTION_DISTANCE
-        self.unretraction_distance = UNRETRACTION_DISTANCE
-        self.z_hop                 = Z_HOP
-        self.z_hop_distance        = Z_HOP_DISTANCE
-        self.extrusion_multiplier  = EXTRUSION_MULTIPLIER
+        # When generating G-code, if the attribute of Path is None, 
+        # the default value will be used. 
+        # During the instantiation of the Path object, the default value is unknown, 
+        # so it is set to None.
+        self.nozzle_diameter       = None
+        self.filament_diameter     = None
+        self.layer_height          = None
+        self.print_speed           = None
+        self.travel_speed          = None
+        self.x_origin              = None
+        self.y_origin              = None
+        self.fan_speed             = None
+        self.nozzle_temperature    = None
+        self.bed_temperature       = None
+        self.retraction            = None
+        self.retraction_distance   = None
+        self.unretraction_distance = None
+        self.z_hop                 = None
+        self.z_hop_distance        = None
+        self.extrusion_multiplier  = None
 
     def apply_optional_settings(self):
         """

@@ -1,6 +1,7 @@
 import os
+import json
 import numpy as np
-from gcoordinator import print_settings 
+from gcoordinator.print_settings import get_default_settings
 from gcoordinator.path_generator import Path
 from gcoordinator.path_generator import flatten_path_list
 from gcoordinator.utils.coords   import get_distances_between_coords
@@ -28,11 +29,11 @@ class GCode:
         apply_path_settings(self, path) -> None: Generate G-code commands to apply the settings of the given `path` object.
         start_gcode(self, file_path) -> None: Sets the path to the start G-code file.
         end_gcode(self, file_path) -> None: Sets the file path for the end G-code script.
-        extrusion_calculator(self, path) -> numpy.ndarray: Calculates the extrusion required for a given path.
+        extrusion_calculator(self, path) -> numpy.ndarray: Calculates the extrusijnfgon required for a given path.
 
     """
 
-    def __init__(self, full_object: list) -> None:
+    def __init__(self, full_object: list, default_settings_path: str = None) -> None:
         """
         Initializes a new `GCode` object with the given `full_object`.
 
@@ -43,11 +44,22 @@ class GCode:
             None
         """
         self.full_object = flatten_path_list(full_object) # list of Path objects
-        self.gcode = None              # gcode file object
+
+        if default_settings_path is None:
+            # if default_settings_path is not specified, 
+            # use the default_settings.json file in the same directory as this file
+            self.settings_path = os.path.join(os.path.dirname(__file__), 'default_settings.json')
+        else:
+            # if default_settings_path is specified, use the specified file
+            self.settings_path = default_settings_path
+        self.default_settings = get_default_settings(self.settings_path)
+        self.apply_defaults_to_instances(self.full_object, self.default_settings)
+
+        self.gcode            = None              # gcode file object
         self.start_gcode_path = 'start_gcode.txt'
-        self.start_gcode_txt = ''
-        self.end_gcode_path = 'end_gcode.txt'
-        self.end_gcode_txt = ''
+        self.start_gcode_txt  = ''
+        self.end_gcode_path   = 'end_gcode.txt'
+        self.end_gcode_txt    = ''
 
     def save(self, file_path:str) -> None:
         """
@@ -191,11 +203,11 @@ class GCode:
             str: A string containing the G-code commands to set the initial printer settings.
         """
         txt = '\n'
-        txt += f'M140 S{print_settings.BED_TEMPERATURE} \n'
-        txt += f'M190 S{print_settings.BED_TEMPERATURE} \n'
-        txt += f'M104 S{print_settings.NOZZLE_TEMPERATURE} \n'
-        txt += f'M109 S{print_settings.NOZZLE_TEMPERATURE} \n'
-        txt += f'M106 S{print_settings.FAN_SPEED} \n'
+        txt += f'M140 S{self.default_settings["bed_temperature"]} \n'
+        txt += f'M190 S{self.default_settings["bed_temperature"]} \n'
+        txt += f'M104 S{self.default_settings["nozzle_temperature"]} \n'
+        txt += f'M109 S{self.default_settings["nozzle_temperature"]} \n'
+        txt += f'M106 S{self.default_settings["fan_speed"]} \n'
         txt += f'M83 ;relative extrusion mode \n'
         self.gcode.write(txt)
     
@@ -211,11 +223,11 @@ class GCode:
         :rtype: str
         """
         txt = ''
-        if path.nozzle_temperature != print_settings.NOZZLE_TEMPERATURE:
+        if path.nozzle_temperature != self.default_settings['nozzle_temperature']:
             txt += f'M104 S{path.nozzle_temperature} \n'
-        if path.bed_temperature != print_settings.BED_TEMPERATURE:
+        if path.bed_temperature != self.default_settings['bed_temperature']:
             txt += f'M140 S{path.bed_temperature} \n'
-        if path.fan_speed != print_settings.FAN_SPEED:
+        if path.fan_speed != self.default_settings['fan_speed']:
             txt += f'M106 S{path.fan_speed} \n'
         self.gcode.write(txt)
 
@@ -269,4 +281,11 @@ class GCode:
             extrusion[i] = numerator / denominator * path.extrusion_multiplier
         
         return extrusion
+    
+    
+    def apply_defaults_to_instances(self, full_object, default_settings):
+        for path in full_object:
+            for key, value in default_settings.items():
+                if getattr(path, key) is None:
+                    setattr(path, key, value)
 

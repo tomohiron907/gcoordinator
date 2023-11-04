@@ -9,7 +9,7 @@ for height in range(100):
     y = 10 * np.sin(arg)
     z = np.full_like(x, (height+1) * 0.2 - 0.1)
     wall = gc.Path(x, y, z)
-    if height<50:
+    if height<10:
         wall.extrusion_multiplier = 2
     
     full_object.append(wall)
