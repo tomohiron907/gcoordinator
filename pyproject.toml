@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gcoordinator"
-version = "0.0.9"
+version = "0.0.10"
 authors = [
   { name="Tomohiro TANIGUCHI", email="gcoordinator.3dp@gmail.com" },
 ]
