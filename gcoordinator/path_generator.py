@@ -1,6 +1,12 @@
 from typing import Any
+import json
 import numpy as np
 from gcoordinator import print_settings
+from gcoordinator.kinematics.kin_bed_rotate  import BedRotate
+from gcoordinator.kinematics.kin_cartesian   import Cartesian
+from gcoordinator.kinematics.kin_bed_tilt_bc import BedTiltBC
+from gcoordinator.kinematics.kin_nozzle_tilt import NozzleTilt
+
 
 class Path:
     """
@@ -64,10 +70,23 @@ class Path:
         Applies the optional settings to the object.
     
     """
-    def __init__(self, x, y, z, **kwargs):
+    def __init__(self, x, y, z, rot=None, tilt=None, **kwargs):
+        with open('/Users/taniguchitomohiro/Documents/gcoordinator/gcoordinator/machine_settings.json') as f:
+            machine_settings = json.load(f)
+        self.kinematics = machine_settings['Printer']['kinematics']
         self.x = np.array(x)
         self.y = np.array(y)
         self.z = np.array(z)
+
+        if tilt is None:
+            self.tilt = np.full_like(x, 0)
+        else:
+            self.tilt = np.array(tilt)
+        if rot is None:
+            self.rot  = np.full_like(x, 0)
+        else:
+            self.rot  = np.array(rot)
+        
         self.coords = np.column_stack([self.x, self.y, self.z])
         self.norms = [(0, 0, 1) for _ in range(len(self.coords))]
         self.center = np.array([np.mean(self.x), np.mean(self.y), np.mean(self.z)])
@@ -76,6 +95,15 @@ class Path:
         self.before_gcode = None
         self.after_gcode = None
 
+        # recalculate the coordinates and the norms according to the kinematics
+        if self.kinematics == 'Cartesian':
+            Cartesian.coords_arrange(self)
+        elif self.kinematics == 'BedRotate':
+            BedRotate.coords_arrange(self)
+        elif self.kinematics == 'BedTiltBC':
+            BedTiltBC.coords_arrange(self)
+        elif self.kinematics == 'NozzleTilt':
+            NozzleTilt.coords_arrange(self)
         # apply default settings to the object
         self.apply_default_settings()
         # apply optional settings to the object

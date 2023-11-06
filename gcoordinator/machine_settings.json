@@ -1,0 +1,35 @@
+{
+    "Kinematics": {
+        "nozzletilt": {
+            "tilt_code": "B",
+            "rot_code": "A",
+            "tilt_offset": 0.0,
+            "rot_offset": 0
+        },
+        "bedtilt": {
+            "tilt_code": "B",
+            "rot_code": "C",
+            "tilt_offset": 0.0,
+            "rot_offset": 0,
+            "div_distance": 0.5
+        },
+        "bedrotate": {
+            "rot_code": "C",
+            "rot_offset": 0.0,
+            "div_distance": 0.5
+        }
+    },
+    "Printer": {
+        "kinematics": "NozzleTilt",
+        "bed_size": {
+            "bed_size_x": 210,
+            "bed_size_y": 210,
+            "bed_size_z": 205
+        },
+        "origin": {
+            "origin_x": 105,
+            "origin_y": 105
+        }
+    }
+}
+
