@@ -1,9 +1,13 @@
 import os
 import numpy as np
-from gcoordinator.settings import get_default_settings
-from gcoordinator.path_generator import Path
-from gcoordinator.path_generator import flatten_path_list
-from gcoordinator.utils.coords   import get_distances_between_coords
+from gcoordinator.settings                   import get_default_settings
+from gcoordinator.path_generator             import Path
+from gcoordinator.path_generator             import flatten_path_list
+from gcoordinator.utils.coords               import get_distances_between_coords
+from gcoordinator.kinematics.kin_bed_rotate  import BedRotate
+from gcoordinator.kinematics.kin_cartesian   import Cartesian
+from gcoordinator.kinematics.kin_bed_tilt_bc import BedTiltBC
+from gcoordinator.kinematics.kin_nozzle_tilt import NozzleTilt
 
 class GCode:
     """
@@ -11,6 +15,8 @@ class GCode:
 
     Attributes:
         full_object (list): A list of `Path` objects representing the paths to be printed.
+        settings_path (str): The path to the settings pickle file.
+        default_settings (dict): A dictionary containing the default settings.
         gcode (file object): The file object for the generated G-code.
         start_gcode_path (str): The path to the file containing the start G-code.
         start_gcode_txt (str): The text of the start G-code.
@@ -28,8 +34,7 @@ class GCode:
         apply_path_settings(self, path) -> None: Generate G-code commands to apply the settings of the given `path` object.
         start_gcode(self, file_path) -> None: Sets the path to the start G-code file.
         end_gcode(self, file_path) -> None: Sets the file path for the end G-code script.
-        extrusion_calculator(self, path) -> numpy.ndarray: Calculates the extrusijnfgon required for a given path.
-
+        apply_defaults_to_instances(self, full_object, default_settings) -> None: Applies the default settings to the given `full_object`.
     """
 
     def __init__(self, full_object: list) -> None:
@@ -111,15 +116,23 @@ class GCode:
         Raises:
             None
         """
-        txt = ''
-        extrusion = self.extrusion_calculator(path)
-        for i in range(len(path.x)-1):
-            # print the path. move to the next point with extrusion
-            txt += f'G1 F{path.print_speed} '
-            txt += f'X{path.x[i+1]+path.x_origin} '
-            txt += f'Y{path.y[i+1]+path.y_origin} '
-            txt += f'Z{path.z[i+1]} '
-            txt += f'E{extrusion[i]}\n'
+        
+        if path.kinematics == 'Cartesian':
+            txt = Cartesian.generate_gcode_of_path(path)
+
+        elif path.kinematics == 'NozzleTilt':
+            NozzleTilt.load_settings()
+            txt = NozzleTilt.generate_gcode_of_path(path)
+        
+        elif path.kinematics == 'BedTiltBC':
+            BedTiltBC.load_settings()
+            txt = BedTiltBC.generate_gcode_of_path(path)
+        
+        elif path.kinematics == 'BedRotate':
+            BedRotate.load_settings()
+            txt = BedRotate.generate_gcode_of_path(path)
+            
+
         self.gcode.write(txt)
 
     def travel_from_path_to_path(self, curr_path:Path, next_path:Path) -> None:
@@ -227,7 +240,7 @@ class GCode:
     def start_gcode(self, file_path):
         """
         Sets the path to the start G-code file.
-
+    
         Args:
             file_path (str): The path to the start G-code file.
 
@@ -277,8 +290,18 @@ class GCode:
     
     
     def apply_defaults_to_instances(self, full_object, default_settings):
-        for path in full_object:
-            for key, value in default_settings.items():
-                if getattr(path, key) is None:
-                    setattr(path, key, value)
+            """
+            Applies default settings to instances of a given object.
+
+            Args:
+                full_object (list): A list of instances of the object to apply default settings to.
+                default_settings (dict): A dictionary of default settings to apply to the instances.
+
+            Returns:
+                None
+            """
+            for path in full_object:
+                for key, value in default_settings.items():
+                    if getattr(path, key) is None:
+                        setattr(path, key, value)
 

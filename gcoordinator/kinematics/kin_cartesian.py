@@ -1,26 +1,40 @@
 import numpy as np
 import math
-from gcoordinator.kinematics.kin_base import *
+from gcoordinator.kinematics.kin_base import Kinematics
 
 class Cartesian(Kinematics):
-    def __init__(self, print_setting):
-        self.axes_count = 3
-        
-    def e_calc(self, path):
-        path.Eval = np.array([0])
-        for i in range(len(path.x)-1):
-            Dis = math.sqrt((path.x[i+1]-path.x[i])**2 + (path.y[i+1]-path.y[i])**2 + (path.z[i+1]-path.z[i])**2)
-            AREA=(print_settings.nozzle_diameter-print_settings.layer_height)*(print_settings.layer_height)+(print_settings.layer_height/2)**2*np.pi
-            path.Eval = np.append(path.Eval, 4*AREA*Dis/(np.pi*print_settings.filament_diameter**2))
-    
+    """
+    A class representing Cartesian kinematics.
+
+    Attributes:
+        None
+
+    Methods:
+        generate_gcode_of_path(path): Generates G-code for a given path.
+
+        -- inherited from Kinematics: 
+        calculate_extrusion(path): Calculates the extrusion required for a given path.
+        update_attrs(path): Rearranges the coordinates of a given path and calculates the corresponding normals.
+
+    """
     @staticmethod
-    def coords_arrange(path):
-        path.coords = np.column_stack([path.x, path.y, path.z])
-        path.center = np.array([np.mean(path.x), np.mean(path.y), np.mean(path.z)])
-        path.start_coord = path.coords[0]
-        path.end_coord = path.coords[-1]
-        norms = []
-        for i in range(len(path.coords)):
-            norms.append((0, 0, 1))
-        path.norms = norms
-        return path.coords, path.norms
+    def generate_gcode_of_path(path) -> str:
+        """
+        Generates G-code for a given path.
+
+        Args:
+            path (Path): A Path object representing the path to generate G-code for.
+
+        Returns:
+            str: A string containing the G-code for the given path.
+        """
+        extrusion = Cartesian.calculate_extrusion(path)
+        txt = ''
+        for i in range(len(path.x)-1):
+            # print the path. move to the next point with extrusion
+            txt += f'G1 F{path.print_speed} '
+            txt += f'X{path.x[i+1]+path.x_origin:.5f} '
+            txt += f'Y{path.y[i+1]+path.y_origin:.5f} '
+            txt += f'Z{path.z[i+1]:.5f} '
+            txt += f'E{extrusion[i]:.5f}\n'
+        return txt

@@ -1,41 +1,59 @@
-import numpy as np
+import os
 import math
-from gcoordinator.kinematics.kin_base import *
-PRE_MOVE_DIV = 10
+import pickle
+import numpy as np
+from gcoordinator.kinematics.kin_base import Kinematics
+
+
 
 class BedTiltBC(Kinematics):
-    def __init__(self, machine_settings):
-        self.axes_count = 5
-        self.tilt_code = machine_settings['Kinematics']['bedtilt.tilt_code']
-        self.rot_code = machine_settings['Kinematics']['bedtilt.rot_code']
-        self.tilt_offset = float(machine_settings['Kinematics']['bedtilt.tilt_offset'])
-        self.rot_offset = float(machine_settings['Kinematics']['bedtilt.rot_offset'])
-        self.div_distance = float(machine_settings['Kinematics']['bedtilt.div_distance'])
+    """
+    A class representing Bed Tilt kinematics. B is the rotation around the y-axis, C is the rotation around the z-axis.
+
+    Attributes:
+        None
+
+    Methods:
+        load_settings(): Loads the nozzle tilt and rotation settings from a pickle file and sets them as class attributes.
+        generate_gcode_of_path(path): Generates G-code for a given path.
+        update_attrs(path): Rearranges the coordinates of a given path and calculates the corresponding normals.
+        calculate_extrusion(path): Calculates the extrusion required for a given path.
         
-    
+    """
+    PRE_MOVE_DIV = 10
+
+    @classmethod
+    def load_settings(cls):
+        """
+        Loads the nozzle tilt and rotation settings from a pickle file and sets them as class attributes.
+
+        Returns:
+            None
+        """
+        settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'settings/settings.pickle')
+        with open(settings_path, 'rb') as f:
+            settings = pickle.load(f)
+        cls.tilt_code   = settings['Kinematics']['bedtilt']['tilt_code']
+        cls.rot_code    = settings['Kinematics']['bedtilt']['rot_code']
+        cls.tilt_offset = settings['Kinematics']['bedtilt']['tilt_offset']
+        cls.rot_offset  = settings['Kinematics']['bedtilt']['rot_offset']
+        cls.div_distance = settings['Kinematics']['bedtilt']['div_distance']
         
-    def e_calc(self, path):
-        path.Eval = np.array([0])
-        px = path.coords[0][0]
-        py = path.coords[0][1]
-        pz = path.coords[0][2]
-        idx = 0
-        for i in range(len(path.x[1:])):
-            Dis = 0.0
-            for j in range(path.sub_segment_cnt[i]):
-                idx += 1
-                nx = path.coords[idx][0]
-                ny = path.coords[idx][1]
-                nz = path.coords[idx][2]
-                Dis += math.sqrt((nx-px)**2 + (ny-py)**2 + (nz-pz)**2)
-                px = nx
-                py = ny
-                pz = nz
-            AREA=(print_settings.nozzle_diameter-print_settings.layer_height)*(print_settings.layer_height)+(print_settings.layer_height/2)**2*np.pi
-            path.Eval = np.append(path.Eval, 4*AREA*Dis/(np.pi*print_settings.filament_diameter**2))            
-    
     @staticmethod
-    def coords_arrange(path):
+    def update_attrs(path) -> None:
+        """
+        Rearranges the coordinates of a given path and calculates the corresponding normals.
+
+        Args:
+            path (Path): The path to be rearranged.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
+        BedTiltBC.load_settings()
         coords = []
         norms = []
         path.sub_segment_cnt = []
@@ -62,12 +80,12 @@ class BedTiltBC(Kinematics):
         for (nx,ny,nz,nrot,ntilt) in zip(path.x[1:],path.y[1:],path.z[1:],path.rot[1:],path.tilt[1:]):
             # pre calc
             Dis = 0.0
-            for i in range(PRE_MOVE_DIV):
-                bx1 = (nx - px) * (i+1) / PRE_MOVE_DIV + px
-                by1 = (ny - py) * (i+1) / PRE_MOVE_DIV + py
-                bz1 = (nz - pz) * (i+1) / PRE_MOVE_DIV + pz
-                brot = (nrot - prot) * (i+1) / PRE_MOVE_DIV + prot
-                btilt = (ntilt - ptilt) * (i+1) / PRE_MOVE_DIV + ptilt
+            for i in range(BedTiltBC.PRE_MOVE_DIV):
+                bx1 = (nx - px) * (i+1) / BedTiltBC.PRE_MOVE_DIV + px
+                by1 = (ny - py) * (i+1) / BedTiltBC.PRE_MOVE_DIV + py
+                bz1 = (nz - pz) * (i+1) / BedTiltBC.PRE_MOVE_DIV + pz
+                brot = (nrot - prot) * (i+1) / BedTiltBC.PRE_MOVE_DIV + prot
+                btilt = (ntilt - ptilt) * (i+1) / BedTiltBC.PRE_MOVE_DIV + ptilt
                 # calc pos
                 bx2 = bx1 * math.cos(btilt) - bz1 * math.sin(btilt)
                 by2 = by1
@@ -84,7 +102,7 @@ class BedTiltBC(Kinematics):
                 pprot = brot
                 pptilt = btilt
             # calc coords
-            div = (int)(np.ceil(Dis / self.div_distance))
+            div = (int)(np.ceil(Dis / BedTiltBC.div_distance))
             path.sub_segment_cnt.append(div)
             for i in range(div):
                 bx1 = (nx - px) * (i+1) / div + px
@@ -126,4 +144,63 @@ class BedTiltBC(Kinematics):
         path.center = (center_x, center_y, center_z)
         path.start_coord = path.coords[0]
         path.end_coord = path.coords[-1]
-        return path.coords, path.norms
+    
+    @staticmethod
+    def calculate_extrusion(path) -> np.ndarray:
+        """
+        Calculates the extrusion required for a given path.
+
+        Args:
+            path (Path): The path for which to calculate the extrusion.
+
+        Returns:
+            numpy.ndarray: An array of extrusion values, one for each segment of the path.
+
+        Raises:
+            None.
+        """
+        extrusion = np.array([])
+        px = path.coords[0][0]
+        py = path.coords[0][1]
+        pz = path.coords[0][2]
+        idx = 0
+        for i in range(len(path.x[1:])):
+            Dis = 0.0
+            for j in range(path.sub_segment_cnt[i]):
+                idx += 1
+                nx = path.coords[idx][0]
+                ny = path.coords[idx][1]
+                nz = path.coords[idx][2]
+                Dis += math.sqrt((nx-px)**2 + (ny-py)**2 + (nz-pz)**2)
+                px = nx
+                py = ny
+                pz = nz
+            AREA=(path.nozzle_diameter-path.layer_height)*(path.layer_height)+(path.layer_height/2)**2*np.pi
+            extrusion = np.append(extrusion, 4*AREA*Dis/(np.pi*path.filament_diameter**2))
+
+        return extrusion
+    
+    @staticmethod
+    def generate_gcode_of_path(path) -> str:
+        """
+        Generates G-code for a given path.
+
+        Args:
+            path: A Path object representing the path to generate G-code for.
+
+        Returns:
+            A string containing the G-code for the given path.
+        """
+        extrusion = BedTiltBC.calculate_extrusion(path)
+        txt = ''
+        for i in range(len(path.x)-1):
+            # print the path. move to the next point with extrusion
+            txt += f'G1 F{path.print_speed} '
+            txt += f'X{path.x[i+1]+path.x_origin:.5f} '
+            txt += f'Y{path.y[i+1]+path.y_origin:.5f} '
+            txt += f'Z{path.z[i+1]:.5f} '
+            txt += f'{BedTiltBC.tilt_code}{path.tilt[i+1]+BedTiltBC.tilt_offset:.5f} '
+            txt += f'{BedTiltBC.rot_code}{path.rot[i+1]+BedTiltBC.rot_offset:.5f} '
+            txt += f'E{extrusion[i]:.5f}\n'
+        return txt
+    

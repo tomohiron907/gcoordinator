@@ -4,7 +4,7 @@ import gcoordinator as gc
 
 LAYER =100
 nozzle = 0.4
-gc.load_settings("PATH TO YOUR MACHINE SETTINGS")
+gc.load_settings("/Users/taniguchitomohiro/Documents/settings.json")
 
 full_object=[]
 for height in range(LAYER):
@@ -34,4 +34,7 @@ for height in range(LAYER):
 
 gc.show(full_object)
 
-
+gcode = gc.GCode(full_object)
+gcode.start_gcode("/Users/taniguchitomohiro/Documents/default_gcode/start_gcode.txt")
+gcode.end_gcode("/Users/taniguchitomohiro/Documents/default_gcode/end_gcode.txt")
+gcode.save('test.gcode')

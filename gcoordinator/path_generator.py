@@ -21,8 +21,17 @@ class Path:
         The y-coordinates of the path points.
     z : numpy.ndarray
         The z-coordinates of the path points.
+    rot : numpy.ndarray
+        The rotation at each point in the path, in radians.
+    tilt : numpy.ndarray
+        The tilt at each point in the path, in radians.
+    kinematics : str
+        The kinematics of the printer. One of 'Cartesian', 'BedRotate', 'BedTiltBC', or 'NozzleTilt'.
+    
     coords : numpy.ndarray
         A 2D array of shape (n_points, 3) containing the (x, y, z) coordinates of the path points.
+    norms : numpy.ndarray
+        A 2D array of shape (n_points, 3) containing the (x, y, z) components of the normals at each point in the path.
     center : numpy.ndarray
         The center of the path, calculated as the mean of the path points.
     start_coord : numpy.ndarray
@@ -88,9 +97,9 @@ class Path:
             self.rot  = np.full_like(x, 0)
         else:
             self.rot  = np.array(rot)
-        
+            
         self.coords = np.column_stack([self.x, self.y, self.z])
-        self.norms = [(0, 0, 1) for _ in range(len(self.coords))]
+        self.norms = np.array([(0, 0, 1) for _ in range(len(self.coords))])
         self.center = np.array([np.mean(self.x), np.mean(self.y), np.mean(self.z)])
         self.start_coord = self.coords[0]
         self.end_coord = self.coords[-1]
@@ -99,13 +108,13 @@ class Path:
 
         # recalculate the coordinates and the norms according to the kinematics
         if self.kinematics == 'Cartesian':
-            Cartesian.coords_arrange(self)
+            Cartesian.update_attrs(self)
         elif self.kinematics == 'BedRotate':
-            BedRotate.coords_arrange(self)
+            BedRotate.update_attrs(self)
         elif self.kinematics == 'BedTiltBC':
-            BedTiltBC.coords_arrange(self)
+            BedTiltBC.update_attrs(self)
         elif self.kinematics == 'NozzleTilt':
-            NozzleTilt.coords_arrange(self)
+            NozzleTilt.update_attrs(self)
         # apply default settings to the object
         self.apply_default_settings()
         # apply optional settings to the object
