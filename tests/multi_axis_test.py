@@ -4,7 +4,7 @@ import gcoordinator as gc
 
 LAYER =100
 nozzle = 0.4
-#gc.set_kinematics('nozzle_tile_BC')
+gc.load_settings("PATH TO YOUR MACHINE SETTINGS")
 
 full_object=[]
 for height in range(LAYER):

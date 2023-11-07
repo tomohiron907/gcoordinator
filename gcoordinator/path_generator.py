@@ -1,7 +1,8 @@
+import os
+import pickle
 from typing import Any
-import json
 import numpy as np
-from gcoordinator import print_settings
+from gcoordinator import settings
 from gcoordinator.kinematics.kin_bed_rotate  import BedRotate
 from gcoordinator.kinematics.kin_cartesian   import Cartesian
 from gcoordinator.kinematics.kin_bed_tilt_bc import BedTiltBC
@@ -71,9 +72,10 @@ class Path:
     
     """
     def __init__(self, x, y, z, rot=None, tilt=None, **kwargs):
-        with open('/Users/taniguchitomohiro/Documents/gcoordinator/gcoordinator/machine_settings.json') as f:
-            machine_settings = json.load(f)
-        self.kinematics = machine_settings['Printer']['kinematics']
+        self.settings_path = os.path.join(os.path.dirname(__file__), 'settings/settings.pickle')
+        with open(self.settings_path, 'rb') as f:
+            self.settings = pickle.load(f)
+        self.kinematics = self.settings['Hardware']['kinematics']
         self.x = np.array(x)
         self.y = np.array(y)
         self.z = np.array(z)

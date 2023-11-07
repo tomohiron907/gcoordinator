@@ -1,6 +1,5 @@
 import numpy as np
 import math
-#import print_settings
 from gcoordinator.kinematics.kin_base import *
 PRE_MOVE_DIV = 10
 

@@ -1,7 +1,6 @@
 import os
-import json
 import numpy as np
-from gcoordinator.print_settings import get_default_settings
+from gcoordinator.settings import get_default_settings
 from gcoordinator.path_generator import Path
 from gcoordinator.path_generator import flatten_path_list
 from gcoordinator.utils.coords   import get_distances_between_coords
@@ -33,7 +32,7 @@ class GCode:
 
     """
 
-    def __init__(self, full_object: list, default_settings_path: str = None) -> None:
+    def __init__(self, full_object: list) -> None:
         """
         Initializes a new `GCode` object with the given `full_object`.
 
@@ -44,14 +43,8 @@ class GCode:
             None
         """
         self.full_object = flatten_path_list(full_object) # list of Path objects
-
-        if default_settings_path is None:
-            # if default_settings_path is not specified, 
-            # use the default_settings.json file in the same directory as this file
-            self.settings_path = os.path.join(os.path.dirname(__file__), 'default_settings.json')
-        else:
-            # if default_settings_path is specified, use the specified file
-            self.settings_path = default_settings_path
+        
+        self.settings_path = os.path.join(os.path.dirname(__file__), 'settings/settings.pickle')
         self.default_settings = get_default_settings(self.settings_path)
         self.apply_defaults_to_instances(self.full_object, self.default_settings)
 

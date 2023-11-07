@@ -1,7 +1,7 @@
 import gcoordinator as gc
 import numpy as np
 
-
+gc.load_settings('/Users/taniguchitomohiro/Documents/settings.json')
 full_object = []
 for height in range(100):
     arg = np.linspace(0, 2*np.pi, 5)

@@ -1,6 +1,5 @@
 import numpy as np
 import math
-#import print_settings
 
 class Kinematics:
     def __init__(self, print_setting):
