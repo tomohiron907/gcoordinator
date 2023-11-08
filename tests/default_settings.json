@@ -42,20 +42,20 @@
         }
     },
     "Kinematics": {
-        "nozzletilt": {
+        "NozzleTilt": {
             "tilt_code": "B",
             "rot_code": "A",
             "tilt_offset": 0.0,
             "rot_offset": 0
         },
-        "bedtilt": {
+        "BedTiltBC": {
             "tilt_code": "B",
             "rot_code": "C",
             "tilt_offset": 0.0,
             "rot_offset": 0,
             "div_distance": 0.5
         },
-        "bedrotate": {
+        "BedRotate": {
             "rot_code": "C",
             "rot_offset": 0.0,
             "div_distance": 0.5

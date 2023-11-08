@@ -32,9 +32,9 @@ class BedRotate(Kinematics):
         settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'settings/settings.pickle')
         with open(settings_path, 'rb') as f:
             settings = pickle.load(f)
-        cls.rot_code     = settings['Kinematics']['bedrotate']['rot_code']
-        cls.rot_offset   = settings['Kinematics']['bedrotate']['rot_offset']
-        cls.div_distance = settings['Kinematics']['bedrotate']['div_distance']
+        cls.rot_code     = settings['Kinematics']['BedRotate']['rot_code']
+        cls.rot_offset   = settings['Kinematics']['BedRotate']['rot_offset']
+        cls.div_distance = settings['Kinematics']['BedRotate']['div_distance']
 
     @staticmethod
     def update_attrs(path) -> None:

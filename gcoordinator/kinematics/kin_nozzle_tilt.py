@@ -32,10 +32,10 @@ class NozzleTilt(Kinematics):
         settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'settings/settings.pickle')
         with open(settings_path, 'rb') as f:
             settings = pickle.load(f)
-        cls.tilt_code   = settings['Kinematics']['nozzletilt']['tilt_code']
-        cls.rot_code    = settings['Kinematics']['nozzletilt']['rot_code']
-        cls.tilt_offset = settings['Kinematics']['nozzletilt']['tilt_offset']
-        cls.rot_offset  = settings['Kinematics']['nozzletilt']['rot_offset']
+        cls.tilt_code   = settings['Kinematics']['NozzleTilt']['tilt_code']
+        cls.rot_code    = settings['Kinematics']['NozzleTilt']['rot_code']
+        cls.tilt_offset = settings['Kinematics']['NozzleTilt']['tilt_offset']
+        cls.rot_offset  = settings['Kinematics']['NozzleTilt']['rot_offset']
         
     @staticmethod
     def update_attrs(path) -> None:

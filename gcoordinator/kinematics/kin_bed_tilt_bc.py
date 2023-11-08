@@ -33,11 +33,11 @@ class BedTiltBC(Kinematics):
         settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'settings/settings.pickle')
         with open(settings_path, 'rb') as f:
             settings = pickle.load(f)
-        cls.tilt_code   = settings['Kinematics']['bedtilt']['tilt_code']
-        cls.rot_code    = settings['Kinematics']['bedtilt']['rot_code']
-        cls.tilt_offset = settings['Kinematics']['bedtilt']['tilt_offset']
-        cls.rot_offset  = settings['Kinematics']['bedtilt']['rot_offset']
-        cls.div_distance = settings['Kinematics']['bedtilt']['div_distance']
+        cls.tilt_code   = settings['Kinematics']['BedTiltBC']['tilt_code']
+        cls.rot_code    = settings['Kinematics']['BedTiltBC']['rot_code']
+        cls.tilt_offset = settings['Kinematics']['BedTiltBC']['tilt_offset']
+        cls.rot_offset  = settings['Kinematics']['BedTiltBC']['rot_offset']
+        cls.div_distance =settings['Kinematics']['BedTiltBC']['div_distance']
         
     @staticmethod
     def update_attrs(path) -> None:
