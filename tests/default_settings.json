@@ -34,7 +34,7 @@
         }
     },
     "Hardware": {
-        "kinematics": "NozzleTilt",
+        "kinematics": "Cartesian",
         "bed_size": {
             "bed_size_x": 210,
             "bed_size_y": 210,
