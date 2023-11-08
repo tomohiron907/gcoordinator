@@ -30,8 +30,7 @@
             "z_hop_distance": 3
         },
         "extrusion_option": {
-            "extrusion_multiplier": 1.0,
-            "absolute_extrusion": false
+            "extrusion_multiplier": 1.0
         }
     },
     "Hardware": {
@@ -40,10 +39,6 @@
             "bed_size_x": 210,
             "bed_size_y": 210,
             "bed_size_z": 205
-        },
-        "origin": {
-            "origin_x": 105,
-            "origin_y": 105
         }
     },
     "Kinematics": {
