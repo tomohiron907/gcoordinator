@@ -54,7 +54,9 @@ def get_default_settings(pickle_path):
 
 def load_settings(config_path):
     # load the default settings from the json file
-    
+    # when this function is called, the default settings are saved to a pickle file
+    # the pickle file is loaded when the GCode class is instantiated
+    # after generating the Gcode, the pickle file is reset to the default settings
     try:
         with open(config_path, 'r') as config_file:
             settings_dict = json.load(config_file)

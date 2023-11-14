@@ -8,8 +8,8 @@
             "layer_height": 0.2
         },
         "speed": {
-            "print_speed": 15000,
-            "travel_speed": 25000
+            "print_speed": 5000,
+            "travel_speed": 10000
         },
         "origin":{
             "x": 100,

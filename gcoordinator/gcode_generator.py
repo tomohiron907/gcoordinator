@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from gcoordinator.settings                   import get_default_settings
+from gcoordinator.settings                   import get_default_settings, load_settings
 from gcoordinator.path_generator             import Path
 from gcoordinator.path_generator             import flatten_path_list
 from gcoordinator.utils.coords               import get_distances_between_coords
@@ -49,6 +49,7 @@ class GCode:
         """
         self.full_object = flatten_path_list(full_object) # list of Path objects
         
+        # load the settings from the json file
         self.settings_path = os.path.join(os.path.dirname(__file__), 'settings/settings.pickle')
         self.default_settings = get_default_settings(self.settings_path)
         self.apply_defaults_to_instances(self.full_object, self.default_settings)
@@ -58,6 +59,10 @@ class GCode:
         self.start_gcode_txt  = ''
         self.end_gcode_path   = 'end_gcode.txt'
         self.end_gcode_txt    = ''
+
+        # after generating the G-code, the default settings are reset to the values in the settings file
+        self.base_settings_path = os.path.join(os.path.dirname(__file__), 'settings/base_settings.json')
+        load_settings(self.base_settings_path)
 
     def save(self, file_path:str) -> None:
         """
