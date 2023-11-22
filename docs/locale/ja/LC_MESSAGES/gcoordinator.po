@@ -1,0 +1,1099 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Tomohiro TANIGUCHI
+# This file is distributed under the same license as the gcoordinator
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gcoordinator \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-22 12:04+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../gcoordinator.rst:2
+msgid "gcoordinator package"
+msgstr ""
+
+#: ../../gcoordinator.rst:5
+msgid "Submodules"
+msgstr ""
+
+#: ../../gcoordinator.rst:8
+msgid "gcoordinator.gcode\\_generator module"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:1 gcoordinator.path_generator.Path:1
+#: gcoordinator.path_generator.PathList:1
+#: gcoordinator.path_transformer.Transform:1 gcoordinator.plot_3d.Plot3D:1 of
+msgid "Bases: :py:class:`object`"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:1 of
+msgid "Represents a G-code generator for 3D printing."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:5 of
+msgid "A list of `Path` objects representing the paths to be printed."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode gcoordinator.path_generator.PathList
+#: gcoordinator.plot_3d.Plot3D of
+msgid "type"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:7 gcoordinator.path_generator.PathList:8
+#: of
+msgid "list"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:11 of
+msgid "The path to the settings pickle file."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:13 gcoordinator.gcode_generator.GCode:31
+#: gcoordinator.gcode_generator.GCode:37 gcoordinator.gcode_generator.GCode:43
+#: gcoordinator.gcode_generator.GCode:49 gcoordinator.path_generator.Path:-1 of
+msgid "str"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:17 of
+msgid "A dictionary containing the default settings."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:19 of
+msgid "dict"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:23 of
+msgid "The file object for the generated G-code."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:25 of
+msgid "file object"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:29 of
+msgid "The path to the file containing the start G-code."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:35 of
+msgid "The text of the start G-code."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:41 of
+msgid "The path to the file containing the end G-code."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:47 of
+msgid "The text of the end G-code."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:53 of
+msgid ""
+"list) -> None: Initializes a new `GCode` object with the given "
+"`full_object`."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:57 of
+msgid ""
+"str) -> None: Saves the generated G-code to a file at the specified file "
+"path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:61 of
+msgid "Generates G-code instructions for the full object."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:65 of
+msgid "Path) -> None: Generates G-code instructions for printing a given path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:69 of
+msgid ""
+"Path, next_path:Path) -> None: Generates G-code instructions for "
+"traveling from the end of `curr_path` to the start of `next_path`."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:73 of
+msgid ""
+"Path) -> None: Generates G-code instructions for traveling to the first "
+"point of the first path in the full object."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:77 of
+msgid "Generates G-code commands to set the initial printer settings."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:81 of
+msgid "Generate G-code commands to apply the settings of the given `path` object."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:85
+#: gcoordinator.gcode_generator.GCode.start_gcode:1 of
+msgid "Sets the path to the start G-code file."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:89
+#: gcoordinator.gcode_generator.GCode.end_gcode:1 of
+msgid "Sets the file path for the end G-code script."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode:93 of
+msgid "Applies the default settings to the given `full_object`."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_defaults_to_instances:1 of
+msgid "Applies default settings to instances of a given object."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_defaults_to_instances
+#: gcoordinator.gcode_generator.GCode.apply_path_settings
+#: gcoordinator.gcode_generator.GCode.end_gcode
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator
+#: gcoordinator.gcode_generator.GCode.print_path
+#: gcoordinator.gcode_generator.GCode.save
+#: gcoordinator.gcode_generator.GCode.start_gcode
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path
+#: gcoordinator.gcode_generator.GCode.travel_to_first_point
+#: gcoordinator.gui_export.gui_export
+#: gcoordinator.infill_generator.gyroid_infill
+#: gcoordinator.infill_generator.line_infill
+#: gcoordinator.path_generator.Path.apply_optional_settings
+#: gcoordinator.path_generator.PathList.sort_paths
+#: gcoordinator.path_transformer.Transform.move
+#: gcoordinator.path_transformer.Transform.move_path
+#: gcoordinator.path_transformer.Transform.move_pathlist
+#: gcoordinator.path_transformer.Transform.offset
+#: gcoordinator.path_transformer.Transform.rotate_xy
+#: gcoordinator.path_transformer.Transform.stretch
+#: gcoordinator.plot_3d.Plot3D.show gcoordinator.plot_3d.show of
+msgid "Parameters"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_defaults_to_instances:3 of
+msgid "A list of instances of the object to apply default settings to."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_defaults_to_instances:5 of
+msgid "A dictionary of default settings to apply to the instances."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_defaults_to_instances
+#: gcoordinator.gcode_generator.GCode.apply_path_settings
+#: gcoordinator.gcode_generator.GCode.end_gcode
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator
+#: gcoordinator.gcode_generator.GCode.generate_gcode
+#: gcoordinator.gcode_generator.GCode.print_path
+#: gcoordinator.gcode_generator.GCode.save
+#: gcoordinator.gcode_generator.GCode.set_initial_settings
+#: gcoordinator.gcode_generator.GCode.start_gcode
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path
+#: gcoordinator.gcode_generator.GCode.travel_to_first_point
+#: gcoordinator.gui_export.gui_export
+#: gcoordinator.infill_generator.gyroid_infill
+#: gcoordinator.infill_generator.line_infill
+#: gcoordinator.path_generator.Path.apply_optional_settings
+#: gcoordinator.path_generator.PathList.sort_paths
+#: gcoordinator.path_transformer.Transform.move
+#: gcoordinator.path_transformer.Transform.move_path
+#: gcoordinator.path_transformer.Transform.move_pathlist
+#: gcoordinator.path_transformer.Transform.offset
+#: gcoordinator.path_transformer.Transform.rotate_xy
+#: gcoordinator.path_transformer.Transform.stretch
+#: gcoordinator.plot_3d.Plot3D.generate_window gcoordinator.plot_3d.show of
+msgid "Returns"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_defaults_to_instances:8
+#: gcoordinator.gcode_generator.GCode.end_gcode:6
+#: gcoordinator.gcode_generator.GCode.generate_gcode:4
+#: gcoordinator.gcode_generator.GCode.print_path:6
+#: gcoordinator.gcode_generator.GCode.start_gcode:6
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path:8
+#: gcoordinator.gcode_generator.GCode.travel_to_first_point:6
+#: gcoordinator.gui_export.gui_export:8
+#: gcoordinator.path_generator.Path.apply_optional_settings:8
+#: gcoordinator.path_generator.PathList.sort_paths:5
+#: gcoordinator.plot_3d.Plot3D.generate_window:3 of
+msgid "None"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_path_settings:1 of
+msgid ""
+"Generate G-code commands to apply the settings of the given `path` "
+"object. The method returns a string containing the G-code commands that "
+"should be sent to the printer to apply the settings of the path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_path_settings:5 of
+msgid "a `Path` object containing the settings to apply."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_path_settings:7 of
+msgid "a string containing the G-code commands to apply the settings."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.apply_path_settings
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator
+#: gcoordinator.gcode_generator.GCode.set_initial_settings
+#: gcoordinator.infill_generator.gyroid_infill
+#: gcoordinator.infill_generator.line_infill
+#: gcoordinator.path_transformer.Transform.move
+#: gcoordinator.path_transformer.Transform.move_path
+#: gcoordinator.path_transformer.Transform.move_pathlist
+#: gcoordinator.path_transformer.Transform.offset
+#: gcoordinator.path_transformer.Transform.rotate_xy
+#: gcoordinator.path_transformer.Transform.stretch of
+msgid "Return type"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.end_gcode:3 of
+msgid "The file path for the end G-code script."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator:1 of
+msgid "Calculates the extrusion required for a given path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator:3 of
+msgid "The path for which to calculate the extrusion."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator:6 of
+msgid "An array of extrusion values, one for each segment of the path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.extrusion_calculator
+#: gcoordinator.gcode_generator.GCode.print_path
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path
+#: gcoordinator.gcode_generator.GCode.travel_to_first_point
+#: gcoordinator.infill_generator.gyroid_infill
+#: gcoordinator.infill_generator.line_infill of
+msgid "Raises"
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.generate_gcode:1 of
+msgid ""
+"Generates G-code instructions for the full object by iterating over its "
+"paths and calling the `apply_path_settings` and `print_path` methods for "
+"each path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.print_path:1 of
+msgid "Generates G-code instructions for printing a given path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.print_path:3 of
+msgid "The path to print."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.save:1 of
+msgid "Saves the generated G-code to a file at the specified file path."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.save:3 of
+msgid "The path to the file where the G-code will be saved."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.save:6 gcoordinator.plot_3d.show:6 of
+msgid "None."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.set_initial_settings:1 of
+msgid ""
+"Generates G-code commands to set the initial printer settings, such as "
+"bed and nozzle temperature, extrusion mode, and fan speed, based on the "
+"values defined in the `print_settings` module."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.set_initial_settings:4 of
+msgid ""
+"A string containing the G-code commands to set the initial printer "
+"settings."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.start_gcode:3 of
+msgid "The path to the start G-code file."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path:1 of
+msgid ""
+"Generates G-code instructions for traveling from the end of `curr_path` "
+"to the start of `next_path`."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path:3 of
+msgid "The path to travel from."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.travel_from_path_to_path:5 of
+msgid "The path to travel to."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.travel_to_first_point:1 of
+msgid ""
+"Generates G-code instructions for traveling to the first point of the "
+"first path in the full object."
+msgstr ""
+
+#: gcoordinator.gcode_generator.GCode.travel_to_first_point:3 of
+msgid "The first path in the full object."
+msgstr ""
+
+#: ../../gcoordinator.rst:16
+msgid "gcoordinator.gui\\_export module"
+msgstr ""
+
+#: gcoordinator.gui_export.gui_export:1 of
+msgid ""
+"Exports the given object to a pickle file. This method is called from the"
+" GUI editor. The generated full_object is saved as a pickle file in the "
+"buffer directory for processing in the G-coordinator (GUI)."
+msgstr ""
+
+#: gcoordinator.gui_export.gui_export:6 of
+msgid "A list of Path or PathList objects."
+msgstr ""
+
+#: ../../gcoordinator.rst:24
+msgid "gcoordinator.infill\\_generator module"
+msgstr ""
+
+#: gcoordinator.infill_generator:1 of
+msgid ""
+"This module provides functions for generating infill paths for 3D "
+"printing. BUT, the algorithm is not optimized yet. It takes a long time "
+"to generate infill paths and file size is large. so, I am planning to "
+"make a new algorithm for infill generation."
+msgstr ""
+
+#: gcoordinator.infill_generator:5 of
+msgid ""
+"Functions: - gyroid_infill: Generates a gyroid infill pattern for a given"
+" path or path list. - line_infill: Generates a line infill pattern for a "
+"given path or path list."
+msgstr ""
+
+#: gcoordinator.infill_generator.gyroid_infill:1 of
+msgid "Generates a gyroid infill pattern for a given path."
+msgstr ""
+
+#: gcoordinator.infill_generator.gyroid_infill:3
+#: gcoordinator.infill_generator.line_infill:3 of
+msgid "The path to generate the infill pattern for."
+msgstr ""
+
+#: gcoordinator.infill_generator.gyroid_infill:5 of
+msgid "The distance between the gyroid surfaces."
+msgstr ""
+
+#: gcoordinator.infill_generator.gyroid_infill:7 of
+msgid "The value to subtract from the gyroid equation."
+msgstr ""
+
+#: gcoordinator.infill_generator.gyroid_infill:10 of
+msgid "A PathList object containing the generated infill pattern."
+msgstr ""
+
+#: gcoordinator.infill_generator.gyroid_infill:13 of
+msgid "If path is not a Path or PathList object."
+msgstr ""
+
+#: gcoordinator.infill_generator.line_infill:1 of
+msgid "Generates a line infill pattern for a given path."
+msgstr ""
+
+#: gcoordinator.infill_generator.line_infill:5 of
+msgid "The distance between the lines in the infill pattern. Defaults to 1."
+msgstr ""
+
+#: gcoordinator.infill_generator.line_infill:7 of
+msgid "The angle of the infill pattern in radians. Defaults to np.pi/4."
+msgstr ""
+
+#: gcoordinator.infill_generator.line_infill:10 of
+msgid "A PathList object containing the infill pattern."
+msgstr ""
+
+#: gcoordinator.infill_generator.line_infill:13 of
+msgid "If the path argument is not a Path or PathList object."
+msgstr ""
+
+#: ../../gcoordinator.rst:32
+msgid "gcoordinator.path\\_generator module"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:1 of
+msgid "A class representing a path in 3D space."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:4 of
+msgid "Attributes:"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:5 of
+msgid "x"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:-1 of
+msgid "numpy.ndarray"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:6 of
+msgid "The x-coordinates of the path points."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:7 of
+msgid "y"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:8 of
+msgid "The y-coordinates of the path points."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:9 of
+msgid "z"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:10 of
+msgid "The z-coordinates of the path points."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:11 of
+msgid "rot"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:12 of
+msgid "The rotation at each point in the path, in radians."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:13 of
+msgid "tilt"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:14 of
+msgid "The tilt at each point in the path, in radians."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:16 of
+msgid "kinematics"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:16 of
+msgid ""
+"The kinematics of the printer. One of 'Cartesian', 'BedRotate', "
+"'BedTiltBC', or 'NozzleTilt'."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:18 of
+msgid "coords"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:19 of
+msgid ""
+"A 2D array of shape (n_points, 3) containing the (x, y, z) coordinates of"
+" the path points."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:20 of
+msgid "norms"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:21 of
+msgid ""
+"A 2D array of shape (n_points, 3) containing the (x, y, z) components of "
+"the normals at each point in the path."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:22 of
+msgid "center"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:23 of
+msgid "The center of the path, calculated as the mean of the path points."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:24 of
+msgid "start_coord"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:25 of
+msgid "The coordinates of the first point in the path."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:27 of
+msgid "end_coord"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:27 of
+msgid "The coordinates of the last point in the path."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:29 of
+msgid "nozzle_diameter"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:-1 of
+msgid "float"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:30 of
+msgid "The diameter of the printer nozzle, in millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:31 of
+msgid "filament_diameter"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:32 of
+msgid "The diameter of the printer filament, in millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:33 of
+msgid "layer_height"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:34 of
+msgid "The height of each printed layer, in millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:35 of
+msgid "print_speed"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:36 of
+msgid ""
+"The speed at which the printer extrudes filament, in millimeters per "
+"second."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:37 of
+msgid "travel_speed"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:38 of
+msgid ""
+"The speed at which the printer moves between points, in millimeters per "
+"second."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:39 of
+msgid "x_origin"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:40 of
+msgid ""
+"The x-coordinate of the origin of the printer's coordinate system, in "
+"millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:41 of
+msgid "y_origin"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:42 of
+msgid ""
+"The y-coordinate of the origin of the printer's coordinate system, in "
+"millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:43 of
+msgid "fan_speed"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:44 of
+msgid ""
+"The speed of the printer's cooling fan, as a percentage of its maximum "
+"speed."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:45 of
+msgid "nozzle_temperature"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:46 of
+msgid "The temperature of the printer nozzle, in degrees Celsius."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:47 of
+msgid "bed_temperature"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:48 of
+msgid "The temperature of the printer bed, in degrees Celsius."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:49 of
+msgid "retraction"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:-1 of
+msgid "bool"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:50 of
+msgid "Whether to retract the filament between moves."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:51 of
+msgid "retraction_distance"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:52 of
+msgid "The distance by which to retract the filament, in millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:53 of
+msgid "unretraction_distance"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:54 of
+msgid "The distance by which to unretract the filament, in millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:55 of
+msgid "z_hop"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:56 of
+msgid "Whether to perform a Z-hop between moves."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:57 of
+msgid "z_hop_distance"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:58 of
+msgid "The distance by which to Z-hop, in millimeters."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:60 of
+msgid "extrusion_multiplier"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:60 of
+msgid ""
+"A multiplier for the amount of filament extruded, used to adjust for "
+"filament diameter variations."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:63 of
+msgid "Methods:"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:64 of
+msgid "apply_default_settings()"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:65 of
+msgid "Applies the default settings to the object."
+msgstr ""
+
+#: gcoordinator.path_generator.Path:69 of
+msgid "apply_optional_settings()"
+msgstr ""
+
+#: gcoordinator.path_generator.Path:67 of
+msgid "Applies the optional settings to the object."
+msgstr ""
+
+#: gcoordinator.path_generator.Path.apply_optional_settings:1 of
+msgid "Applies optional settings to the current instance of the Path class."
+msgstr ""
+
+#: gcoordinator.path_generator.Path.apply_optional_settings:3 of
+msgid ""
+"This method iterates over the optional_settings dictionary and sets each "
+"key-value pair as an attribute of the current instance of the "
+"PathGenerator class."
+msgstr ""
+
+#: gcoordinator.path_generator.PathList:1 of
+msgid ""
+"A class representing a list of paths. This class has the same attributes "
+"of Path class. The attributes are applied to all paths in the PathList."
+msgstr ""
+
+#: gcoordinator.path_generator.PathList:6 of
+msgid "A list of Path objects."
+msgstr ""
+
+#: gcoordinator.path_generator.PathList:16 of
+msgid "Initializes a PathList object with a list of Path objects."
+msgstr ""
+
+#: gcoordinator.path_generator.PathList:20 of
+msgid "Sets an attribute to all paths in the PathList."
+msgstr ""
+
+#: gcoordinator.path_generator.PathList:24
+#: gcoordinator.path_generator.PathList.sort_paths:1 of
+msgid ""
+"Sorts the paths in the PathList object in order of proximity to the "
+"previous path's end point."
+msgstr ""
+
+#: gcoordinator.path_generator.flatten_path_list:1 of
+msgid ""
+"the full_object(list) is composed of Path and PathList. when calcuate, "
+"PathList nedds to be flatten. this function makes all elements in "
+"full_object to Path."
+msgstr ""
+
+#: gcoordinator.path_generator.flatten_path_list:5 of
+msgid "args    : list of Path and PathList returns : list of Path"
+msgstr ""
+
+#: ../../gcoordinator.rst:40
+msgid "gcoordinator.path\\_transformer module"
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:1 of
+msgid ""
+"Moves a Path or PathList object in 3D space by the specified amounts of "
+"translation and rotation."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:3 of
+msgid "The Path or PathList object to be transformed."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:5 of
+msgid "The amount of translation along the x-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:7 of
+msgid "The amount of translation along the y-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:9 of
+msgid "The amount of translation along the z-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:11 of
+msgid "The amount of rotation around the x-axis, in radians."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:13 of
+msgid "The amount of rotation around the y-axis, in radians."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:15 of
+msgid "The amount of rotation around the z-axis, in radians."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move:18 of
+msgid "The transformed Path or PathList object."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:1 of
+msgid "Moves a given path by a specified translation vector and rotation angles."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:3 of
+msgid "The path to be moved."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:5 of
+msgid "The x-component of the translation vector. Defaults to 0."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:7 of
+msgid "The y-component of the translation vector. Defaults to 0."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:9 of
+msgid "The z-component of the translation vector. Defaults to 0."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:11 of
+msgid "The roll angle in radians. Defaults to 0."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:13 of
+msgid "The pitch angle in radians. Defaults to 0."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:15 of
+msgid "The yaw angle in radians. Defaults to 0."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_path:18 of
+msgid "The moved path."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:1 of
+msgid ""
+"Moves a list of paths in 3D space according to the specified translation "
+"and rotation values."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:3 of
+msgid "The list of paths to be transformed."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:5 of
+msgid "The amount to translate the paths along the x-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:7 of
+msgid "The amount to translate the paths along the y-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:9 of
+msgid "The amount to translate the paths along the z-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:11 of
+msgid "The amount to rotate the paths around the x-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:13 of
+msgid "The amount to rotate the paths around the y-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:15 of
+msgid "The amount to rotate the paths around the z-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.move_pathlist:18 of
+msgid "A new PathList instance containing the transformed paths."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.offset:1 of
+msgid ""
+"Computes the offset polygon of a given path by moving each vertex along "
+"its normal vector by the offset_distance."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.offset:3 of
+msgid "The path to offset."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.offset:5 of
+msgid "The distance to offset the path by."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.offset:8 of
+msgid "The offset path."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.rotate_xy:1 of
+msgid "Rotates a 2D path around the origin by a given angle."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.rotate_xy:3 of
+msgid "The path to be rotated."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.rotate_xy:5 of
+msgid "The angle (in radians) by which to rotate the path."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.rotate_xy:8 of
+msgid "The rotated path."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.stretch:1 of
+msgid "Stretches a given path by the specified ratios along each axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.stretch:3 of
+msgid "The path to be stretched."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.stretch:5 of
+msgid "The ratio by which to stretch the path along the x-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.stretch:7 of
+msgid "The ratio by which to stretch the path along the y-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.stretch:9 of
+msgid "The ratio by which to stretch the path along the z-axis."
+msgstr ""
+
+#: gcoordinator.path_transformer.Transform.stretch:12 of
+msgid "The stretched path."
+msgstr ""
+
+#: ../../gcoordinator.rst:48
+msgid "gcoordinator.plot\\_3d module"
+msgstr ""
+
+#: gcoordinator.plot_3d:1 of
+msgid ""
+"This module provides a class for generating and displaying 3D plots using"
+" PyQtGraph's GLViewWidget."
+msgstr ""
+
+#: gcoordinator.plot_3d:3 of
+msgid ""
+"The Plot3D class contains methods for initializing a 3D plot window, "
+"adding a 3D grid to the view, and creating and drawing a sequence of "
+"coordinates that the nozzle moves through the entire list of "
+"full_objects."
+msgstr ""
+
+#: gcoordinator.plot_3d:7 of
+msgid "Functions:"
+msgstr ""
+
+#: gcoordinator.plot_3d:7 of
+msgid "show(full_object): Displays a 3D plot of the given object."
+msgstr ""
+
+#: gcoordinator.plot_3d:9 of
+msgid "Classes:"
+msgstr ""
+
+#: gcoordinator.plot_3d:10 of
+msgid ""
+"Plot3D: A class for generating and displaying 3D plots using PyQtGraph's "
+"GLViewWidget."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:1 of
+msgid ""
+"A class for generating and displaying 3D plots using PyQtGraph's "
+"GLViewWidget."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:5 of
+msgid "The Qt application instance."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:7 of
+msgid "QApplication"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:11 of
+msgid "The main window of the application."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:13 of
+msgid "QMainWindow"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:17 of
+msgid "The central widget of the main window."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:19 of
+msgid "QWidget"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:23 of
+msgid "The layout of the central widget."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:25 of
+msgid "QVBoxLayout"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:29 of
+msgid "The 3D view widget."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:31 of
+msgid "GLViewWidget"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:35 of
+msgid "Initializes the class instance and generates the window and grid."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:39 gcoordinator.plot_3d.Plot3D.generate_window:1
+#: of
+msgid "Initializes and displays a 3D plot window using PyQtGraph's GLViewWidget."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:43 of
+msgid "Adds a 3D grid to the view, with axis labels and tick marks."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D:47 of
+msgid ""
+"Creates and draws a sequence of coordinates that the nozzle moves through"
+" the entire list of full_objects."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D.draw_grid:1 of
+msgid "Add a 3D grid to the view, with axis labels and tick marks."
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D.show:1 of
+msgid ""
+"Create and draw a sequence of coordinates that the nozzle moves through "
+"the entire list of full_objects"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D.show:3 of
+msgid "widget of graphics view"
+msgstr ""
+
+#: gcoordinator.plot_3d.Plot3D.show:5 of
+msgid "list of path objects"
+msgstr ""
+
+#: gcoordinator.plot_3d.show:1 of
+msgid "Displays a 3D plot of the given object."
+msgstr ""
+
+#: gcoordinator.plot_3d.show:3 of
+msgid "The object to be plotted."
+msgstr ""
+
+#: ../../gcoordinator.rst:56
+msgid "gcoordinator.settings module"
+msgstr ""
+
+#: gcoordinator.settings.get_default_settings:1 of
+msgid ""
+"This function loads the default settings for a 3D printer from a JSON "
+"file and retunrs them as a dictionary."
+msgstr ""
+
+#: gcoordinator.settings.get_default_settings:3 of
+msgid ""
+"The following constants are defined: - 'nozzle_diameter'      : the "
+"diameter of the printer's nozzle in millimeters - 'layer_height'         "
+": the height of each printed layer in millimeters - 'filament_diameter'"
+"    : the diameter of the filament used by the printer in millimeters - "
+"'print_speed'          : the speed at which the printer extrudes filament"
+" during printing in millimeters per minute - 'travel_speed'         : the"
+" speed at which the printer moves between printing locations in "
+"millimeters per minute - 'x_origin'             : the X coordinate of the"
+" printer's origin in millimeters - 'y_origin'             : the Y "
+"coordinate of the printer's origin in millimeters - 'fan_speed'"
+"            : the speed of the printer's fan in percent of maximum speed "
+"- 'nozzle_temperature'   : the temperature of the printer's nozzle in "
+"degrees Celsius - 'bed_temperature'      : the temperature of the "
+"printer's bed in degrees Celsius - 'retraction'           : a boolean "
+"indicating whether the printer should retract filament during travel "
+"moves - 'retraction_distance'  : the distance by which the printer should"
+" retract filament during travel moves in millimeters - "
+"'unretraction_distance': the distance by which the printer should "
+"unretract filament after travel moves in millimeters - 'z_hop'"
+"                : a boolean indicating whether the printer should raise "
+"the nozzle during travel moves - 'z_hop_distance'       : the height by "
+"which the printer should raise the nozzle during travel moves in "
+"millimeters - 'extrusion_multiplier' : a scaling factor for the amount of"
+" filament extruded by the printer"
+msgstr ""
+
+#: ../../gcoordinator.rst:64
+msgid "Module contents"
+msgstr ""
+

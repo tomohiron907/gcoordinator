@@ -1,0 +1,101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Tomohiro TANIGUCHI
+# This file is distributed under the same license as the gcoordinator
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gcoordinator \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-22 12:04+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../index.rst:21
+msgid "Quick Start:"
+msgstr "クイックスタート"
+
+#: ../../index.rst:51
+msgid "Api Reference:"
+msgstr ""
+
+#: ../../index.rst:7
+msgid "Welcome to G-coordinator/gcoordinator"
+msgstr "G-coordinator/gcoordinatorへようこそ"
+
+#: ../../index.rst:9
+msgid "G-coordinator/gcoordinator is 3D printing G-code generation software."
+msgstr "G-coordinator/gcoordiantor は，3Dプリンタ用G-code生成ソフトウェアです．"
+
+#: ../../index.rst:11
+msgid ""
+"Using Python, you can make detailed specifications for modeling and "
+"printing conditions. There are two components:"
+msgstr "pythonを用いて，造形や印刷条件の細かな指定が可能です．G-codeを生成するためのpythonライブラリgcoordinatorと，それをより簡単に使用するためのGUIアプリのG-coordinatorがあります．"
+
+#: ../../index.rst:14
+msgid "gcoordinator: Python library for G-code generation"
+msgstr "gcoordinator: G-code生成のためのPythonライブラリ"
+
+#: ../../index.rst:15
+msgid "G-coordinator: GUI application for easier utilization."
+msgstr "G-coordinator: G-code生成のためのGUIアプリ"
+
+#: ../../index.rst:17
+msgid ""
+"By installing the GUI app, you can generate G-code without needing a "
+"complete Python environment. Tasks such as modeling, previewing, and "
+"exporting G-code can be accomplished using just the gcoordinator library."
+" Depending on your needs, you can choose between the library and the GUI "
+"for your workflow."
+msgstr "GUIアプリをインストールすれば，python環境が整っていなくても，pythonコードを書いてG-codeを生成することが可能です．造形やプレビュー，G-codeの書き出しなどは，gcoordinatorのライブラリ単体でも可能です．ニーズに合わせて，ライブラリとGUIを選択してください．"
+
+#: ../../index.rst:35
+msgid "G-coordinator(GUI application)"
+msgstr ""
+
+#: ../../index.rst:36
+msgid "https://github.com/tomohiron907/G-coordinator"
+msgstr ""
+
+#: ../../index.rst:-1
+msgid "G-coordinator"
+msgstr ""
+
+#: ../../index.rst:43
+msgid "gcoordinator(python library)"
+msgstr ""
+
+#: ../../index.rst:44
+msgid "https://github.com/tomohiron907/gcoordinator"
+msgstr ""
+
+#: ../../index.rst:-1
+msgid "gcoordinator"
+msgstr ""
+
+#: ../../index.rst:59
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../index.rst:61
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:62
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:63
+msgid ":ref:`search`"
+msgstr ""
+

@@ -1,0 +1,374 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Tomohiro TANIGUCHI
+# This file is distributed under the same license as the gcoordinator
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gcoordinator \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-22 12:04+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../tutorials/pre_start_readings.rst:2
+msgid "Before using software"
+msgstr "その前に"
+
+#: ../../tutorials/pre_start_readings.rst:4
+msgid ""
+"Before using G-coordinator/gcoordinator, let's take a moment to review "
+"what G-code is. The image below shows G-code opened in Repetier."
+msgstr "G-coordinator/gcoordinatorを使う前に，G-codeとは何かを振り返りましょう．以下の画像は，repetier でG-codeを開いたものです．"
+
+#: ../../tutorials/pre_start_readings.rst:-1
+msgid "repetier"
+msgstr ""
+
+#: ../../tutorials/pre_start_readings.rst:10
+msgid ""
+"In essence, it consists largely of lines like \"G1 F800 X114.97987 "
+"Y105.63424 Z2.00000 E0.00589\" being repeated extensively. This command "
+"instructs the nozzle to move from the current position to the coordinates"
+" X114.97987 Y105.63424 Z2.00000 at a feed rate of 800 mm/min while "
+"extruding 0.00589 mm of filament."
+msgstr "基本的には， G1 F800 X114.97987 Y105.63424 Z2.00000 E0.00589 こういった行が大量に繰り返されています． これは，現在の位置からX114.97987 Y105.63424 Z2.00000の位置まで，分速800ｍｍで移動しながら，フィラメントを0.00589mm押し出すという命令です．"
+
+#: ../../tutorials/pre_start_readings.rst:13
+msgid ""
+"To break it down further, the elements to be controlled via G-code are "
+"the three coordinates (x, y, z), speed, and extrusion amount—amounting to"
+" a total of five parameters."
+msgstr "突き詰めれば，G-codeで制御すべき要素は，座標(x, y, z)の三要素とスピード，押し出し量の計５つです．"
+
+#: ../../tutorials/pre_start_readings.rst:15
+msgid ""
+"Additionally, both speed and extrusion can be automatically determined by"
+" the G-coordinator (though specific manual settings are also possible). "
+"Therefore, the key consideration lies in determining the coordinates "
+"where the nozzle should move."
+msgstr "さらに，スピードと，押し出しはG-coordinator から自動で決定できる（もちろん細かく個別に指定することも可能）なので，考えるべきは，どの位置にノズルが動くかという座標のみで良いです．"
+
+#: ../../tutorials/tutorial_1.rst:2
+msgid "Simple Rectangle"
+msgstr ""
+
+#: ../../tutorials/tutorial_1.rst:4
+msgid "Let's write code to draw a rectangle on a plane."
+msgstr "平面に単純な四角形を作ってみましょう．"
+
+#: ../../tutorials/tutorial_1.rst:-1
+msgid "rectangle path"
+msgstr ""
+
+#: ../../tutorials/tutorial_1.rst:12
+msgid "First, let's import the gcoordinator library:"
+msgstr "まず，gcoordinatorライブラリを読み込みます．"
+
+#: ../../tutorials/tutorial_1.rst:18
+msgid ""
+"The coordinates for the nozzle's movement are (0, 0, 0), (10, 0, 0), (10,"
+" 10, 0), (0, 10, 0), and (0, 0, 0). Considering the starting and ending "
+"points, we'll sequentially move through these five coordinates."
+msgstr "平面上で，四角形を描くコードを書いてみましょう．ノズルが移動していく座標は，(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0), (0, 0, 0)です．始点と終点の座表も考えて，５つの座表を順に移動していきます．"
+
+#: ../../tutorials/tutorial_1.rst:21
+msgid ""
+"In gcoordinator, it is necessary to have coordinate sequences for x, y, "
+"and z. Therefore, we'll create coordinate sequences like the following."
+msgstr "gcoordinatorでは，x座標列，y座標列，z座標列が造形に必要です．そのため，以下のような座標列を作成します．"
+
+#: ../../tutorials/tutorial_1.rst:31
+msgid "From these sequences, we'll create the nozzle path."
+msgstr "それらの座標列から，ノズルパスを作成します．"
+
+#: ../../tutorials/tutorial_1.rst:37
+msgid "We'll add the created path to a list called \"full_object.\""
+msgstr "作成したパスをfull_objectというリストに追加します．"
+
+#: ../../tutorials/tutorial_1.rst:44
+msgid ""
+"If you're using G-coordinator (GUI app), you can preview it with "
+"gc.gui_export(full_object). If you're using gcoordinator as a Python "
+"library, you can use gc.show(full_object) to display the preview."
+msgstr "full_objectのリストは，G-coordinator(GUIアプリ）なら，gc.gui_export(full_object). gcoordinator(pythonライブラリ)なら，gc.show(full_object)でプレビューが表示されます．"
+
+#: ../../tutorials/tutorial_1.rst:53
+msgid "Here is the final code to draw a rectangle on a plane:"
+msgstr "以下が全体のコードです．"
+
+#: ../../tutorials/tutorial_2.rst:2
+msgid "Recatngle Wall"
+msgstr ""
+
+#: ../../tutorials/tutorial_2.rst:4
+msgid ""
+"As you may know, in 3D printing, a single path is not sufficient to "
+"create a three-dimensional object because the printing process involves "
+"layering. It is necessary to stack the paths vertically."
+msgstr "ご存知の通り，3Dプリンタでは，積層をするため，パス一つでは，造形物にはなりません．先ほど作ったパスを縦に積み重ねる必要があります．"
+
+#: ../../tutorials/tutorial_2.rst:-1
+msgid "rectangle wall"
+msgstr ""
+
+#: ../../tutorials/tutorial_2.rst:11
+msgid ""
+"This can be achieved by using a for loop to increment the z-coordinate "
+"sequence for each path, effectively raising them one on top of the other."
+msgstr "for文を用いて，それぞれのパスのz座標列をパスごとに高くすればいいです．"
+
+#: ../../tutorials/tutorial_2.rst:27
+msgid ""
+"In the Z-coordinate sequence, I am creating a sequence of coordinates "
+"with the same number of terms as the X-coordinate sequence, where the "
+"values are set to (height+1)*0.2."
+msgstr "z座標列では，ｘ座標列と同じ項数で，値が(height+1)*0.2となる座標列を作成しています．"
+
+#: ../../tutorials/tutorial_2.rst:30
+msgid ""
+"Adding 1 to the height is done within a for loop to ensure that even when"
+" the height starts from 0, the Z-coordinate begins at 0.2."
+msgstr "heightに1を足しているのは，forループで，heightの値が0からスタートしても，z座標は，0.2から始まって欲しいからです．また，0.2は，一般的なレイヤー厚さとして例に挙げています．"
+
+#: ../../tutorials/tutorial_2.rst:32
+msgid "The value 0.2 is provided as an example of a typical layer thickness."
+msgstr "また，0.2は，一般的なレイヤー厚さとして例に挙げています．"
+
+#: ../../tutorials/tutorial_3.rst:2
+msgid "Cylinder Wall"
+msgstr ""
+
+#: ../../tutorials/tutorial_3.rst:4
+msgid ""
+"Next, let's try sculpting a slightly more complex cylinder. This can be "
+"achieved by making the vertices of the previous rectangular prism large "
+"enough. Since there are a considerable number of vertices, we will use "
+"NumPy to create the coordinate sequence."
+msgstr "次に，もう少し複雑な円柱を造形してみましょう．これは，先ほどの，四角柱の頂点を十分大きいものにすれば実現できます．頂点の数が非常に多いので，numpyを用いて，座標列を作成します．"
+
+#: ../../tutorials/tutorial_3.rst:-1
+msgid "cylinder wall"
+msgstr ""
+
+#: ../../tutorials/tutorial_3.rst:13
+msgid ""
+"A cylinder (precisely a regular 99-gon) can be sculpted using the "
+"following code:"
+msgstr "円柱(正確には正99角形)は，以下のコードで造形できます．"
+
+#: ../../tutorials/tutorial_3.rst:31
+msgid ""
+"The code creates a sequence named 'arg,' consisting of 100 angles ranging"
+" from 0 to 2π."
+msgstr "argという0から2πで項数が100個の角度に関する数列を作成します．"
+
+#: ../../tutorials/tutorial_3.rst:33
+msgid ""
+"The x-coordinate sequence is obtained by multiplying the cosine of each "
+"angle by the radius, and the y-coordinate sequence is obtained by "
+"multiplying the sine of each angle by the radius."
+msgstr "その角度のcos, sinに半径をかけたものががx座標列，y座標列です．"
+
+#: ../../tutorials/tutorial_3.rst:35
+msgid ""
+"The z-coordinate sequence follows the same pattern as before, "
+"incrementing by 0.2 for each height unit in line with the x and "
+"y-coordinate sequences."
+msgstr "z座標列は，前回と同じく，項数がx,y座標列と同じで，値heightごとに0.2ずつ大きくなっていく数列です．"
+
+#: ../../tutorials/tutorial_4.rst:2
+msgid "印刷設定"
+msgstr ""
+
+#: ../../tutorials/tutorial_4.rst:5 ../../tutorials/tutorial_5.rst:5
+#: ../../tutorials/tutorial_6.rst:9
+msgid "G-coordinator (GUI application)"
+msgstr ""
+
+#: ../../tutorials/tutorial_4.rst:8
+msgid ""
+"The print settings currently allow you to specify the parameters as shown"
+" in the image below."
+msgstr "印刷設定は，現段階では，以下の画像に示すパラメータを指定することができます．"
+
+#: ../../tutorials/tutorial_4.rst:-1
+msgid "print_settings"
+msgstr ""
+
+#: ../../tutorials/tutorial_4.rst:13
+msgid "There are some important points to note regarding these parameters:"
+msgstr "これらのパラメータに関していくつかの注意点があります．"
+
+#: ../../tutorials/tutorial_4.rst:15
+msgid ""
+"layer_height: Since it is the value used to calculate the extrusion "
+"amount, it needs to be aligned with the layer pitch."
+msgstr "layer_height：押し出し量を計算する時に参照する値であるので，造形ピッチと揃える必要がある"
+
+#: ../../tutorials/tutorial_4.rst:16
+msgid "speed: the unit is in mm/min."
+msgstr "スピード: 印刷とトラベル速度．mm/minの単位"
+
+#: ../../tutorials/tutorial_4.rst:17
+msgid "fan speed is represented by values ranging from 0 to 255."
+msgstr "ファンスピードは0から255の値"
+
+#: ../../tutorials/tutorial_4.rst:18
+msgid ""
+"The origin value indicates the shift amount from the origin. In typical "
+"3D printers, the origin is set at the front left of the bed. However, in "
+"G-coordinator, the origin is set at the center of the bed for the "
+"simplicity of writing the formulation. For example, if the bed of the 3D "
+"printer is 200mm × 200mm, the center (100, 100) is set as the origin. The"
+" coordinates (10, -20) in G-coordinator will be recorded as (110, 80) in "
+"G-code."
+msgstr "originの値は，原点からシフト量を示す．一般の3Dプリンタでは，原点をベッドの左手前に設定していますが，G-coordinatorでは，造形の数式を簡単に書くために，原点をベッドの中央に設定しています． 例えば，使用する3Dプリンタのベッドが200mm×200mmなので，その中心の(100, 100) を原点と設定しています．G-coordinator上で(10,-20)の座標が，G-code上では(110, 80)に変換されて記録されます．"
+
+#: ../../tutorials/tutorial_4.rst:19
+msgid "extrusion_multiplier represents the filament extrusion coefficient."
+msgstr "extrusion_multiplierは，樹脂の射出係数"
+
+#: ../../tutorials/tutorial_4.rst:21
+msgid ""
+"These values are the basic settings applied by default to all paths for "
+"printing."
+msgstr "これらの値は，印刷する全てのパスにデフォルトで適用される基本設定です．"
+
+#: ../../tutorials/tutorial_4.rst:23
+msgid ""
+"However, there are often situations where you want to specify the "
+"conditions of the 3D printer more finely."
+msgstr "しかし，3Dプリンタの条件をもっと細かく指定したい場合がよくあります．"
+
+#: ../../tutorials/tutorial_4.rst:25
+msgid "Such adjustments are made in the editor."
+msgstr "そうした調整はエディタで行います．"
+
+#: ../../tutorials/tutorial_4.rst:27
+msgid ""
+"For example, let's consider a situation where you want to increase "
+"filament extrusion for the first layer to enhance bed adhesion."
+msgstr "例えば，ファーストレイヤはベッドの定着をするために，樹脂の射出を多くしたいという状況を想定しましょう．"
+
+#: ../../tutorials/tutorial_4.rst:29
+msgid "In that case, you would modify the code as follows."
+msgstr "その場合には，以下のようにコードを修正します．"
+
+#: ../../tutorials/tutorial_4.rst:50
+msgid ""
+"Additionally, you can individually configure other settings for each "
+"path, such as the retraction and printing speed."
+msgstr "その他にも，リトラクションの有無や印刷スピードなども，パスに対して個別に設定可能です．"
+
+#: ../../tutorials/tutorial_4.rst:62 ../../tutorials/tutorial_5.rst:22
+#: ../../tutorials/tutorial_6.rst:19
+msgid "gcoordinator (Python library)"
+msgstr ""
+
+#: ../../tutorials/tutorial_4.rst:64
+msgid ""
+"The print settings can be configured in the same way as in the GUI "
+"application. In the gcoordinator library, the basic settings applied to "
+"all paths are managed through the following JSON. Specific configurations"
+" for individual paths are also done in the code, as mentioned earlier."
+msgstr "gcoordinatorライブラリでは，全てのパスに適用される基本設定を以下のjsonで管理を行います．また，個別のパスに対する指定は，上と同じくコード上で行います．"
+
+#: ../../tutorials/tutorial_4.rst:68
+msgid ""
+":download:`base_settings.json "
+"<../../gcoordinator/settings/base_settings.json>`"
+msgstr ""
+
+#: ../../tutorials/tutorial_4.rst:139
+msgid ""
+"By downloading and adjusting the JSON file, specifying its path in "
+"advance allows it to be loaded as the global print settings."
+msgstr "ダウンロードして，パラメータを調整したjsonファイルは，そのパスを事前に指定することで，グローバルな印刷設定として読み込まれます．"
+
+#: ../../tutorials/tutorial_4.rst:146
+msgid ""
+"When using a GUI application, there's no need to specify the JSON path, "
+"as the values of the parameter tree are retrieved directly."
+msgstr "GUIアプリを使う場合には，パラメータツリーの値を取得するので，jsonのパスを指定する必要はありません．"
+
+#: ../../tutorials/tutorial_5.rst:2
+msgid "Start, End G-code"
+msgstr ""
+
+#: ../../tutorials/tutorial_5.rst:8
+msgid ""
+"The configuration of the Start and End G-code is done within the window "
+"that pops up when you press the \"machine_settings\" button above the "
+"print settings."
+msgstr "スタート，エンドG-codeの設定は，印刷設定の上のmachine_settingsのボタンを押してポップアップするウィンドウの中で行います．"
+
+#: ../../tutorials/tutorial_5.rst:14
+msgid ""
+"In each field, you can simply copy and paste the Start and End G-code "
+"used by your usual slicer, for example."
+msgstr "それぞれの欄に，普段使っているスライサなどのスタート，エンドG-codeをコピーペーストすればいいです．"
+
+#: ../../tutorials/tutorial_5.rst:16
+msgid ""
+"After making these configuration changes, it is necessary to restart the "
+"software."
+msgstr "これらの設定の変更後には，ソフトの再起動が必要です．"
+
+#: ../../tutorials/tutorial_5.rst:24
+msgid ""
+"To generate G-code using the library as a standalone component, you need "
+"to save the Start and End G-code in separate text files. Then, specify "
+"the paths to these saved text files to generate the G-code."
+msgstr "ライブラリ単体で，G-codeを生成するには，スタート，エンドG-codeをそれぞれ別のテキストファイルに保存します．その保存したテキストファイルのパスを指定して，G-codeが生成されます．"
+
+#: ../../tutorials/tutorial_5.rst:27
+msgid "The procedure is as follows:"
+msgstr "その手順は以下の通りである．"
+
+#: ../../tutorials/tutorial_6.rst:2
+msgid "G-code exporting"
+msgstr "G-codeの書き出し"
+
+#: ../../tutorials/tutorial_6.rst:4
+msgid ""
+"Through the steps outlined so far, you've been able to configure the "
+"modeling, print settings, and Start/End G-code. Now, all that's left is "
+"to export the G-code."
+msgstr "これまでのステップで，造形，印刷設定，スタート・エンドG-codeの設定ができました．あとは，G-codeを書き出すだけです．"
+
+#: ../../tutorials/tutorial_6.rst:10
+msgid ""
+"clicking the \"G-code export\" button will bring up the G-code preview "
+"screen, showing only the first 1000 lines of the G-code."
+msgstr "G-code exportボタンを押せば，G-codeプレビュー画面が表示されます．G-codeの最初の1000行のみがプレビューされます．"
+
+#: ../../tutorials/tutorial_6.rst:15
+msgid ""
+"By clicking the \"Save G-code file\" button, you can save the generated "
+"G-code to a specified location. However, when saving with a custom name, "
+"it's necessary to input the file extension at the same time."
+msgstr "save G-code file　のボタンを押せば，生成されたG-codeを指定の場所に保存することができます．ただし，名前をつけて保存する時に，拡張子も同時に入力する必要があります．"
+
+#: ../../tutorials/tutorial_6.rst:21
+msgid ""
+"To save the generated G-code using the library, you can call the save "
+"method on the GCode object you created previously."
+msgstr "ライブラリを使って，生成したG-codeを保存するには，先ほど作成したGCodeオブジェクトのsaveメソッドを呼び出します．"
+
+#: ../../tutorials/tutorial_6.rst:27
+msgid ""
+"Based on the information provided so far, the code for outputting G-code "
+"using the gcoordinator library as a standalone component would look "
+"something like the following:"
+msgstr "以上より，G-codeをgcoordinatorライブラリ単体で出力するにはこれまでの内容を踏まえると以下のようなコードになります．"
+

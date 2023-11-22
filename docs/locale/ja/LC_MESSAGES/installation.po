@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Tomohiro TANIGUCHI
+# This file is distributed under the same license as the gcoordinator
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gcoordinator \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-22 12:04+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../installation.rst:2
+msgid "Installation"
+msgstr "インストール"
+
+#: ../../installation.rst:5
+msgid "G-coordinator: GUI app"
+msgstr ""
+
+#: ../../installation.rst:6
+msgid ""
+"The GUI application for G-coordinator is available in both Mac (.app) and"
+" Windows (.exe) versions. Please download the respective compressed files"
+" (.dmg, .zip) from the links below. "
+"https://github.com/tomohiron907/G-coordinator/releases"
+msgstr "G-coordinatorのGUIアプリは，Mac版(.app)とWindows版(.exe)を用意しています．それぞれの圧縮ファイル(.dmg,  .zip)を以下からダウンロードしてください．アプリをダウンロードすれば，python環境を整えたり，ライブラリをインストールする必要はありません．"
+
+#: ../../installation.rst:11
+msgid ""
+"Furthermore, if you have a Python environment set up, you can launch the "
+"GUI by creating a clone of the Git repository and executing main.py. In "
+"this case, please install the necessary libraries for startup using the "
+"following command:"
+msgstr "また，python環境が整っている場合には，git リポジトリのクローンを作成して，main.pyを実行することでもGUIを起動できます．その場合には，起動に必要なライブラリを以下のコマンドでインストールしてください．"
+
+#: ../../installation.rst:18
+msgid ""
+"Additionally, when launching, make sure to move to the \"src\" directory "
+"and execute main.py."
+msgstr "また，起動の際には，プロジェクトのルートディレクトリではなく，srcディレクトリに移動して，main.pyを実行してください．"
+
+#: ../../installation.rst:21
+msgid "gcoordinator: Python library"
+msgstr ""
+
+#: ../../installation.rst:22
+msgid "The Python library for G-coordinator is available on PyPI."
+msgstr "G-coordinatorのG-code生成エンジンのgcoordinatorはPyPIからインストールできます．"
+
+#: ../../installation.rst:24
+msgid "To install gcoordinator, run the following command:"
+msgstr "gcoordinatorライブラリのインストールには，以下のコマンドを実行してください"
+
