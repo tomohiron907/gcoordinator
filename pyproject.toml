@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gcoordinator"
-version = "0.0.13"
+version = "0.0.14"
 authors = [
   { name="Tomohiro TANIGUCHI", email="gcoordinator.3dp@gmail.com" },
 ]
@@ -23,3 +23,4 @@ dependencies = ["numpy", "pyqtgraph==0.13.2", "pyopengl", "pyqt5", "matplotlib==
 
 [project.urls]
 "Homepage" = "https://github.com/tomohiron907/gcoordinator"
+"Documentation" = "https://gcoordinator.readthedocs.io/en/latest/index.html"
