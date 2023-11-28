@@ -1,4 +1,5 @@
 import os
+import json
 import numpy as np
 from gcoordinator.settings                   import get_default_settings, load_settings
 from gcoordinator.path_generator             import Path
@@ -8,6 +9,7 @@ from gcoordinator.kinematics.kin_bed_rotate  import BedRotate
 from gcoordinator.kinematics.kin_cartesian   import Cartesian
 from gcoordinator.kinematics.kin_bed_tilt_bc import BedTiltBC
 from gcoordinator.kinematics.kin_nozzle_tilt import NozzleTilt
+from gcoordinator.settings                   import template_settings
 
 class GCode:
     """
@@ -49,9 +51,15 @@ class GCode:
         """
         self.full_object = flatten_path_list(full_object) # list of Path objects
         
-        # load the settings from the json file
-        self.settings_path = os.path.join(os.path.dirname(__file__), 'settings/settings.pickle')
-        self.default_settings = get_default_settings(self.settings_path)
+        try:
+            self.settings_path = '.temp_config.json'
+            with open(self.settings_path, 'r') as f:
+                self.settings = json.load(f)
+            
+        except:
+            self.settings = template_settings # gcoordinator/settings.py
+
+        self.default_settings = get_default_settings(self.settings)
         self.apply_defaults_to_instances(self.full_object, self.default_settings)
 
         self.gcode            = None              # gcode file object
@@ -59,10 +67,6 @@ class GCode:
         self.start_gcode_txt  = ''
         self.end_gcode_path   = 'end_gcode.txt'
         self.end_gcode_txt    = ''
-
-        # after generating the G-code, the default settings are reset to the values in the settings file
-        self.base_settings_path = os.path.join(os.path.dirname(__file__), 'settings/base_settings.json')
-        load_settings(self.base_settings_path)
 
     def save(self, file_path:str) -> None:
         """
@@ -88,6 +92,11 @@ class GCode:
         self.gcode.write(self.end_gcode_txt)
         
         self.gcode.close()
+        if os.path.exists(".temp_config.json"):
+            # remove the temporary config file
+            os.remove(".temp_config.json")
+        else:
+            print(".temp_config.json does not exist")
 
     def generate_gcode(self) -> None:
         """

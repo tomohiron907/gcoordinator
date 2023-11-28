@@ -1,8 +1,10 @@
 import os
+import json
 import math
 import pickle
 import numpy as np
 from gcoordinator.kinematics.kin_base import Kinematics
+from gcoordinator.settings            import template_settings
 
 class NozzleTilt(Kinematics):
     """
@@ -29,9 +31,13 @@ class NozzleTilt(Kinematics):
         Returns:
             None
         """
-        settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'settings/settings.pickle')
-        with open(settings_path, 'rb') as f:
-            settings = pickle.load(f)
+        try:
+            settings_path = '.temp_config.json'
+            with open(settings_path, 'r') as f:
+                settings = json.load(f)
+        except:
+            settings = template_settings # gcoordinator/settings.py
+            
         cls.tilt_code   = settings['Kinematics']['NozzleTilt']['tilt_code']
         cls.rot_code    = settings['Kinematics']['NozzleTilt']['rot_code']
         cls.tilt_offset = settings['Kinematics']['NozzleTilt']['tilt_offset']

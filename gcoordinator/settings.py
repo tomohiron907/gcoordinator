@@ -1,7 +1,6 @@
-import os
 import json
-import pickle
-def get_default_settings(pickle_path):
+
+def get_default_settings(settings):
     """
     This function loads the default settings for a 3D printer from a JSON file and retunrs them as a dictionary.
 
@@ -24,9 +23,6 @@ def get_default_settings(pickle_path):
     - 'extrusion_multiplier' : a scaling factor for the amount of filament extruded by the printer
 
     """
-    # load the settings from the json file
-    with open(pickle_path, 'rb') as f:
-        settings = pickle.load(f)
 
     default_settings = {
         'nozzle_diameter'      : settings['Print']['nozzle']['nozzle_diameter'],
@@ -53,20 +49,95 @@ def get_default_settings(pickle_path):
 
 
 def load_settings(config_path):
-    # load the default settings from the json file
-    # when this function is called, the default settings are saved to a pickle file
-    # the pickle file is loaded when the GCode class is instantiated
-    # after generating the Gcode, the pickle file is reset to the default settings
+    """
+    Loads the settings from a JSON config file.
+    The format of the JSON file is as follows:
+    https://gcoordinator.readthedocs.io/en/latest/tutorials/tutorial_4.html
+
+    Args:
+        config_path (str): The path to the JSON config file.
+
+    Returns:
+        None
+
+    Raises:
+        json.JSONDecodeError: If the config file has an invalid JSON format.
+
+    """
     try:
         with open(config_path, 'r') as config_file:
             settings_dict = json.load(config_file)
-        # use the settings from the config file if it is valid JSON
-        # save the settings to a pickle file
-        pickle_path = os.path.join(os.path.dirname(__file__), 'settings/settings.pickle')
-        with open(pickle_path, 'wb') as f:
-            pickle.dump(settings_dict, f)
+        settings_name = '.temp_config.json'
+        with open(settings_name, 'w') as temp_config:
+            json.dump(settings_dict, temp_config, indent=4)
 
     except json.JSONDecodeError:
-        # use the default settings if the config file is not valid JSON
         print("Error: Invalid JSON format in the config file. Using default settings.")
     
+
+
+
+template_settings = {
+    "Print": {
+        "nozzle": {
+            "nozzle_diameter": 0.4,
+            "filament_diameter": 1.75
+        },
+        "layer": {
+            "layer_height": 0.2
+        },
+        "speed": {
+            "print_speed": 5000,
+            "travel_speed": 10000
+        },
+        "origin": {
+            "x": 100,
+            "y": 100
+        },
+        "fan_speed": {
+            "fan_speed": 255
+        },
+        "temperature": {
+            "nozzle_temperature": 200,
+            "bed_temperature": 50
+        },
+        "travel_option": {
+            "retraction": False,
+            "retraction_distance": 2.0,
+            "unretraction_distance": 2.0,
+            "z_hop": False,
+            "z_hop_distance": 3
+        },
+        "extrusion_option": {
+            "extrusion_multiplier": 1.0
+        }
+    },
+    "Hardware": {
+        "kinematics": "Cartesian",
+        "bed_size": {
+            "bed_size_x": 200,
+            "bed_size_y": 200,
+            "bed_size_z": 205
+        }
+    },
+    "Kinematics": {
+        "NozzleTilt": {
+            "tilt_code": "B",
+            "rot_code": "A",
+            "tilt_offset": 0.0,
+            "rot_offset": 0
+        },
+        "BedTiltBC": {
+            "tilt_code": "B",
+            "rot_code": "C",
+            "tilt_offset": 0.0,
+            "rot_offset": 0,
+            "div_distance": 0.5
+        },
+        "BedRotate": {
+            "rot_code": "C",
+            "rot_offset": 0.0,
+            "div_distance": 0.5
+        }
+    }
+}

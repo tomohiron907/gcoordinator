@@ -1,12 +1,13 @@
 import os
 import pickle
+import json
 from typing import Any
 import numpy as np
-from gcoordinator import settings
 from gcoordinator.kinematics.kin_bed_rotate  import BedRotate
 from gcoordinator.kinematics.kin_cartesian   import Cartesian
 from gcoordinator.kinematics.kin_bed_tilt_bc import BedTiltBC
 from gcoordinator.kinematics.kin_nozzle_tilt import NozzleTilt
+from gcoordinator.settings                   import template_settings
 
 
 class Path:
@@ -81,9 +82,13 @@ class Path:
     
     """
     def __init__(self, x, y, z, rot=None, tilt=None, **kwargs):
-        self.settings_path = os.path.join(os.path.dirname(__file__), 'settings/settings.pickle')
-        with open(self.settings_path, 'rb') as f:
-            self.settings = pickle.load(f)
+        try:
+            self.settings_path = '.temp_config.json'
+            with open(self.settings_path, 'r') as f:
+                self.settings = json.load(f)
+        except:
+            self.settings = template_settings # gcoordinator/settings.py
+        
         self.kinematics = self.settings['Hardware']['kinematics']
         self.x = np.array(x)
         self.y = np.array(y)
