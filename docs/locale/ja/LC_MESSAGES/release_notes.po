@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Tomohiro TANIGUCHI
+# This file is distributed under the same license as the gcoordinator
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gcoordinator \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 13:32+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../release_notes.rst:2
+msgid "Release Notes"
+msgstr "リリースノート"
+
+#: ../../release_notes.rst:5
+msgid "G-coordinator ver3.0.0"
+msgstr ""
+
+#: ../../release_notes.rst:9
+msgid ""
+"This version is a major update from ver2.0.0. Due to the lack of backward"
+" compatibility with version 2, some adjustments are necessary for the "
+"modeling code created in version 2 to work with version 3."
+msgstr "ver2との後方互換性がないため，ver2で作成した造形コードはver3では一部修正の必要があります．"
+
+#: ../../release_notes.rst:12
+msgid ""
+"The internal G-code generation process has been standardized to the "
+"gcoordinator library version 0.0.14. As a result, some aspects of the "
+"fabrication code processing have been modified."
+msgstr "内部のG-code生成処理をgcoordinatorライブラリ0.0.14に統一．
+それに伴い，造形コードの処理の一部が変更．"
+
+#: ../../release_notes.rst:15
+msgid ""
+"In G-coordinator ver2, the code for shaping was written inside a function"
+" called object_modeling(). In ver3, that restriction has been removed, "
+"and now shaping can be done through the execution of pure Python code."
+msgstr "G-coordinator ver2では，造形のコードをobject_modeling()という関数の内部に記述していました．ver3では，その制限がなくなり，純粋なpythonコードの実行で造形ができるようになっています．"
+
+#: ../../release_notes.rst:18
+msgid ""
+"By passing the list of path objects, full_object, to the gui_export() "
+"function, you can preview and export G-code within the application."
+msgstr "パスオブジェクトのリストfull_objectをgui_export()関数に渡すことで，アプリ上でのプレビューやG-codeの書き出しができます．"
+
+#: ../../release_notes.rst:68
+msgid ""
+"Furthermore, there have been slight changes in the way functions like "
+"Path(), Transform class, and gyroid_infill() are called. To avoid "
+"namespace pollution, it is recommended to access objects from the "
+"gcoordinator library by calling them through the gc alias."
+msgstr "また，Path()や，Transformクラス，gyroid_infill()などの関数の呼び出し方も少し変更されました．名前空間の汚染を回避するため，gcoordinatorライブラリのオブジェクトにアクセスする時には，gcエイリアスから呼び出すことを推奨します．"
+
+#: ../../release_notes.rst:102
+msgid ""
+"In version 3, code refactoring was performed to streamline the complexity"
+" of the code, leading to certain functions being restricted or "
+"deprecated. Specifically:"
+msgstr "ver3においては，煩雑化していたコードのリファクタリングに伴い，一部機能の制限，廃止を行いました．"
+
+#: ../../release_notes.rst:106
+msgid "Functionality to access parameter tree values in the editor"
+msgstr "エディタでパラメータツリーの値にアクセスする機能"
+
+#: ../../release_notes.rst:107
+msgid "The print() function in the editor"
+msgstr "エディタでのprint()関数"
+
+#: ../../release_notes.rst:108
+msgid "The Transform.fill() function"
+msgstr "Transform.fill()関数"
+
+#: ../../release_notes.rst:109
+msgid ""
+"These features are not included in ver3.0.0; however, we plan to "
+"reintroduce them in a more improved form through future updates."
+msgstr "これらの機能はver3.0.0では搭載していませんが，今後のアップデートでより良い形で再登場させる予定です．"
+

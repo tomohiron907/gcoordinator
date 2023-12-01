@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gcoordinator \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-22 12:04+0900\n"
+"POT-Creation-Date: 2023-12-01 13:32+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -176,7 +176,8 @@ msgstr ""
 #: gcoordinator.path_transformer.Transform.offset
 #: gcoordinator.path_transformer.Transform.rotate_xy
 #: gcoordinator.path_transformer.Transform.stretch
-#: gcoordinator.plot_3d.Plot3D.show gcoordinator.plot_3d.show of
+#: gcoordinator.plot_3d.Plot3D.show gcoordinator.plot_3d.show
+#: gcoordinator.settings.load_settings of
 msgid "Parameters"
 msgstr ""
 
@@ -210,7 +211,8 @@ msgstr ""
 #: gcoordinator.path_transformer.Transform.offset
 #: gcoordinator.path_transformer.Transform.rotate_xy
 #: gcoordinator.path_transformer.Transform.stretch
-#: gcoordinator.plot_3d.Plot3D.generate_window gcoordinator.plot_3d.show of
+#: gcoordinator.plot_3d.Plot3D.generate_window gcoordinator.plot_3d.show
+#: gcoordinator.settings.load_settings of
 msgid "Returns"
 msgstr ""
 
@@ -224,7 +226,8 @@ msgstr ""
 #: gcoordinator.gui_export.gui_export:8
 #: gcoordinator.path_generator.Path.apply_optional_settings:8
 #: gcoordinator.path_generator.PathList.sort_paths:5
-#: gcoordinator.plot_3d.Plot3D.generate_window:3 of
+#: gcoordinator.plot_3d.Plot3D.generate_window:3
+#: gcoordinator.settings.load_settings:8 of
 msgid "None"
 msgstr ""
 
@@ -278,7 +281,8 @@ msgstr ""
 #: gcoordinator.gcode_generator.GCode.travel_from_path_to_path
 #: gcoordinator.gcode_generator.GCode.travel_to_first_point
 #: gcoordinator.infill_generator.gyroid_infill
-#: gcoordinator.infill_generator.line_infill of
+#: gcoordinator.infill_generator.line_infill
+#: gcoordinator.settings.load_settings of
 msgid "Raises"
 msgstr ""
 
@@ -1091,6 +1095,21 @@ msgid ""
 "which the printer should raise the nozzle during travel moves in "
 "millimeters - 'extrusion_multiplier' : a scaling factor for the amount of"
 " filament extruded by the printer"
+msgstr ""
+
+#: gcoordinator.settings.load_settings:1 of
+msgid ""
+"Loads the settings from a JSON config file. The format of the JSON file "
+"is as follows: "
+"https://gcoordinator.readthedocs.io/en/latest/tutorials/tutorial_4.html"
+msgstr ""
+
+#: gcoordinator.settings.load_settings:5 of
+msgid "The path to the JSON config file."
+msgstr ""
+
+#: gcoordinator.settings.load_settings:10 of
+msgid "If the config file has an invalid JSON format."
 msgstr ""
 
 #: ../../gcoordinator.rst:64

@@ -28,7 +28,9 @@ msgstr "その前に"
 msgid ""
 "Before using G-coordinator/gcoordinator, let's take a moment to review "
 "what G-code is. The image below shows G-code opened in Repetier."
-msgstr "G-coordinator/gcoordinatorを使う前に，G-codeとは何かを振り返りましょう．以下の画像は，repetier でG-codeを開いたものです．"
+msgstr ""
+"G-coordinator/gcoordinatorを使う前に，G-codeとは何かを振り返りましょう．以下の画像は，repetier でG-"
+"codeを開いたものです．"
 
 #: ../../tutorials/pre_start_readings.rst:-1
 msgid "repetier"
@@ -41,7 +43,10 @@ msgid ""
 "instructs the nozzle to move from the current position to the coordinates"
 " X114.97987 Y105.63424 Z2.00000 at a feed rate of 800 mm/min while "
 "extruding 0.00589 mm of filament."
-msgstr "基本的には， G1 F800 X114.97987 Y105.63424 Z2.00000 E0.00589 こういった行が大量に繰り返されています． これは，現在の位置からX114.97987 Y105.63424 Z2.00000の位置まで，分速800ｍｍで移動しながら，フィラメントを0.00589mm押し出すという命令です．"
+msgstr ""
+"基本的には， G1 F800 X114.97987 Y105.63424 Z2.00000 E0.00589 "
+"こういった行が大量に繰り返されています． これは，現在の位置からX114.97987 Y105.63424 "
+"Z2.00000の位置まで，分速800ｍｍで移動しながら，フィラメントを0.00589mm押し出すという命令です．"
 
 #: ../../tutorials/pre_start_readings.rst:13
 msgid ""
@@ -56,7 +61,9 @@ msgid ""
 " the G-coordinator (though specific manual settings are also possible). "
 "Therefore, the key consideration lies in determining the coordinates "
 "where the nozzle should move."
-msgstr "さらに，スピードと，押し出しはG-coordinator から自動で決定できる（もちろん細かく個別に指定することも可能）なので，考えるべきは，どの位置にノズルが動くかという座標のみで良いです．"
+msgstr ""
+"さらに，スピードと，押し出しはG-coordinator "
+"から自動で決定できる（もちろん細かく個別に指定することも可能）なので，考えるべきは，どの位置にノズルが動くかという座標のみで良いです．"
 
 #: ../../tutorials/tutorial_1.rst:2
 msgid "Simple Rectangle"
@@ -79,7 +86,9 @@ msgid ""
 "The coordinates for the nozzle's movement are (0, 0, 0), (10, 0, 0), (10,"
 " 10, 0), (0, 10, 0), and (0, 0, 0). Considering the starting and ending "
 "points, we'll sequentially move through these five coordinates."
-msgstr "平面上で，四角形を描くコードを書いてみましょう．ノズルが移動していく座標は，(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0), (0, 0, 0)です．始点と終点の座表も考えて，５つの座表を順に移動していきます．"
+msgstr ""
+"平面上で，四角形を描くコードを書いてみましょう．ノズルが移動していく座標は，(0, 0, 0), (10, 0, 0), (10, 10, 0),"
+" (0, 10, 0), (0, 0, 0)です．始点と終点の座表も考えて，５つの座表を順に移動していきます．"
 
 #: ../../tutorials/tutorial_1.rst:21
 msgid ""
@@ -100,7 +109,9 @@ msgid ""
 "If you're using G-coordinator (GUI app), you can preview it with "
 "gc.gui_export(full_object). If you're using gcoordinator as a Python "
 "library, you can use gc.show(full_object) to display the preview."
-msgstr "full_objectのリストは，G-coordinator(GUIアプリ）なら，gc.gui_export(full_object). gcoordinator(pythonライブラリ)なら，gc.show(full_object)でプレビューが表示されます．"
+msgstr ""
+"full_objectのリストは，G-coordinator(GUIアプリ）なら，gc.gui_export(full_object). "
+"gcoordinator(pythonライブラリ)なら，gc.show(full_object)でプレビューが表示されます．"
 
 #: ../../tutorials/tutorial_1.rst:53
 msgid "Here is the final code to draw a rectangle on a plane:"
@@ -187,7 +198,7 @@ msgid ""
 msgstr "z座標列は，前回と同じく，項数がx,y座標列と同じで，値heightごとに0.2ずつ大きくなっていく数列です．"
 
 #: ../../tutorials/tutorial_4.rst:2
-msgid "印刷設定"
+msgid "Print Settings"
 msgstr ""
 
 #: ../../tutorials/tutorial_4.rst:5 ../../tutorials/tutorial_5.rst:5
@@ -232,7 +243,10 @@ msgid ""
 "printer is 200mm × 200mm, the center (100, 100) is set as the origin. The"
 " coordinates (10, -20) in G-coordinator will be recorded as (110, 80) in "
 "G-code."
-msgstr "originの値は，原点からシフト量を示す．一般の3Dプリンタでは，原点をベッドの左手前に設定していますが，G-coordinatorでは，造形の数式を簡単に書くために，原点をベッドの中央に設定しています． 例えば，使用する3Dプリンタのベッドが200mm×200mmなので，その中心の(100, 100) を原点と設定しています．G-coordinator上で(10,-20)の座標が，G-code上では(110, 80)に変換されて記録されます．"
+msgstr ""
+"originの値は，原点からシフト量を示す．一般の3Dプリンタでは，原点をベッドの左手前に設定していますが，G-coordinatorでは，造形の数式を簡単に書くために，原点をベッドの中央に設定しています．"
+" 例えば，使用する3Dプリンタのベッドが200mm×200mmなので，その中心の(100, 100) "
+"を原点と設定しています．G-coordinator上で(10,-20)の座標が，G-code上では(110, 80)に変換されて記録されます．"
 
 #: ../../tutorials/tutorial_4.rst:19
 msgid "extrusion_multiplier represents the filament extrusion coefficient."
@@ -329,7 +343,9 @@ msgid ""
 "To generate G-code using the library as a standalone component, you need "
 "to save the Start and End G-code in separate text files. Then, specify "
 "the paths to these saved text files to generate the G-code."
-msgstr "ライブラリ単体で，G-codeを生成するには，スタート，エンドG-codeをそれぞれ別のテキストファイルに保存します．その保存したテキストファイルのパスを指定して，G-codeが生成されます．"
+msgstr ""
+"ライブラリ単体で，G-codeを生成するには，スタート，エンドG-"
+"codeをそれぞれ別のテキストファイルに保存します．その保存したテキストファイルのパスを指定して，G-codeが生成されます．"
 
 #: ../../tutorials/tutorial_5.rst:27
 msgid "The procedure is as follows:"
@@ -357,7 +373,9 @@ msgid ""
 "By clicking the \"Save G-code file\" button, you can save the generated "
 "G-code to a specified location. However, when saving with a custom name, "
 "it's necessary to input the file extension at the same time."
-msgstr "save G-code file　のボタンを押せば，生成されたG-codeを指定の場所に保存することができます．ただし，名前をつけて保存する時に，拡張子も同時に入力する必要があります．"
+msgstr ""
+"save G-code file　のボタンを押せば，生成されたG-"
+"codeを指定の場所に保存することができます．ただし，名前をつけて保存する時に，拡張子も同時に入力する必要があります．"
 
 #: ../../tutorials/tutorial_6.rst:21
 msgid ""
@@ -371,4 +389,7 @@ msgid ""
 "using the gcoordinator library as a standalone component would look "
 "something like the following:"
 msgstr "以上より，G-codeをgcoordinatorライブラリ単体で出力するにはこれまでの内容を踏まえると以下のようなコードになります．"
+
+#~ msgid "印刷設定"
+#~ msgstr ""
 

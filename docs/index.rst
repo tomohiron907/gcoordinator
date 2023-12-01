@@ -54,6 +54,12 @@ https://github.com/tomohiron907/gcoordinator
 
    gcoordinator
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Release Notes:
+
+   release_notes
+
 
 Indices and tables
 ==================
