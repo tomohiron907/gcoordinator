@@ -177,9 +177,9 @@ class GCode:
         travel_y = next_path.y[0] - curr_path.y[-1]
         travel_z = next_path.z[0] - curr_path.z[-1]
         txt += f'G0 F{next_path.travel_speed} '
-        txt += f'X{travel_x} '
-        txt += f'Y{travel_y} '
-        txt += f'Z{travel_z}\n'
+        txt += f'X{travel_x:.5f} '
+        txt += f'Y{travel_y:.5f} '
+        txt += f'Z{travel_z:.5f}\n'
 
         if curr_path.z_hop:
             txt += f'G0 Z{-curr_path.z_hop_distance}\n'
