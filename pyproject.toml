@@ -4,21 +4,25 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gcoordinator"
-version = "0.0.15"
+version = "0.0.16"
 authors = [
-  { name="Tomohiro TANIGUCHI", email="gcoordinator.3dp@gmail.com" },
+  { name = "Tomohiro TANIGUCHI", email = "gcoordinator.3dp@gmail.com" },
 ]
 description = "a package for generate G-code for 3D Printer"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
 ]
-dependencies = ["numpy", "pyqtgraph==0.13.2", "pyopengl", "pyqt5", "matplotlib==3.7.1"]
-
-
+dependencies = [
+  "numpy==1.26.2",
+  "pyqtgraph==0.13.2",
+  "pyopengl==3.1.7",
+  "pyqt5==5.15.10",
+  "matplotlib==3.7.1",
+]
 
 
 [project.urls]
