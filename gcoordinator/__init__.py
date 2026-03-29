@@ -5,3 +5,4 @@ from gcoordinator.gcode_generator  import GCode
 from gcoordinator.plot_3d          import show
 from gcoordinator.gui_export       import gui_export
 from gcoordinator.settings         import load_settings
+from gcoordinator.preview          import preview
