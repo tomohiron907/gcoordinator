@@ -147,6 +147,7 @@ class Path:
         self.z_hop                 = None
         self.z_hop_distance        = None
         self.extrusion_multiplier  = None
+        self.travel_path           = None
 
     def apply_optional_settings(self):
         """

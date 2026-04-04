@@ -380,7 +380,7 @@ wheels = [
 
 [[package]]
 name = "gcoordinator"
-version = "0.0.16"
+version = "0.0.18"
 source = { editable = "." }
 dependencies = [
     { name = "matplotlib" },

@@ -172,14 +172,27 @@ class GCode:
         if curr_path.z_hop:
             txt += f'G0 Z{curr_path.z_hop_distance}\n'
         
-        # travel to the start of the nextent path
-        travel_x = next_path.x[0] - curr_path.x[-1]
-        travel_y = next_path.y[0] - curr_path.y[-1]
-        travel_z = next_path.z[0] - curr_path.z[-1]
-        txt += f'G0 F{next_path.travel_speed} '
-        txt += f'X{travel_x:.5f} '
-        txt += f'Y{travel_y:.5f} '
-        txt += f'Z{travel_z:.5f}\n'
+        # travel to the start of the next path
+        if curr_path.travel_path is not None:
+            prev_x, prev_y, prev_z = curr_path.x[-1], curr_path.y[-1], curr_path.z[-1]
+            for wp in curr_path.travel_path:
+                dx = wp[0] - prev_x
+                dy = wp[1] - prev_y
+                dz = wp[2] - prev_z
+                txt += f'G0 F{next_path.travel_speed} X{dx:.5f} Y{dy:.5f} Z{dz:.5f}\n'
+                prev_x, prev_y, prev_z = wp[0], wp[1], wp[2]
+            dx = next_path.x[0] - prev_x
+            dy = next_path.y[0] - prev_y
+            dz = next_path.z[0] - prev_z
+            txt += f'G0 F{next_path.travel_speed} X{dx:.5f} Y{dy:.5f} Z{dz:.5f}\n'
+        else:
+            travel_x = next_path.x[0] - curr_path.x[-1]
+            travel_y = next_path.y[0] - curr_path.y[-1]
+            travel_z = next_path.z[0] - curr_path.z[-1]
+            txt += f'G0 F{next_path.travel_speed} '
+            txt += f'X{travel_x:.5f} '
+            txt += f'Y{travel_y:.5f} '
+            txt += f'Z{travel_z:.5f}\n'
 
         if curr_path.z_hop:
             txt += f'G0 Z{-curr_path.z_hop_distance}\n'
