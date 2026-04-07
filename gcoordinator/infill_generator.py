@@ -1,7 +1,6 @@
 """
 This module provides functions for generating infill paths for 3D printing.
-BUT, the algorithm is not optimized yet. It takes a long time to generate infill paths and file size is large.
-so, I am planning to make a new algorithm for infill generation.
+
 
 Infill patterns fall into two categories with different generation strategies:
 
@@ -295,81 +294,108 @@ class _TriangleInfillGenerator(_LinePatternInfillGenerator):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Public API
+# Public API – unified class (gc.Infill.xxx)
+# ─────────────────────────────────────────────────────────────────────────────
+
+class Infill:
+    """
+    Namespace class for infill pattern generation, mirroring the Transform API.
+
+    Usage::
+
+        import gcoordinator as gc
+        infill = gc.Infill.gyroid(wall, infill_distance=2)
+        infill = gc.Infill.schwartz_p(wall, infill_distance=2)
+        infill = gc.Infill.line(wall, infill_distance=2, angle=np.pi/4)
+        infill = gc.Infill.grid(wall, infill_distance=2)
+        infill = gc.Infill.triangle(wall, infill_distance=2)
+    """
+
+    @staticmethod
+    def gyroid(path, infill_distance=1, value=0) -> PathList:
+        """
+        Gyroid (TPMS) infill. Pattern varies with layer height.
+
+        Args:
+            path (Path or PathList): Boundary of the infill region.
+            infill_distance (float): Spacing between gyroid surfaces.
+            value (float): Iso-level offset; 0 gives the mid-surface.
+
+        Returns:
+            PathList: Generated infill paths.
+        """
+        return _GyroidInfillGenerator(infill_distance, value)(path)
+
+    @staticmethod
+    def schwartz_p(path, infill_distance=1, value=0) -> PathList:
+        """
+        Schwartz P (TPMS) infill. Pattern varies with layer height.
+
+        Args:
+            path (Path or PathList): Boundary of the infill region.
+            infill_distance (float): Spacing between surfaces.
+            value (float): Iso-level offset; 0 gives the mid-surface.
+
+        Returns:
+            PathList: Generated infill paths.
+        """
+        return _SchwartzPInfillGenerator(infill_distance, value)(path)
+
+    @staticmethod
+    def line(path, infill_distance=1, angle=np.pi/4) -> PathList:
+        """
+        Parallel-line infill at a given angle.
+
+        Args:
+            path (Path or PathList): Boundary of the infill region.
+            infill_distance (float): Perpendicular spacing between lines.
+            angle (float): Angle of the lines from the X-axis in radians.
+
+        Returns:
+            PathList: Generated infill paths (each Path is a straight segment).
+        """
+        return _LineInfillGenerator(infill_distance, angle)(path)
+
+    @staticmethod
+    def grid(path, infill_distance=1) -> PathList:
+        """
+        Rectilinear grid infill (lines in X and Y).
+
+        Args:
+            path (Path or PathList): Boundary of the infill region.
+            infill_distance (float): Spacing between grid lines.
+
+        Returns:
+            PathList: Generated infill paths (each Path is a straight segment).
+        """
+        return _GridInfillGenerator(infill_distance)(path)
+
+    @staticmethod
+    def triangle(path, infill_distance=1) -> PathList:
+        """
+        Triangular grid infill (lines at 0°, 60°, 120°).
+
+        Args:
+            path (Path or PathList): Boundary of the infill region.
+            infill_distance (float): Perpendicular spacing within each line family.
+
+        Returns:
+            PathList: Generated infill paths (each Path is a straight segment).
+        """
+        return _TriangleInfillGenerator(infill_distance)(path)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Backward-compatible module-level aliases
 # ─────────────────────────────────────────────────────────────────────────────
 
 def gyroid_infill(path, infill_distance=1, value=0) -> PathList:
-    """
-    Generates a gyroid (TPMS) infill pattern.
-
-    Args:
-        path (Path or PathList): Boundary of the infill region.
-        infill_distance (float): Spacing between gyroid surfaces.
-        value (float): Iso-level offset; 0 gives the mid-surface.
-
-    Returns:
-        PathList: Generated infill paths.
-    """
-    return _GyroidInfillGenerator(infill_distance, value)(path)
-
-
-def schwartz_p_infill(path, infill_distance=1, value=0) -> PathList:
-    """
-    Generates a Schwartz P (TPMS) infill pattern.
-
-    Args:
-        path (Path or PathList): Boundary of the infill region.
-        infill_distance (float): Spacing between surfaces.
-        value (float): Iso-level offset; 0 gives the mid-surface.
-
-    Returns:
-        PathList: Generated infill paths.
-    """
-    return _SchwartzPInfillGenerator(infill_distance, value)(path)
+    """Backward-compatible alias for Infill.gyroid()."""
+    return Infill.gyroid(path, infill_distance, value)
 
 
 def line_infill(path, infill_distance=1, angle=np.pi/4) -> PathList:
-    """
-    Generates a parallel-line infill pattern.
-
-    Args:
-        path (Path or PathList): Boundary of the infill region.
-        infill_distance (float): Perpendicular spacing between lines.
-        angle (float): Angle of the lines from the X-axis in radians.
-
-    Returns:
-        PathList: Generated infill paths (each Path is a straight segment).
-    """
-    return _LineInfillGenerator(infill_distance, angle)(path)
-
-
-def grid_infill(path, infill_distance=1) -> PathList:
-    """
-    Generates a rectilinear grid infill pattern (lines in X and Y).
-
-    Args:
-        path (Path or PathList): Boundary of the infill region.
-        infill_distance (float): Spacing between grid lines.
-
-    Returns:
-        PathList: Generated infill paths (each Path is a straight segment).
-    """
-    return _GridInfillGenerator(infill_distance)(path)
-
-
-def triangle_infill(path, infill_distance=1) -> PathList:
-    """
-    Generates a triangular grid infill pattern.
-
-    Three families of lines at 0°, 60°, 120° form a grid of equilateral triangles.
-
-    Args:
-        path (Path or PathList): Boundary of the infill region.
-        infill_distance (float): Perpendicular spacing within each line family.
-
-    Returns:
-        PathList: Generated infill paths (each Path is a straight segment).
-    """
-    return _TriangleInfillGenerator(infill_distance)(path)
+    """Backward-compatible alias for Infill.line()."""
+    return Infill.line(path, infill_distance, angle)
 
 
