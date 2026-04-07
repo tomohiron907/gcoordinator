@@ -259,6 +259,29 @@ class _SchwartzPInfillGenerator(_ImplicitSurfaceInfillGenerator):
         return np.cos(X * p) + np.cos(Y * p) + np.cos(z_height * p) - self.value
 
 
+class _CustomImplicitInfillGenerator(_ImplicitSurfaceInfillGenerator):
+    """
+    User-defined implicit surface infill.
+
+    The scalar field is provided as a callable ``equation_fn(X, Y, z_height)``
+    that receives the meshgrid arrays and the layer height, and returns a
+    2-D ndarray of the same shape.  The iso-contour at level 0 becomes the
+    infill pattern.
+    """
+    def __init__(self, equation_fn, resolution: float):
+        self._equation_fn = equation_fn
+        self._res_step    = resolution   # grid step in mm
+
+    def _resolution(self, min_x, max_x, min_y, max_y):
+        return (
+            max(2, int((max_x - min_x) / self._res_step)),
+            max(2, int((max_y - min_y) / self._res_step)),
+        )
+
+    def _equation(self, X, Y, z_height):
+        return self._equation_fn(X, Y, z_height)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Concrete generators – Category 2 (line pattern)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -304,11 +327,20 @@ class Infill:
     Usage::
 
         import gcoordinator as gc
+        import numpy as np
+
         infill = gc.Infill.gyroid(wall, infill_distance=2)
         infill = gc.Infill.schwartz_p(wall, infill_distance=2)
         infill = gc.Infill.line(wall, infill_distance=2, angle=np.pi/4)
         infill = gc.Infill.grid(wall, infill_distance=2)
         infill = gc.Infill.triangle(wall, infill_distance=2)
+
+        # Custom implicit surface:
+        def my_equation(X, Y, z_height):
+            p = 2 * np.pi / 3.0
+            return np.sin(X * p) + np.cos(Y * p) * np.sin(z_height * p)
+
+        infill = gc.Infill.custom_implicit(wall, my_equation)
     """
 
     @staticmethod
@@ -383,6 +415,44 @@ class Infill:
             PathList: Generated infill paths (each Path is a straight segment).
         """
         return _TriangleInfillGenerator(infill_distance)(path)
+
+    @staticmethod
+    def custom_implicit(path, equation_fn, resolution=0.4) -> PathList:
+        """
+        Infill defined by a user-supplied implicit surface equation.
+
+        The zero iso-contour of ``equation_fn`` on the print plane becomes
+        the infill pattern, clipped to the boundary.
+
+        Args:
+            path (Path or PathList): Boundary of the infill region.
+            equation_fn (callable): A function with signature
+                ``(X: np.ndarray, Y: np.ndarray, z_height: float) -> np.ndarray``
+                that returns the scalar field evaluated on the meshgrid.
+                The iso-contour at level 0 is used as the infill.
+            resolution (float): Grid sampling step in mm. Smaller values give
+                finer contours but take longer. Default: 0.4.
+
+        Returns:
+            PathList: Generated infill paths.
+
+        Example::
+
+            import numpy as np
+            import gcoordinator as gc
+
+            def lidinoid(X, Y, z):
+                p = 2 * np.pi / 3.0
+                return (
+                    np.sin(2*X*p) * np.cos(Y*p) * np.sin(z*p)
+                    + np.sin(2*Y*p) * np.cos(z*p) * np.sin(X*p)
+                    + np.sin(2*z*p) * np.cos(X*p) * np.sin(Y*p)
+                    - 0.3
+                )
+
+            infill = gc.Infill.custom_implicit(wall, lidinoid, resolution=0.3)
+        """
+        return _CustomImplicitInfillGenerator(equation_fn, resolution)(path)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
