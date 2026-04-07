@@ -21,7 +21,7 @@ dependencies = [
   "pyqtgraph==0.13.2",
   "pyopengl==3.1.7",
   "pyqt5==5.15.10",
-  "matplotlib==3.7.1",
+  "contourpy>=1.1.0",
   "msgpack>=1.0.0",
 ]
 

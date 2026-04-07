@@ -1,8 +1,5 @@
 """
 This module provides functions for generating infill paths for 3D printing.
-BUT, the algorithm is not optimized yet. It takes a long time to generate infill paths and file size is large.
-so, I am planning to make a new algorithm for infill generation.
-
 Functions:
 - gyroid_infill: Generates a gyroid infill pattern for a given path or path list.
 - line_infill: Generates a line infill pattern for a given path or path list.
@@ -11,10 +8,28 @@ Functions:
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.path import Path as matlabPath
+from contourpy import contour_generator
 from gcoordinator.path_generator import Path, PathList
 
+
+def _points_in_polygon(polygon_xy: np.ndarray, points: np.ndarray) -> np.ndarray:
+    px, py = points[:, 0], points[:, 1]
+    vx, vy = polygon_xy[:, 0], polygon_xy[:, 1]
+    vx_next = np.roll(vx, -1)
+    vy_next = np.roll(vy, -1)
+
+    py_col      = py[:, np.newaxis]
+    px_col      = px[:, np.newaxis]
+    vy_row      = vy[np.newaxis, :]
+    vy_next_row = vy_next[np.newaxis, :]
+    vx_row      = vx[np.newaxis, :]
+    vx_next_row = vx_next[np.newaxis, :]
+
+    cond = (vy_row > py_col) != (vy_next_row > py_col)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        x_intersect = vx_row + (py_col - vy_row) * (vx_next_row - vx_row) / (vy_next_row - vy_row)
+    crosses = cond & (px_col < x_intersect)
+    return np.count_nonzero(crosses, axis=1) % 2 == 1
 
 
 def gyroid_infill(path, infill_distance=1, value=0):
@@ -81,11 +96,9 @@ def gyroid_infill(path, infill_distance=1, value=0):
         y_list = path.y
 
         # Determine the inside region
-        inside = np.ones_like(equation) # outside = 1
-        path = matlabPath(np.column_stack([x_list, y_list]))
-
+        polygon_xy = np.column_stack([x_list, y_list])
         points = np.column_stack((X.flatten(), Y.flatten()))
-        inside = path.contains_points(points) # inside = 0
+        inside = _points_in_polygon(polygon_xy, points)
         inside = inside.reshape(X.shape).astype(float)
         inside[inside == 1] = -1 # change inside to -1
         inside[inside == 0] = 1  # Change outside  to 1
@@ -99,20 +112,17 @@ def gyroid_infill(path, infill_distance=1, value=0):
     # Replace -1 with np.nan
     result[result == 1] = np.nan
 
-    # Plot the slices
+    # Extract contour lines at level 0
     slice_plane = equation * result
-    contours = plt.contour(x, y, slice_plane, levels=[0], colors='black')
+    gen = contour_generator(x=x, y=y, z=slice_plane)
 
     infill_path_list = []
-    for contour in contours.collections:
-        paths = contour.get_paths()
-        for path in paths:
-            points = path.vertices
-            x_coords = points[:, 0]
-            y_coords = points[:, 1]
-            z_coords = np.full_like(x_coords, z_height)
-            wall = Path(x_coords, y_coords, z_coords)
-            infill_path_list.append(wall)
+    for vertices in gen.lines(0.0):
+        x_coords = vertices[:, 0]
+        y_coords = vertices[:, 1]
+        z_coords = np.full_like(x_coords, z_height)
+        wall = Path(x_coords, y_coords, z_coords)
+        infill_path_list.append(wall)
 
     return PathList(infill_path_list)
 
@@ -164,36 +174,30 @@ def line_infill(path, infill_distance=1, angle=np.pi/4):
         x_list = path.x
         y_list = path.y        
         # Determine the inside region
-        inside = np.ones_like(equation) # outside = 1
-        path = matlabPath(np.column_stack([x_list, y_list]))
-        
+        polygon_xy = np.column_stack([x_list, y_list])
         points = np.column_stack((X.flatten(), Y.flatten()))
-        inside = path.contains_points(points) # inside = 0
+        inside = _points_in_polygon(polygon_xy, points)
         inside = inside.reshape(X.shape).astype(float)
         inside[inside == 1] = -1 # change inside to -1
         inside[inside == 0] = 1  # Change outside  to 1
         insides.append(inside)
 
-    result = insides[0]  
+    result = insides[0]
 
     for i in range(1, len(insides)):
-        result = np.multiply(result, insides[i])  
+        result = np.multiply(result, insides[i])
 
     # Replace -1 with np.nan
     result[result == 1] = np.nan
 
-    # Plot the slices
+    # Extract contour lines at level 0
     slice_plane = equation * result
-    contours = plt.contour(x, y, slice_plane, levels=[0], colors='black')
+    gen = contour_generator(x=x, y=y, z=slice_plane)
     infill_path_list = []
-    for contour in contours.collections:
-        
-        paths = contour.get_paths()
-        for path in paths:
-            points = path.vertices
-            x_coords = points[:, 0]
-            y_coords = points[:, 1]
-            z_coords = np.full_like(x_coords, z_height)
-            wall = Path(x_coords, y_coords, z_coords)
-            infill_path_list.append(wall)
+    for vertices in gen.lines(0.0):
+        x_coords = vertices[:, 0]
+        y_coords = vertices[:, 1]
+        z_coords = np.full_like(x_coords, z_height)
+        wall = Path(x_coords, y_coords, z_coords)
+        infill_path_list.append(wall)
     return PathList(infill_path_list)
