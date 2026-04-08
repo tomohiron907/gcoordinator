@@ -242,7 +242,7 @@ wheels = [
 
 [[package]]
 name = "gcoordinator"
-version = "0.0.19"
+version = "0.0.20"
 source = { editable = "." }
 dependencies = [
     { name = "contourpy", version = "1.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },

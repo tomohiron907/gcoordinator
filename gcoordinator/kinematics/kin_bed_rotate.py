@@ -139,6 +139,11 @@ class BedRotate(Kinematics):
         Raises:
             None.
         """
+        if path.segment_extrusion_multiplier is not None:
+            multipliers = np.asarray(path.segment_extrusion_multiplier)
+        else:
+            multipliers = np.full(len(path.x) - 1, path.extrusion_multiplier)
+
         extrusion = np.array([])
         px = path.coords[0][0]
         py = path.coords[0][1]
@@ -156,7 +161,7 @@ class BedRotate(Kinematics):
                 py = ny
                 pz = nz
             AREA=(path.nozzle_diameter-path.layer_height)*(path.layer_height)+(path.layer_height/2)**2*np.pi
-            extrusion = np.append(extrusion, 4*AREA*Dis/(np.pi*path.filament_diameter**2))  
+            extrusion = np.append(extrusion, 4*AREA*Dis/(np.pi*path.filament_diameter**2) * multipliers[i])
         return extrusion
     
 

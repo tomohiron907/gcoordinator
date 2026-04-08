@@ -46,6 +46,12 @@ class Kinematics:
         """
         coords = path.coords
         distances = get_distances_between_coords(coords)
+
+        if path.segment_extrusion_multiplier is not None:
+            multipliers = np.asarray(path.segment_extrusion_multiplier)
+        else:
+            multipliers = np.full(len(distances), path.extrusion_multiplier)
+
         extrusion = np.zeros(len(distances))
         for i, distance in enumerate(distances):
             # Calculate the extrusion for each distance
@@ -53,6 +59,6 @@ class Kinematics:
             # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7600913/
             numerator    = 4 * path.nozzle_diameter * path.layer_height * distance
             denominator  = np.pi * path.filament_diameter**2
-            extrusion[i] = numerator / denominator * path.extrusion_multiplier
-        
+            extrusion[i] = numerator / denominator * multipliers[i]
+
         return extrusion

@@ -72,6 +72,11 @@ class Path:
         The distance by which to Z-hop, in millimeters.
     extrusion_multiplier : float
         A multiplier for the amount of filament extruded, used to adjust for filament diameter variations.
+    segment_extrusion_multiplier : numpy.ndarray or None
+        Per-segment multiplier for filament extrusion. An array of the same length as x and y.
+        For segment i (from point i to i+1), the value at index i is used.
+        When both extrusion_multiplier and segment_extrusion_multiplier are specified,
+        segment_extrusion_multiplier takes precedence.
 
     Methods:
     --------
@@ -146,8 +151,9 @@ class Path:
         self.unretraction_distance = None
         self.z_hop                 = None
         self.z_hop_distance        = None
-        self.extrusion_multiplier  = None
-        self.travel_path           = None
+        self.extrusion_multiplier          = None
+        self.segment_extrusion_multiplier  = None
+        self.travel_path                   = None
 
     def apply_optional_settings(self):
         """
