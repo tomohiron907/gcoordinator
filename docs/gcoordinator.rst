@@ -44,14 +44,6 @@ gcoordinator.path\_transformer module
    :undoc-members:
    :show-inheritance:
 
-gcoordinator.plot\_3d module
-----------------------------
-
-.. automodule:: gcoordinator.plot_3d
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 gcoordinator.settings module
 ----------------------------
 

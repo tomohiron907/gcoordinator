@@ -16,7 +16,7 @@ pip install gcoordinator
 ``` 
 
 Since the dependencies include features that require specific versions to function properly, it is strongly recommended to create a virtual environment. 
-Specifically, you will need pyqtgraph==0.13.2 and matplotlib==3.7.1.
+Specifically, you will need matplotlib==3.7.1.
 
 # What is G-code?
 In essence, the G-code used in 3D printing primarily consists of a series of coordinates where the nozzle moves. 
@@ -40,9 +40,6 @@ for height in range(100):
     wall = gc.Path(x, y, z)
     
     full_object.append(wall)
-
-gc.show(full_object)
-
 
 gcode = gc.GCode(full_object)
 gcode.start_gcode("PATH TO YOUR START G-CODE")
@@ -96,13 +93,6 @@ full_object is a list that stores all the Paths to be printed in the order of pr
 <br>
 Note that the end point of the nth Path and the start point of the n+1th Path are automatically traveled.
 
-## preview
-```python
-gc.show(full_object)
-```
-
-Preview all the Paths stored in full_object.
-
 ## G-code generation
 ```python
 gcode = gc.GCode(full_object)
@@ -140,7 +130,7 @@ pip install gcoordinator
 ```
 依存ライブラリの中に，指定のバージョンでないと動作しない機能が含まれるため，仮想環境を作成することを強くお勧めします．
 <br>
-具体的には，pyqtgraph==0.13.2, matplotlib==3.7.1が必要です．
+具体的には，matplotlib==3.7.1が必要です．
 
 
 # G-codeとは
@@ -165,9 +155,6 @@ for height in range(100):
     wall = gc.Path(x, y, z)
     
     full_object.append(wall)
-
-gc.show(full_object)
-
 
 gcode = gc.GCode(full_object)
 gcode.start_gcode("PATH TO YOUR START G-CODE")
@@ -219,13 +206,6 @@ full_object.append(wall)
 full_objectは，印刷すべき全てのPathを印刷順に格納したリストです．
 <br>
 なお，n番目のPathの終点とn+1番目のPathの始点とは，自動でトラベルするようになっています．
-
-## プレビュー
-```python
-gc.show(full_object)
-```
-
-full_objectに格納された全てのPathをプレビューします．
 
 ## G-codeの生成
 ```python
