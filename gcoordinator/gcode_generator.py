@@ -174,8 +174,10 @@ class GCode:
         
         # travel to the start of the next path
         if curr_path.travel_path is not None:
+            tp = curr_path.travel_path
+            waypoints = np.column_stack([np.atleast_1d(tp[0]), np.atleast_1d(tp[1]), np.atleast_1d(tp[2])])
             prev_x, prev_y, prev_z = curr_path.x[-1], curr_path.y[-1], curr_path.z[-1]
-            for wp in curr_path.travel_path:
+            for wp in waypoints:
                 dx = wp[0] - prev_x
                 dy = wp[1] - prev_y
                 dz = wp[2] - prev_z

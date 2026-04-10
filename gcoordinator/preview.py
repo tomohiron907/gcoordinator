@@ -31,7 +31,8 @@ def preview(full_object, port: int = 5163) -> None:
     travel_coords_list = []
     for path in paths:
         if path.travel_path is not None:
-            wps = np.asarray(path.travel_path, dtype=np.float32)
+            tp = path.travel_path
+            wps = np.column_stack([np.atleast_1d(tp[0]), np.atleast_1d(tp[1]), np.atleast_1d(tp[2])]).astype(np.float32)
             travel_path_lengths.append(len(wps))
             travel_coords_list.append(wps.flatten())
         else:
