@@ -77,6 +77,11 @@ class Path:
         For segment i (from point i to i+1), the value at index i is used.
         When both extrusion_multiplier and segment_extrusion_multiplier are specified,
         segment_extrusion_multiplier takes precedence.
+    segment_print_speed : numpy.ndarray or None
+        Per-segment print speed. An array of the same length as x and y.
+        For segment i (from point i to i+1), the value at index i is used.
+        When both print_speed and segment_print_speed are specified,
+        segment_print_speed takes precedence.
 
     Methods:
     --------
@@ -153,6 +158,7 @@ class Path:
         self.z_hop_distance        = None
         self.extrusion_multiplier          = None
         self.segment_extrusion_multiplier  = None
+        self.segment_print_speed           = None
         self.travel_path                   = None
 
     def apply_optional_settings(self):

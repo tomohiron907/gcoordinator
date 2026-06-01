@@ -177,10 +177,14 @@ class BedRotate(Kinematics):
             A string containing the G-code for the given path.
         """
         extrusion = BedRotate.calculate_extrusion(path)
+        if path.segment_print_speed is not None:
+            print_speeds = np.asarray(path.segment_print_speed)
+        else:
+            print_speeds = np.full(len(path.x) - 1, path.print_speed)
         txt = ''
         for i in range(len(path.x)-1):
             # print the path. move to the next point with extrusion
-            txt += f'G1 F{path.print_speed} '
+            txt += f'G1 F{print_speeds[i]} '
             txt += f'X{path.x[i+1]+path.x_origin:.5f} '
             txt += f'Y{path.y[i+1]+path.y_origin:.5f} '
             txt += f'Z{path.z[i+1]:.5f} '
