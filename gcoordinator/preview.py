@@ -1,3 +1,4 @@
+import os
 import urllib.request
 import urllib.error
 import numpy as np
@@ -49,6 +50,19 @@ def preview(full_object, port: int = 5163) -> None:
         },
         use_bin_type=True,
     )
+
+    export_path = os.environ.get('GCOORDINATOR_EXPORT_FILE')
+    pickle_path = os.environ.get('GCOORDINATOR_PICKLE_FILE')
+
+    if export_path:
+        with open(export_path, 'wb') as f:
+            f.write(data)
+    if pickle_path:
+        import pickle
+        with open(pickle_path, 'wb') as f:
+            pickle.dump(full_object, f)
+    if export_path or pickle_path:
+        return
 
     url = f"http://127.0.0.1:{port}/preview"
     req = urllib.request.Request(
