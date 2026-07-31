@@ -45,7 +45,7 @@ In that case, you would modify the code as follows.
             wall.extrusion_multiplier = 1.2
         full_object.append(wall)
     
-    gc.gui_export(full_object)
+    gc.preview(full_object)
 
 Additionally, you can individually configure other settings for each path, such as the retraction and printing speed.
 

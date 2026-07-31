@@ -41,14 +41,16 @@ We'll add the created path to a list called "full_object."
     full_object = []
     full_object.append(rectangle)   
 
-If you're using G-coordinator (GUI app), you can preview it with gc.gui_export(full_object). 
-If you're using gcoordinator as a Python library, you can use gc.show(full_object) to display the preview.
+Passing full_object to gc.preview() displays the preview.
+The same call works with both the G-coordinator app and the gcoordinator VSCode extension.
 
 .. code-block:: python
 
-    gc.gui_export(full_object) # for G-coordinator (GUI app)
+    gc.preview(full_object)
 
-    gc.show(full_object) # for gcoordinator as a Python library
+.. note::
+
+    gc.gui_export() is kept as an alias of gc.preview(), so existing code keeps working as is.
 
 Here is the final code to draw a rectangle on a plane:
 
@@ -65,4 +67,4 @@ Here is the final code to draw a rectangle on a plane:
     rectangle = gc.path(x, y, z)
     full_object.append(rectangle)
 
-    gc.gui_export(full_object) # for G-coordinator (GUI app)
+    gc.preview(full_object)

@@ -41,6 +41,8 @@ for height in range(100):
     
     full_object.append(wall)
 
+gc.preview(full_object)
+
 gcode = gc.GCode(full_object)
 gcode.start_gcode("PATH TO YOUR START G-CODE")
 gcode.end_gcode("PATH TO YOUR END G-CODE")
@@ -92,6 +94,15 @@ Add the created Path to a list called full_object.
 full_object is a list that stores all the Paths to be printed in the order of printing.
 <br>
 Note that the end point of the nth Path and the start point of the n+1th Path are automatically traveled.
+
+## preview
+```python
+gc.preview(full_object)
+```
+
+Displays the modeling result. It automatically detects the frontend in use, so the same code
+previews correctly on both the G-coordinator app and the gcoordinator VSCode extension.
+`gc.gui_export(full_object)` is kept as an alias of `gc.preview()` for backwards compatibility.
 
 ## G-code generation
 ```python
@@ -156,6 +167,8 @@ for height in range(100):
     
     full_object.append(wall)
 
+gc.preview(full_object)
+
 gcode = gc.GCode(full_object)
 gcode.start_gcode("PATH TO YOUR START G-CODE")
 gcode.end_gcode("PATH TO YOUR END G-CODE")
@@ -206,6 +219,15 @@ full_object.append(wall)
 full_objectは，印刷すべき全てのPathを印刷順に格納したリストです．
 <br>
 なお，n番目のPathの終点とn+1番目のPathの始点とは，自動でトラベルするようになっています．
+
+## プレビュー
+```python
+gc.preview(full_object)
+```
+
+造形結果を表示します．使用中のフロントエンドを自動で判別するため，同じコードでG-coordinatorアプリでも，
+VSCode拡張機能のgcoordinator-extensionでもプレビューできます．
+`gc.gui_export(full_object)`は後方互換のため`gc.preview()`のエイリアスとして残されています．
 
 ## G-codeの生成
 ```python

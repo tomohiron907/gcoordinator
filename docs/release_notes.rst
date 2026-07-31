@@ -1,6 +1,31 @@
 Release Notes
 =============
 
+gcoordinator ver0.0.24
+----------------------
+
+The two preview entry points, ``gui_export()`` and ``preview()``, have been unified.
+
+- ``preview()`` is now the canonical name. It decides where to send the result automatically,
+  so the same code previews correctly on both the G-coordinator app and the gcoordinator
+  VSCode extension.
+- ``gui_export()`` is kept permanently as an alias of ``preview()``.
+  Existing code does not need to be changed, and it now works with the VSCode extension too.
+
+.. code-block:: python
+
+    gc.preview(full_object)     # recommended
+    gc.gui_export(full_object)  # still works, identical behavior
+
+.. warning::
+
+    The legacy fallback that wrote ``buffer/full_object.pickle`` when no frontend was detected
+    has been removed. The PyQt-based G-coordinator (ver2 series and the ver3 PyQt builds) is no
+    longer supported. Please use the current G-coordinator app or the VSCode extension.
+
+Also fixed: previewing an empty ``full_object`` no longer skips writing the preview data,
+which used to make the app report "No gc.gui_export() or gc.preview() call detected."
+
 G-coordinator ver3.0.0
 ----------------------
 

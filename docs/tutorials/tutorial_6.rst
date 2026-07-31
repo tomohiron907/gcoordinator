@@ -43,7 +43,7 @@ Based on the information provided so far, the code for outputting G-code using t
         outer_wall = gc.Transform.offset(wall, 0.4)
         full_object.append(wall)
 
-    gc.show(full_object)
+    gc.preview(full_object)
 
 
     gcode = gc.GCode(full_object)

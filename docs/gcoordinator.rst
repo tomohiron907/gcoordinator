@@ -12,10 +12,10 @@ gcoordinator.gcode\_generator module
    :undoc-members:
    :show-inheritance:
 
-gcoordinator.gui\_export module
--------------------------------
+gcoordinator.preview module
+---------------------------
 
-.. automodule:: gcoordinator.gui_export
+.. automodule:: gcoordinator.preview
    :members:
    :undoc-members:
    :show-inheritance:

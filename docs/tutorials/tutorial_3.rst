@@ -26,7 +26,7 @@ A cylinder (precisely a regular 99-gon) can be sculpted using the following code
         wall = gc.Path(x, y, z)
         full_object.append(wall)
     
-    gc.gui_export(full_object)
+    gc.preview(full_object)
 
 The code creates a sequence named 'arg,' consisting of 100 angles ranging from 0 to 2π. 
 

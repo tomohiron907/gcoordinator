@@ -21,7 +21,7 @@ This can be achieved by using a for loop to increment the z-coordinate sequence 
         z = [(height+1)*0.2] * 5
         path = gc.Path(x, y, z)
         full_object.append(path)
-    gc.gui_export(full_object)
+    gc.preview(full_object)
 
 
 In the Z-coordinate sequence, I am creating a sequence of coordinates with the same number of terms as the X-coordinate sequence, 
