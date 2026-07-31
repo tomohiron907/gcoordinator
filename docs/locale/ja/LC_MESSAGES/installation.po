@@ -59,6 +59,22 @@ msgid "The Python library for G-coordinator is available on PyPI."
 msgstr "G-coordinatorのG-code生成エンジンのgcoordinatorはPyPIからインストールできます．"
 
 #: ../../installation.rst:24
-msgid "To install gcoordinator, run the following command:"
-msgstr "gcoordinatorライブラリのインストールには，以下のコマンドを実行してください"
+msgid ""
+"We strongly recommend setting up your environment with `uv "
+"<https://docs.astral.sh/uv/>`_:"
+msgstr "環境構築には\\ `uv <https://docs.astral.sh/uv/>`_\\ を使うことを強くお勧めします．"
+
+#: ../../installation.rst:33
+msgid ""
+"The dependencies pin specific versions, so gcoordinator must live in its "
+"own virtual environment. uv creates and manages one for you. Python 3.12 "
+"is recommended because the pinned numpy has no prebuilt wheels for 3.13 "
+"and later."
+msgstr "依存ライブラリの中にバージョンが固定されているものがあるため，gcoordinatorは専用の仮想環境で使う必要があります．uvを使えば仮想環境の作成と管理は自動で行われます．Python 3.12を推奨しているのは，固定されているnumpyのバージョンに3.13以降向けのビルド済みwheelが無いためです．"
+
+#: ../../installation.rst:37
+msgid ""
+"If you prefer to manage the environment yourself, you can also install it "
+"with pip:"
+msgstr "環境を自分で管理する場合は，pipでインストールすることもできます．"
 

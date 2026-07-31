@@ -9,14 +9,21 @@ With this library alone, you can perform 3D modeling, preview, G-code generation
 In the upcoming version 3 series of the GUI application, the plan is to fully migrate the internal generation engine to this library.
 
 # Installation
-You can install it using the following command:
+We strongly recommend setting up your environment with [uv](https://docs.astral.sh/uv/):
 
-```python
-pip install gcoordinator
-``` 
+```bash
+uv init --python 3.12 my-prints
+cd my-prints
+uv add gcoordinator
+uv run main.py
+```
 
-Since the dependencies include features that require specific versions to function properly, it is strongly recommended to create a virtual environment. 
-Specifically, you will need matplotlib==3.7.1.
+The dependencies pin specific versions, so gcoordinator must live in its own
+virtual environment — uv creates and manages one for you. Python 3.12 is
+recommended because the pinned numpy has no prebuilt wheels for 3.13 and later.
+
+`pip install gcoordinator` still works if you prefer to manage the environment
+yourself.
 
 # What is G-code?
 In essence, the G-code used in 3D printing primarily consists of a series of coordinates where the nozzle moves. 
@@ -135,13 +142,21 @@ GUIアプリのG-coordinator[https://github.com/tomohiron907/G-coordinator] のG
 GUIアプリのver3系列では，内部の生成エンジンを完全にこのライブラリに移行する予定です．
 
 # インストール
-以下のコマンドでインストール可能です．
-```python
-pip install gcoordinator
+環境構築には[uv](https://docs.astral.sh/uv/)を使うことを強くお勧めします．
+
+```bash
+uv init --python 3.12 my-prints
+cd my-prints
+uv add gcoordinator
+uv run main.py
 ```
-依存ライブラリの中に，指定のバージョンでないと動作しない機能が含まれるため，仮想環境を作成することを強くお勧めします．
+
+依存ライブラリの中にバージョンが固定されているものがあるため，gcoordinatorは専用の仮想環境で使う必要があります．
+uvを使えば仮想環境の作成と管理は自動で行われます．
 <br>
-具体的には，matplotlib==3.7.1が必要です．
+Python 3.12を推奨しているのは，固定されているnumpyのバージョンに3.13以降向けのビルド済みwheelが無いためです．
+
+環境を自分で管理する場合は`pip install gcoordinator`でもインストールできます．
 
 
 # G-codeとは
